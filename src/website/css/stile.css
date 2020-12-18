@@ -1,0 +1,146 @@
+@charset "utf-8";
+/* CSS Document */
+
+
+body {
+	font-family: 'Noto Sans', sans-serif;
+}
+
+section {
+	margin-top: 3rem;
+}
+.bg-verde {
+	background-color: #7ABB3B;
+
+}
+
+
+.benvenuto {
+	color: #ffffff;
+}
+
+a.metalink {
+	color: #DFDEDE;
+}
+
+.cerca {
+	color: #fff;
+    background-color: #606f9c;
+    border-color: #606f9c;
+}
+.cerca:hover {
+	color: #fff;
+    background-color: #B8CE2E;
+    border-color: #B8CE2E;
+}
+
+/*risorse*/
+
+a.card-link {
+	color: #606f9c;
+}
+.card-header {
+	background: none;
+	color: #7ABB3B;
+}
+
+/*video*/
+
+.embed-responsive {
+	margin-top: 20px;
+	margin-bottom: 20px;
+}
+
+/*form*/
+.form-group {
+	margin-top: 1rem;
+}
+
+.btn-primary {
+	color: #fff;
+    background-color: #606f9c;
+    border-color: #606f9c;
+}
+
+.btn-primary:hover {
+	color: #fff;
+    background-color: #B8CE2E;
+    border-color: #B8CE2E;
+}
+
+/*footer*/
+
+.links {
+	list-style-type: none;
+	padding-left: 0.25rem;
+	line-height: 1.8em;
+}
+
+.links a {
+	color: #DFDEDE;
+	text-decoration: none;
+}
+
+.links a:hover {
+	color: #606f9c;
+	text-decoration: none;
+}
+
+
+footer {
+	background-color: #426E17;
+	color: #fff;
+    position: absolute;
+    bottom: 0;
+    min-width: -webkit-fill-available;
+}
+
+/* LOGIN AND REGISTRATION FORM*/
+.divider-text {
+    position: relative;
+    text-align: center;
+    margin-top: 15px;
+    margin-bottom: 15px;
+}
+.divider-text span {
+    padding: 7px;
+    font-size: 12px;
+    position: relative;   
+    z-index: 2;
+}
+.divider-text:after {
+    content: "";
+    position: absolute;
+    width: 100%;
+    border-bottom: 1px solid #ddd;
+    top: 55%;
+    left: 0;
+    z-index: 1;
+}
+
+
+.imgcontainer {
+  text-align: center;
+  margin: 24px 0 12px 0;
+}
+
+img.avatar {
+  width: 20%;
+  border-radius: 50%;
+}
+
+
+.pdf_holder{
+    margin-top: 20px;
+}
+
+
+
+
+
+
+
+
+
+
+
