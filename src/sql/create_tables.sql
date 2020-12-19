@@ -28,7 +28,9 @@ CREATE TABLE Utente(
     PasswordUtente varchar(255),
     DataNascita date,
     LuogoNascita varchar(255),
-    RecapitoTelefonico varchar(255)
+    RecapitoTelefonico varchar(255),
+    TipoUtente varchar(255),
+    StatoUtente varchar(255)
 );
 
 CREATE TABLE UtentiIscritti(
@@ -53,7 +55,9 @@ CREATE TABLE Volontario(
 
 CREATE TABLE Utilizzatore(
     EmailUtente varchar(255) PRIMARY KEY,
-    MezzoDiTrasporto varchar(255),
+    Professione varchar(255),
+    StatoProfilo varchar(255),
+    DataDiRegistrazione date,
     FOREIGN KEY(EmailUtente) REFERENCES Utente(Email)
 );
 

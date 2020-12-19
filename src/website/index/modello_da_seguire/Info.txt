@@ -8,12 +8,9 @@ Alllorrss,
 
  - images
 	Qui vanno inserite tutte le immagini che possono servire al progetto.
-
- - mongoDb
-	... lasciamo stare ...
-
- - sql 
-	Qui trovate la creazione delle tabelle, non dovrebbe esserci caricato nient'altro, il resto è tutto in php.
+    
+ - js
+    Qui vanno tutti gli script javascript che servono
 
 Ho inserito in /index una cartella che si chiama 'Modello_da_seguire'. Qui potete trovare un file HTML che contiene footer e header che devono avere TUTTE le pagine del sitoweb. Inoltre, anche un file PHP che contiene la connessione (funzionante) al database.
 
