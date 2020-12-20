@@ -11,34 +11,20 @@
         echo 'Connection failed: ' . $e->getMessage();
     }
 
-    $emailUtente = $_POST['email'];
-    $passwordUtente = $_POST['password'];
+    //non usiamo $REQUEST perchè conosciamo il tipo di richiesta (Post)
+    $emailUtente = $_POST['emailUtente'];
+    $passwordUtente = $_POST['passwordUtente'];
 
-    try {
-        $sql = "SELECT * FROM Utente WHERE Email = '$emailUtente' and PasswordUtente = '$passwordUtente'";
-        $res=$pdo->query($sql);
-        $row=$res->fetch();
-    }catch(PDOException $e) {
-        echo("Query SQL Failed: ".$e->getMessage());
-        exit();
+    $sql = "SELECT * FROM registeredUserEaer WHERE Email = '$emailUtente' and Password = '$passwordUtente'";
+    $result = $pdo->exec($sql);
+
+    if($result->num_rows > 0)
+    {
+        header("location: ../home/home.html");
     }
-
-
-    if ($row>0) {
-       echo("<b> Benvenuto nel sistema, ".$row['Nome']."</b>");
-        $_SESSION["TipoDiUTente"] = $row['TipoUtente'];
-        $_SESSION["EmailUtente"] = $row['Email'];
-
-        /*
-         *  Quando disponibile, sarà necessario fare il redirect alla pagina homepage
-         *  header("location: ../homepage/home.html");
-        */
-
-      } else {
-       header("Refresh: 2; url= loginPage.html");
-       echo "<script type='text/javascript'>alert(\"I dati non risultano corretti, sicuro di esserti registrato?\")</script>";
+    else
+    {                  
+        header("Refresh: 3; url= loginPage.html");
+        echo "<script type='text/javascript'>alert(\"I dati non risultano corretti, sicuro di esserti registrato?\")</script>";
     }
-
 ?>
-
-
