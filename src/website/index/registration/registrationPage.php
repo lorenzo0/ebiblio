@@ -135,7 +135,7 @@
             </div>
 
         </div>
-        <!--<footer class="text-center">
+        <footer class="text-center">
           <div class="container">
             <div class="row">
               <div class="col-12 pt-3">
@@ -143,6 +143,6 @@
               </div>
             </div>
           </div>
-        </footer>-->
+        </footer>
     </body>
 </html>
