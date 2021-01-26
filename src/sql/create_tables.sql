@@ -1,10 +1,13 @@
-use sql7381971;
+DROP DATABASE IF EXISTS ebiblio;
+CREATE SCHEMA ebiblio;
+USE ebiblio;
 
 /* Creazione tabelle*/
+
 CREATE TABLE Biblioteca(
 	Nome varchar(255) PRIMARY KEY,
     Indirizzo varchar(255),
-    Email varchar(255),
+    Email varchar(255) UNIQUE,
     URLSito varchar(255),
     Latitudine int(3),
     Longitudine int(3),
@@ -32,7 +35,7 @@ CREATE TABLE PostoLettura(
 CREATE TABLE Libro(
 	CodiceISBN int(10) PRIMARY KEY,
     Titolo varchar(255),
-    Anno year,
+    Anno int(4),
     Genere varchar(255),
     NomeEdizione varchar(255)
 );
@@ -42,7 +45,7 @@ CREATE TABLE LibriDisponibili(
     CodiceISBN int(10),
     FOREIGN KEY(EmailBiblioteca) REFERENCES Biblioteca(Email),
     FOREIGN KEY(CodiceISBN) REFERENCES Libro(CodiceISBN),
-    PRIMARY KEY(EmailBiblioteca, CodiceLibro)
+    PRIMARY KEY(EmailBiblioteca, CodiceISBN)
 );
 
 CREATE TABLE Autore(
@@ -82,26 +85,6 @@ CREATE TABLE PrenotazioneCartaceo(
     FOREIGN KEY(CodiceISBNCartaceo) REFERENCES Cartaceo(CodiceISBN)
 );
 
-CREATE TABLE Consegna(
-    IdPrenotazioneCartaceo int(10) PRIMARY KEY,
-    EmailVolontario varchar(255),
-    EmailUtilizzatore varchar(255),
-    Nome varchar(200),
-    Tipo enum("Restituzione","Affidamento"),
-    DataConsegna date,
-    StatoConsegna varchar(255),
-    FOREIGN KEY(EmailVolontario) REFERENCES Volontario(EmailUtente),
-    FOREIGN KEY(EmailUtilizzatore) REFERENCES Utilizzatore(EmailUtente),
-    FOREIGN KEY(IdPrenotazioneCartaceo) REFERENCES PrenotazioneCartaceo(IdPrenotazioneCartaceo)
-);
-
-CREATE TABLE AccessoEbook(
-	CodiceISBN int(10),
-    EmailUtilizzatore varchar(255),
-    FOREIGN KEY(EmailUtilizzatore) REFERENCES Utilizzatore(EmailUtente),
-    FOREIGN KEY(CodiceISBN) REFERENCES Ebook(CodiceISBN),
-    PRIMARY KEY(CodiceISBN, EmailUtilizzatore)
-);
 
 CREATE TABLE Utente(
     Email varchar(255) PRIMARY KEY,
@@ -133,6 +116,28 @@ CREATE TABLE Utilizzatore(
     DataDiRegistrazione date,
     FOREIGN KEY(EmailUtente) REFERENCES Utente(Email)
 );
+
+CREATE TABLE Consegna(
+	IdConsegna int(10) AUTO_INCREMENT PRIMARY KEY,
+    IdPrenotazioneCartaceo int(10),
+    EmailVolontario varchar(255),
+    EmailUtilizzatore varchar(255),
+    Note varchar(200),
+    Tipo enum("Restituzione","Affidamento"),
+    DataConsegna date,
+    FOREIGN KEY(EmailVolontario) REFERENCES Volontario(EmailUtente),
+    FOREIGN KEY(EmailUtilizzatore) REFERENCES Utilizzatore(EmailUtente),
+    FOREIGN KEY(IdPrenotazioneCartaceo) REFERENCES PrenotazioneCartaceo(IdPrenotazioneCartaceo)
+);
+
+CREATE TABLE AccessoEbook(
+	CodiceISBN int(10),
+    EmailUtilizzatore varchar(255),
+    FOREIGN KEY(EmailUtilizzatore) REFERENCES Utilizzatore(EmailUtente),
+    FOREIGN KEY(CodiceISBN) REFERENCES Ebook(CodiceISBN),
+    PRIMARY KEY(CodiceISBN, EmailUtilizzatore)
+);
+
 
 CREATE TABLE Messaggio(
     Id int(10) AUTO_INCREMENT PRIMARY KEY,
@@ -168,65 +173,100 @@ CREATE TABLE PrenotazionePostoLettura(
 
 
 /* Creazione Trigger */
-
-/* Nel	caso	in	cui	un	utilizzatore	riceva cumulativamente più	di	tre	
-segnalazioni (anche	 da	 amministratori	 di	 biblioteche	 diverse),	 lo stato	 dell’account viene	
-settato	 a	 “Sospeso” */
-
+                    
+DELIMITER |
 CREATE TRIGGER AccountSospeso
 AFTER INSERT ON SEGNALAZIONE
 FOR EACH ROW
-	UPDATE UTILIZZATORE
-	SET StatoAccount = "Sospeso"
-	WHERE StatoAccount <> "Sospeso"
-	AND Email IN (SELECT EmailUtilizzatore 
-					FROM SEGNALAZIONE
-					GROUP BY EmailUtilizzatore
-					HAVING Count(*)>3);
+BEGIN
+	UPDATE Utilizzatore 
+    SET StatoAccount = "Sospeso"
+	WHERE EmailUtente = NEW.EmailUtilizzatore
+    AND StatoAccount <> "Sospeso"
+    AND EmailUtente IN (SELECT EmailUtilizzatore 
+						FROM SEGNALAZIONE
+						GROUP BY EmailUtilizzatore
+						HAVING Count(*)>3);
+END |   
 
-
-CREATE TRIGGER NewStatoPrenotato
+DELIMITER |
+CREATE TRIGGER LibroPrenotato
 AFTER INSERT ON PrenotazioneCartaceo
 FOR EACH ROW
+BEGIN
 	UPDATE Cartaceo 
     SET StatoPrestito = "Prenotato"
-    WHERE CodiceISBN=NEW.CodiceISBNCartaceo;
-				
-CREATE TRIGGER NewStatoConsegnato
+    WHERE CodiceISBN = NEW.CodiceISBNCartaceo
+    AND StatoPrestito = "Disponibile";
+END |;
+	
+
+DELIMITER |
+CREATE TRIGGER LibroConsegnato
 AFTER INSERT ON Consegna
 FOR EACH ROW
-	UPDATE Cartaceo SET StatoPrestito = "Consegnato" 
-	WHERE CodiceISBN=NEW.CodiceISBNCartaceo
-    AND NEW.Tipo = "Affidamento";
-    
-CREATE TRIGGER NewStatoDisponibile
+BEGIN
+	UPDATE Cartaceo 
+    SET StatoPrestito = "Consegnato" 
+    WHERE StatoPrestito = "Prenotato"
+    AND CodiceISBN IN ( SELECT CodiceISBNCartaceo
+						FROM PrenotazioneCartaceo
+						WHERE IdPrenotazioneCartaceo IN (SELECT IdPrenotazioneCartaceo
+														 FROM Consegna
+														 WHERE IdConsegna = NEW.IdConsegna
+														 AND NEW.Tipo = "Affidamento"));
+END |
+
+
+DELIMITER |
+CREATE TRIGGER LibroRestituito
 AFTER INSERT ON Consegna
 FOR EACH ROW
-	UPDATE Cartaceo SET StatoPrestito = "Disponibile" 
-	WHERE CodiceISBN=NEW.CodiceISBNCartaceo
-    AND NEW.Tipo = "Restituzione";
-    
+BEGIN                                        
+	UPDATE Cartaceo 
+    SET StatoPrestito = "Disponibile" 
+    WHERE StatoPrestito = "Consegnato"
+    AND CodiceISBN IN ( SELECT CodiceISBNCartaceo
+						FROM PrenotazioneCartaceo
+						WHERE IdPrenotazioneCartaceo IN (SELECT IdPrenotazioneCartaceo
+														 FROM Consegna
+														 WHERE IdConsegna = NEW.IdConsegna
+														 AND NEW.Tipo = "Restituzione"));
+END |
 
                 
 /* Creazione Utente */
+
+DROP USER IF EXISTS utenteSospeso;
+DROP USER IF EXISTS utenteUtilizzatore;
+DROP USER IF EXISTS utenteAmministratore;
+DROP USER IF EXISTS utenteVolontario;
 
 CREATE USER utenteSospeso;
 CREATE USER utenteUtilizzatore;
 CREATE USER utenteAmministratore;
 CREATE USER utenteVolontario;
 
+GRANT ALL PRIVILEGES ON Consegna TO utenteVolontario;
+GRANT ALL PRIVILEGES ON ebiblio TO utenteAmministratore;
+REVOKE ALL PRIVILEGES ON ebiblio TO utenteSospeso;
+
+GRANT INSERT ON prenotazionecartaceo to utenteUtilizzatore;
+GRANT INSERT ON prenotazionepostolettura to utenteUtilizzatore;
+
+
 /*
 	L'utente sospeso non può fare niente - 
-     "impedendo qualsiasi accesso alla piattaforma da	parte dell’utente sanzionato"
+     "impedendo qualsiasi accesso alla piattaforma da parte dell’utente sanzionato"
 	
     L'utente amministratore può fare tutto
     
     L'utente volontario può avere accesso (insert + select + update + delete) evento di consegna
+    
+    L'utente utilizzatore può leggere tutti i dati ed inserire una nuova prenotazione posto lettura e cartaceo
 */
 
-GRANT SELECT ON	Consegna TO utenteVolontario;
-GRANT INSERT ON	Consegna TO utenteVolontario;
-GRANT DELETE ON	Consegna TO utenteVolontario;
-GRANT UPDATE ON	Consegna TO utenteVolontario;
+
+
 
 
