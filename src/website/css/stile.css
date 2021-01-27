@@ -131,11 +131,31 @@ img.avatar {
   border-radius: 50%;
 }
 
-
 .pdf_holder{
     margin-top: 20px;
 }
 
+/* START successed/rejected request subscription*/
+/* Responsivness picture successed/rejected request subscription*/
+.image{
+  width: 100%;
+  max-width: 400px;
+  height: auto;
+}
+
+/* Button which go back to homepage from successed/rejected request subscription */
+
+#backToHomePage{
+  margin-top: 20px;
+  background-color: #7ABB3B;
+}
+
+#requestedSubscription{
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+/* END successed/rejected request subscription*/
 
 
 
@@ -178,12 +198,3 @@ img.avatar {
 .dropdown:hover .dropdown-content {display: block;}
 
 .dropdown:hover .dropbtn {background-color: #3e8e41;}  */
-
-
-
-
-
-
-
-
-
