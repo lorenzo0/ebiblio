@@ -7,7 +7,9 @@ body {
 }
 
 section {
-	margin-top: 3rem;
+	margin-top: 1rem;
+	margin: 5rem;
+
 }
 .bg-verde {
 	background-color: #7ABB3B;
@@ -92,7 +94,6 @@ footer {
 	background-color: #426E17;
 	color: #fff;
     position: absolute;
-    bottom: 0;
     min-width: -webkit-fill-available;
 }
 
@@ -134,6 +135,11 @@ img.avatar {
 .pdf_holder{
     margin-top: 20px;
 }
+
+
+
+
+
 
 
 /* DROPDOWN BUTTON

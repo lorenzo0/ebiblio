@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Ebiblio - Libro</title>
+	<script src="https://kit.fontawesome.com/188e218822.js"></script>
+      
+    <!-- Bootstrap -->
+	<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <link href="../../css/bootstrap-4.0.0.css" rel="stylesheet">
+	<link href="../../css/stile.css" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css?family=Noto+Sans&display=swap" rel="stylesheet">    
+  </head>
+    
+    <!-- NOTA QUANDO INSERISCI UN LIBRO SAREBBE CARINO FARE UNA CHECKBOX EBOOK CHE SE LA SPUNTI TI COMPARE IL CAMPO
+    DA TRASCINARE SOPRA IL PDF, però poi se un libro è disponibile solo in formato ebook succede un casino, direi di sì??????? .// -->
+            
+    
+    <body>
+        <nav class="navbar navbar-expand-lg navbar-dark bg-verde">
+          <a class="navbar-brand" href="#"><img src="../../images/bookcase.png" alt="brand"/></a>
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+
+            </ul>
+              <a class="nav-link metalink" href="#"><img src="../../images/bookcase.png" alt="brand"/></a>
+
+          </div>
+        </nav>
+        <div class="container">
+            <div class="card mt-4" style="border: 0">
+                <article class="card-body mx-auto" style="max-width: 400px;">
+                    <h4 class="card-title mt-3 text-center">Inserirsci Libro Cartaceo</h4>
+                    <div class="imgcontainer">
+                        <img src="../../images/inserimentoCartaceo.png" alt="Avatar" class="avatar">
+                    </div>
+                   <form action="inserimentoCartaceo.php" method="post"> 
+                    
+                     <div class="form-group input-group">
+                          <input type="number" placeholder="Codice ISBN" class="form-control" name="codiceCartaceo" id="codiceCartaceo" required>
+                    </div> <!-- form-group// -->
+                    
+                     <div class="form-group input-group">
+                          <input type="text" placeholder="Titolo Libro" class="form-control" name="titoloCartaceo" id="titoloCartaceo" required>
+                    </div> <!-- form-group// -->
+                       
+                    
+                    <div class="form-group input-group">
+                          <input type="text" placeholder="Genere libro" class="form-control" name="genereCartaceo" id="genereCartaceo" required>
+                    </div> <!-- form-group// -->
+                       
+                    
+                    <div class="form-group input-group">
+                          <input type="text" placeholder="Edizione libro" class="form-control" name="edizioneCartaceo" id="edizioneCartaceo" required>
+                    </div> <!-- form-group// -->
+                            
+                    
+                    <div class="form-group input-group">
+                          <input type="number" placeholder="Anno Edizione" class="form-control" name="annoEdizioneCartaceo" id="annoEdizioneCartaceo" required>
+                    </div> <!-- form-group// -->
+                    
+                    
+                    <div class="form-group input-group">
+                          <input type="number" placeholder="Numero pagine" class="form-control" name="numeroPagine" id="numeroPagine" required>
+                    </div> <!-- form-group// -->
+                    
+                     
+                    <div class="form-group input-group">
+                          <input type="number" placeholder="Numero scaffale" class="form-control" name="numeroScaffale" id="numeroScaffale" required>
+                    </div> <!-- form-group// -->
+                    
+                    
+                    <div class="form-group">
+                        <label for="statoConservazioneCartaceo">Stato di Conservazione:</label>
+                          <select class="form-control" name="statoConservazione" id="statoConservazione">
+                            <option>Ottimo</option>
+                            <option>Buono</option>
+                            <option>Non buono</option>
+                            <option>Scadente</option>
+                          </select>
+                     </div>
+                       
+                    <div class="form-group">
+                        <label for="tipologiaConsegna">Stato del prestito:</label>
+                          <select class="form-control" name="statoPrestito"  id="statoPrestito">
+                            <option>Disponibile</option>
+                            <option>Prenotato</option>
+                            <option>Consegnato</option>
+                          </select>
+                     </div>
+                
+                       
+                    
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-primary btn-block"> Inserisci Libro </button>
+                    </div> <!-- form-group// -->          
+               </form>
+                </article>
+            </div> <!-- card.// -->
+            
+
+        </div>
+        <footer class="text-center">
+          <div class="container">
+            <div class="row">
+              <div class="col-12 pt-3">
+                <p> Progetto di Base di dati - 2020 </p>
+              </div>
+            </div>
+          </div>
+        </footer>
+    </body>
+</html>
