@@ -1,20 +1,4 @@
 <!DOCTYPE html>
-
-<?php
-        session_start();
-
-        $dsn = 'mysql:dbname=ebiblio;host=127.0.0.1';
-        $user = 'root';
-        $password = 'root';
-
-        try {
-          $pdo = new PDO($dsn, $user, $password);  
-
-        } catch (PDOException $e) {
-            echo 'Connection failed: ' . $e->getMessage();
-        }
- ?>
-
 <html>
   <head>
     <meta charset="utf-8">
@@ -65,24 +49,17 @@
                         <input type="date" placeholder="data consegna" class="form-control" name="data" id="data" required>
                     </div> <!-- form-group// -->
                       
-                    <div class="form-group input-group">
-                    <input type="text" placeholder="note" class="form-control" name="note" id="note" required>
+                     <div class="form-group input-group">
+                        <input type="text" placeholder="email volontario" class="form-control" name="emailVolontario" id="emailVolontario" required>
                     </div> <!-- form-group// -->
-                       
-                       
-                    <div class="form-group input-group">
-                    <input type="text" placeholder="email volontario" class="form-control" name="emailVolontario" id="emailVolontario" required>
-                    </div> <!-- form-group// -->
-                       
-                       
-          
+                
+                  
                      <div class="form-group">
                        <label for="utilizzatore">Scegli Utilizzatore:</label> 
                           <select class="form-control" id="emailUtilizzatore">
                               <!-- seleziona l'email utilizzatore dal db --> 
                           <?php 
                               
-                                
                                             try {
                                                 $sql = "SELECT Nome,Cognome FROM Utente WHERE TipoUtente = 'Utilizzatore'"; 
                                                 $res=$pdo->query($sql);
@@ -98,28 +75,16 @@
                             ?>
                           </select>
                         </div>
-                      
+                       
+                    <div class="form-group input-group">
+                            <input type="text" placeholder="note" class="form-control" name="note" id="note">
+                    </div> <!-- form-group// -->
+                       
                     
                     <div class="form-group">
                         <button type="submit" class="btn btn-primary btn-block"> Inserisci Consegna </button>
                     </div> <!-- form-group// -->          
                </form>
-                    
-                    <!-- fare inserimento --> 
-                  <?php             
-                        
-                    
-                         $note = $_POST['note'];
-                         $data = $_POST['data'];
-                         $tipologiaConsegna = $_POST['tipologiaConsegna']; 
-                         $emailUtilizzatore = $_POST['emailUtilizzatore'];
-                         $emailVolontario = $_POST['emailVolontario'];
-                    
-                        $sql = "INSERT INTO Consegna(IdConsegna, IdPrenotazioneCartaceo, EmailVolontario,   EmailUtilizzatore, Note, Tipo, DataConsegna) VALUES ('0', '1', '$emailVolontario', '$emailUtilizzatore', '$note', '$tipologiaConsegna', '$data')";
-                        
-                         $pdo->exec($sql);
-                    ?> 
-                
                 </article>
             </div> <!-- card.// -->
 
@@ -135,7 +100,3 @@
         </footer>
     </body>
 </html>
-
-
-
-

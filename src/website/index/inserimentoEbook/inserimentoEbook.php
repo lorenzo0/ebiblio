@@ -11,25 +11,22 @@
         echo 'Connection failed: ' . $e->getMessage();
     }
     
-    $codiceEbook = $_POST['codiceEbook'];
-    $titoloEbook = $_POST['titoloEbook'];
-    $genereEbook = $_POST['genereEbook'];
-    $edizioneEbook = $_POST['edizioneEbook'];
-    $annoEdizioneEbook = $_POST['annoEdizioneEbook'];
-    $upload = $_POST['upload'];
+    $codice = $_POST['codice'];
+    $titolo = $_POST['titolo'];
+    $anno= $_POST['anno'];
+    $genere= $_POST['genere'];
+    $nomeEdizione= $_POST['nomeEdizione'];
+    $pdf= $_POST['pdf'];
     $dimensione = $_POST['dimensione'];
     
-    //Inserimento Ebook not working
-    $sql = "INSERT INTO Ebook (CodiceISBN, PDF, Dimensione) VALUES ('$codiceEbook', '$upload', '$dimensione')";   
+    $sql = "INSERT INTO Libro (CodiceISBN, Titolo, Anno, Genere, NomeEdizione) VALUES ('$codice','$titolo','$anno','$genere','$nomeEdizione')";
     
-    //INSERIMENTO LIBRO WORKING
-     $sql2 = "INSERT INTO Libro (CodiceISBN, Titolo, Anno, Genere, NomeEdizione) VALUES ('$codiceEbook', '$titoloEbook', '$annoEdizioneEbook', '$genereEbook','$edizioneEbook')";
-
     $pdo->exec($sql);
-    $pdo->exec($sql2);
 
-
- 
+    //il numero accessi deve ancora essere gestito
+    $sql1 = "INSERT INTO Ebook (CodiceISBN, PDF, Dimensione) VALUES ('$codice', '$pdf', '$dimensione')";
+    
+    $pdo->exec($sql1);
 
 
 ?>

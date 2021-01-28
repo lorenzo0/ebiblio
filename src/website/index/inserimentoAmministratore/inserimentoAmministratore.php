@@ -16,20 +16,27 @@
         echo 'Connection failed: ' . $e->getMessage();
     }
 
-    $nomeBiblioteca= $_POST['nomeBiblioteca'];
-    $indirizzo = $_POST['indirizzo'];
-    $email = $_POST['email'];
-    $sito = $_POST['sito'];
-    $latitudine = $_POST['latitudine'];
-    $longitudine = $_POST['longitudine'];
+    $nomeUtente= $_POST['nomeUtente'];
+    $cognomeUtente = $_POST['cognomeUtente'];
+    $emailUtente = $_POST['emailUtente'];
+    $password = $_POST['password'];
+    $dataNascita= $_POST['dataNascita'];
+    $luogoNascita = $_POST['luogoNascita'];
     $recapito = $_POST['recapito'];
-    $note = $_POST['note'];
+    $qualifica = $_POST['qualifica'];
+
+    $sql = "INSERT INTO Utente (Email, Nome, Cognome, PasswordUtente, DataNascita, LuogoNascita, RecapitoTelefonico) VALUES ('$emailUtente','$nomeUtente','$cognomeUtente','$password','$dataNascita','$luogoNascita', '$recapito')";
+    
+    $pdo->exec($sql);
+
+    $sql1 = "INSERT INTO Amministratore (EmailUtente, Qualifica) VALUES ('$emailUtente', '$qualifica')";
+    
+    $pdo->exec($sql1);
 
  
-    $sql = "INSERT INTO Biblioteca (Nome, Indirizzo, Email, URLSito, Latitudine, Longitudine, Recapito, Note) VALUES ('$nomeBiblioteca','$indirizzo','$email','$sito','$latitudine', '$longitudine','$recapito','$note' )";
 
-    $pdo->exec($sql);
     
+    /*
     $sql1='SELECT COUNT(*) AS Conteggio FROM Biblioteca  WHERE (Nome="'.$nomeBiblioteca.'")';
     $res1=$pdo->query($sql1);
     $row=$res1->fetch();
@@ -38,6 +45,6 @@
        echo 'biblioteca già presente nel DB';
      } else {
        echo "biblioteca inserita con successo" ;
-     }
+     }*/
 
 ?>
