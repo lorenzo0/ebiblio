@@ -37,7 +37,8 @@ CREATE TABLE Libro(
     Titolo varchar(255),
     Anno int(4),
     Genere varchar(255),
-    NomeEdizione varchar(255)
+    NomeEdizione varchar(255),
+    TipoLibro enum("Cartaceo","Ebook", "Entrambi")
 );
 
 CREATE TABLE LibriDisponibili(
@@ -66,6 +67,7 @@ CREATE TABLE Cartaceo(
 	StatoPrestito enum("Disponibile","Prenotato","Consegnato"),
 	NumeroPagine int(10),
     NumeroScaffale int(10),
+    NumeroCopie int(10),
     FOREIGN KEY(CodiceISBN) REFERENCES Libro(CodiceISBN)
 );
 
