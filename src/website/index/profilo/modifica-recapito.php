@@ -14,6 +14,12 @@
       
     <!-- Script JS -->
     <script src="../../js/script.js"></script>
+    <script>
+        $(function loadNavFoo(){
+          $("#header").load("../utils/navbar.html"); 
+          $("#footer").load("../utils/footer.html"); 
+        });
+    </script>
       
   </head>
     
@@ -34,19 +40,7 @@
             }
         ?>
         
-        <nav class="navbar navbar-expand-lg navbar-dark bg-verde">
-          <a class="navbar-brand" href="#"><img src="../../images/bookcase.png" alt="brand"/></a>
-          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-          </button>
-          <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav mr-auto">
-
-            </ul>
-              <a class="nav-link metalink" href="#"><img src="../../images/bookcase.png" alt="brand"/></a>
-
-          </div>
-        </nav>
+        <div id="header"></div>
         <div class="container">
             <div class="card mt-4" style="border: 0">
                 <article class="card-body mx-auto" style="max-width: 400px;">
@@ -66,17 +60,8 @@
                
                 </article>
             </div>
-             
 
         </div>
-        <footer class="text-center">
-          <div class="container">
-            <div class="row">
-              <div class="col-12 pt-3">
-                <p> Progetto di Base di dati - 2020 </p>
-              </div>
-            </div>
-          </div>
-        </footer>
+        <div id="footer"></div>
     </body>
 </html>

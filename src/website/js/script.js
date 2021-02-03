@@ -122,3 +122,12 @@ function validateFormLibro(){
 }
 
 /* FINE inserimentoLibro.php*/
+
+/* INIZIO gestione aggiunta navbar e footer in ogni pagina*/
+
+$(function loadNavFoo(){
+  $("#header").load("../utils/navbar.html"); 
+  $("#footer").load("../utils/footer.html"); 
+});
+
+/* FINE gestione aggiunta navbar e footer in ogni pagina*/
