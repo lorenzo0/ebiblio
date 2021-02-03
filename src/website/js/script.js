@@ -4,17 +4,17 @@ function setVisibleForUser(){
     var x = document.getElementById("tipoUtente").value;
 
     switch(x){
-        case "utilizzatore":
+        case "Utilizzatore":
             document.getElementById("utilizzatoreGroup").style.display = 'block';
             document.getElementById("volontarioGroup").style.display = 'none';
             document.getElementById("amministratoreGroup").style.display = 'none';
             break;
-        case "volontario":
+        case "Volontario":
             document.getElementById("volontarioGroup").style.display = 'block';
             document.getElementById("utilizzatoreGroup").style.display = 'none';
             document.getElementById("amministratoreGroup").style.display = 'none';
             break;
-        case "amministratore":
+        case "Amministratore":
             document.getElementById("amministratoreGroup").style.display = 'block';
             document.getElementById("utilizzatoreGroup").style.display = 'none';
             document.getElementById("volontarioGroup").style.display = 'none';
@@ -40,18 +40,18 @@ function validateFormRegistrazione(){
 
     var x = document.getElementById("tipoUtente").value;
 
-    if(x == 'utilizzatore'){
+    if(x == 'Utilizzatore'){
         if(document.getElementById("professione").value == '')
             alert("E' necessario inserire una professione");
         else
             return true;
-    }else if(x == 'volontario'){
+    }else if(x == 'Volontario'){
         if(document.getElementById("mezzoDiTrasporto").value == '')
             alert("E' necessario inserire un mezzo di trasporto");
         else
             return true;
     }
-    else if(x == 'amministratore'){
+    else if(x == 'Amministratore'){
         if(document.getElementById("qualifica").value == '')
             alert("E' necessario inserire una qualifica");
         else

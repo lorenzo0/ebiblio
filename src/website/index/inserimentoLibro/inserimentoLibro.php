@@ -41,7 +41,7 @@
                    <form action="inserimentoNuovoLibroDB.php" method="post" onsubmit="validateFormLibro()" enctype="multipart/form-data"> 
                        
                        <div class="form-group input-group">
-                            <input type="number" placeholder="codice ISBN" class="form-control" name="codice" id="codice" value = <?php echo $_GET['isbn'] ?>required>
+                            <input type="number" placeholder="codice ISBN" class="form-control" name="codice" id="codice" value = <?php echo $_GET['isbn'] ?>required readonly>
                         </div>
                        
                        <label>Vorrei inserire il libro come </label>

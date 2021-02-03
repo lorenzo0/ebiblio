@@ -6,6 +6,7 @@
     $cognomeUtente = $_POST['cognome'];
     $emailUtente = $_POST['email'];
     $passwordUtente = $_POST['passwordUtente'];
+    $passwordUtente = md5($passwordUtente);
     $dataNascitaUtente = $_POST['dataNascita'];
     $nomeBiblioteca = $_POST['nomeBiblioteca'];
     $tipoUtente = $_POST['tipoUtente'];
@@ -27,10 +28,8 @@
 
     $luogoNascitaUtente = $_POST['luogoNascita'];
 
-    /*echo $nomeUtente . " - " . $cognomeUtente . " - " . $emailUtente . " - " . $passwordUtente . " - " . $dataNascitaUtente . " - " . $nomeBiblioteca . " - " . $tipoUtente . " - " . $recapitoUtente . " - " . $luogoNascitaUtente;*/
-
     try {
-        $sql = "INSERT INTO Utente VALUES('$emailUtente', '$nomeUtente', '$cognomeUtente', '$passwordUtente', '$dataNascitaUtente', '$luogoNascitaUtente', '$recapitoUtente', '$tipoUtente', 'In attesa')";
+        $sql = "INSERT INTO Utente VALUES('$emailUtente', '$nomeUtente', '$cognomeUtente', '$passwordUtente', '$dataNascitaUtente', '$luogoNascitaUtente', '$recapitoUtente', '$tipoUtente')";
         $res=$pdo->exec($sql);
     }catch(PDOException $e) {
         echo("Query SQL Failed: ".$e->getMessage());
@@ -71,11 +70,12 @@
                 break;
         }
         
+        //da inserire homepage
         if($res != 0)
-            header("location: ../registration/successfullRequest.html");
+            echo "<script> alert('Richiesta processata correttamente!'); window.location.href='profilo.php'; </script>";
         
     }else{
-        header("location: ../registration/rejectedRequest.html");
+        echo "<script> alert('La richiesta NON è stata processata correttamente!'); window.location.href='loginPage.html'; </script>";
     }
 
 

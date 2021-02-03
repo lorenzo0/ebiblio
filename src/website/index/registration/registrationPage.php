@@ -73,9 +73,9 @@
                     <label>Vorresti iscriverti come </label>
                         <select id="tipoUtente" name="tipoUtente" onchange="setVisibleForUser()">
                           <option value="none" selected>--------</option>  
-                          <option value="amministratore">Amministratore</option>
-                          <option value="utilizzatore">Utilizzatore</option>
-                          <option value="volontario">Volontario</option>
+                          <option value="Amministratore">Amministratore</option>
+                          <option value="Utilizzatore">Utilizzatore</option>
+                          <option value="Volontario">Volontario</option>
                         </select>
                     
                     <div id="utilizzatoreGroup" style="display:none">
