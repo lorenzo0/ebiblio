@@ -55,37 +55,35 @@
                     
                     <div class="form-group">
                         <label for="tipologiaConsegna">Tipologia di Consegna:</label>
-                          <select class="form-control" id="tipologiaConsegna">
-                            <option>Affidamento</option>
-                            <option>Restituzione</option>
+                          <select class="form-control" id="tipologiaConsegna" name="tipologiaConsegna">
+                            <option value= "Affidamento">Affidamento</option>
+                            <option value= "Restituzione">Restituzione</option>
                           </select>
                         </div>
                     
                     <div class="form-group input-group">
                         <input type="date" placeholder="data consegna" class="form-control" name="data" id="data" required>
-                    </div> <!-- form-group// -->
+                    </div> 
                       
                     <div class="form-group input-group">
                     <input type="text" placeholder="note" class="form-control" name="note" id="note" required>
-                    </div> <!-- form-group// -->
+                    </div> 
                        
                        
                     <div class="form-group input-group">
                     <input type="text" placeholder="email volontario" class="form-control" name="emailVolontario" id="emailVolontario" required>
-                    </div> <!-- form-group// -->
+                    </div> 
                        
                        
           
                      <div class="form-group">
                        <label for="utilizzatore">Scegli Utilizzatore:</label> 
-                          <select class="form-control" id="emailUtilizzatore">
+                          <select class="form-control" id="emailUtilizzatore" name="emailUtilizzatore">
                               <!-- seleziona l'email utilizzatore dal db --> 
-                          <?php 
-                              
-                                
-                                            try {
-                                                $sql = "SELECT Nome,Cognome FROM Utente WHERE TipoUtente = 'Utilizzatore'"; 
-                                                $res=$pdo->query($sql);
+                                  <?php    
+                                        try {
+                                        $sql = "SELECT Email, Nome, Cognome FROM Utente WHERE TipoUtente = 'Utilizzatore'"; 
+                                        $res=$pdo->query($sql);
     
                                             } catch(PDOException $e) {
                                                 echo("Query SQL Failed: ".$e->getMessage());
@@ -93,21 +91,20 @@
                                             }
 
                                              while($row = $res->fetch()) {
-                                                echo "<option>" . $row['Nome'] ." ". $row['Cognome'] . "</option>";
-                                            }    
-                            ?>
+                                                echo "<option value=" . $row['Email'] . ">". $row['Nome'] ." ". $row['Cognome'] . "</option>";                                 
+                                             }
+                                    ?> 
                           </select>
                         </div>
                       
                     
                     <div class="form-group">
                         <button type="submit" class="btn btn-primary btn-block"> Inserisci Consegna </button>
-                    </div> <!-- form-group// -->          
+                    </div>          
                </form>
                     
-                    <!-- fare inserimento --> 
+        
                   <?php             
-                        
                     
                          $note = $_POST['note'];
                          $data = $_POST['data'];
@@ -115,9 +112,33 @@
                          $emailUtilizzatore = $_POST['emailUtilizzatore'];
                          $emailVolontario = $_POST['emailVolontario'];
                     
-                        $sql = "INSERT INTO Consegna(IdConsegna, IdPrenotazioneCartaceo, EmailVolontario,   EmailUtilizzatore, Note, Tipo, DataConsegna) VALUES ('0', '1', '$emailVolontario', '$emailUtilizzatore', '$note', '$tipologiaConsegna', '$data')";
+                        //GESTIONE ID PRENOTAZIONE CARTACEO
+                        $sql_id = "Select IdPrenotazione From EffettuaPrenotazione, PrenotazioneCartaceo WHERE PrenotazioneCartaceo.IdPrenotazioneCartaceo = EffettuaPrenotazione.IdPrenotazione";
                         
-                         $pdo->exec($sql);
+                        $res= $pdo->query($sql_id);
+                        
+                        while($row = $res->fetch()) {
+                            
+                            $var = $row ['idPrenotazione'];
+                        }
+                    
+                        //al posto di 1 ci va $var
+                        $sql = "INSERT INTO Consegna(IdConsegna, IdPrenotazioneCartaceo, EmailVolontario,  EmailUtilizzatore, Note, Tipo, DataConsegna) VALUES (0, 1, '$emailVolontario', '$emailUtilizzatore', '$note', '$tipologiaConsegna', '$data')";
+                        
+                        echo $note; 
+                        echo $data; 
+                        echo $tipologiaConsegna; 
+                        echo $emailUtilizzatore; 
+                        echo $emailVolontario; 
+                    
+                        $res = $pdo->exec($sql);
+                        
+                       /* if($res>0) {
+                            echo "great"; 
+                        } else {
+                            echo "not great";
+                        }*/
+                    
                     ?> 
                 
                 </article>
@@ -128,7 +149,7 @@
           <div class="container">
             <div class="row">
               <div class="col-12 pt-3">
-                <p> Progetto di Base di dati - 2020 </p>
+                <p> Progetto di Basi di dati - 2020 </p>
               </div>
             </div>
           </div>
