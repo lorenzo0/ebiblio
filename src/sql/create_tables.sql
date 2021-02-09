@@ -84,7 +84,9 @@ CREATE TABLE PrenotazioneCartaceo(
     CodiceISBNCartaceo int(10),
     AvvioPrenotazione date,
     FinePrenotazione date,
-    FOREIGN KEY(CodiceISBNCartaceo) REFERENCES Cartaceo(CodiceISBN)
+    EmailUtilizzatore varchar(255),
+    FOREIGN KEY(CodiceISBNCartaceo) REFERENCES Cartaceo(CodiceISBN),
+    FOREIGN KEY(EmailUtilizzatore) REFERENCES Utilizzatore(EmailUtente)
 );
 
 
