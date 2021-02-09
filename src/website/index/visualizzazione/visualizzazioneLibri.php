@@ -101,6 +101,11 @@
                             while ($row = $res->fetch()) {
                                 $isbn = $row['CodiceISBN'];
                                 $tipoLibro = $row['TipoLibro'];
+                                $titolo = $row['Titolo'];
+                                $anno = $row['Anno'];
+                                $genere = $row['Genere'];
+                                $nomeEdizione = $row['NomeEdizione'];
+                                
                                 echo "<tr>"; 
                                 echo "<td>";
                                 if($tipoLibro == 'Cartaceo')
@@ -113,12 +118,12 @@
                                 }
                                 echo "</td>";
                                 echo "<td>" . $isbn . "</td>";
-                                echo "<td>" . $row['Titolo'] . "</td>";
-                                echo "<td>" . $row['Anno'] . "</td>";
-                                echo "<td>" . $row['Genere'] . "</td>";
-                                echo "<td>" . $row['NomeEdizione'] . "</td>";
-                                echo "<td>" . "<button class=" . "btn btn-primary btn-block" . " onclick=" . "location.href='dettagliLibro.php?isbn=" .
-                                    "$isbn" . "&tipo=" . "$tipoLibro" . "'" . "> Dettagli </button></td>";
+                                echo "<td>" . $titolo . "</td>";
+                                echo "<td>" . $anno . "</td>";
+                                echo "<td>" . $genere . "</td>";
+                                echo "<td>" . $nomeEdizione . "</td>";
+                                echo "<td>" . "<button class=" . "btn btn-primary btn-block" . " onclick=" . "location.href='dettagliLibro.php?Isbn=" .
+                                    "$isbn" . "&Tipo=" . urlencode($tipoLibro) . "&Titolo=" . urlencode($titolo) . "&Anno=" . "$anno" . "&Genere=" . urlencode($genere) . "&NomeEdizione=" . urlencode($nomeEdizione) . "'" . "> Dettagli </button></td>";
                                 echo "</tr>"; 
                             }        
                     echo "</table></tbody>";
@@ -132,3 +137,7 @@
         <div id="footer"></div>
     </body>
 </html>
+
+
+
+<button class="btn" btn-primary="" btn-block="" onclick="location.href='dettagliLibro.php?Isbn=2&amp;Tipo=Entrambi&amp;Titolo=Ladra" di="" coltelli&anno="2000&amp;Genere=Tragico&amp;NomeEdizione=A" b="" c'=""> Dettagli </button>

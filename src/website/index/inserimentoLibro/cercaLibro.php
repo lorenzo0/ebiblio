@@ -4,20 +4,21 @@ require '../../../connectionDB/connection.php';
 
 $isbn = $_POST['codiceIsbn'];
 
-$sql = "SELECT *
+try{
+    $sql = "SELECT *
         FROM libro
         WHERE CodiceISBN = '$isbn'";
-  
-//Da sostituire quando (se) inseriamo il campo tipo
-$res = $pdo -> exec($sql);
+    $res = $pdo -> query($sql);
+}catch(PDOException $e){echo $e->getMessage();}	
+
+while ($row = $res->fetch()) {
+    $tipoLibro = $row['TipoLibro'];
+}
 
 if($res != 0){
-    while($row = $result->fetch_assoc()) {
-        $_SESSION["tipoLibro"] = $row["TipoLibro"];
-    }
-    header("location: libroPresente.php?isbn='$isbn'");
+    header("location: libroPresente.php?isbn='$isbn'&tipo=$tipoLibro");
 }else
-    header("location: inserimentoLibro.php?isbn='$isbn'");
+    header("location: inserimentoLibro.php?isbn='$isbn'&tipo=$tipoLibro");
 
     
 

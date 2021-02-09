@@ -3,8 +3,8 @@
             require '../../../connectionDB/connection.php';
 
             /* Se vogliamo aggiungere il campo tipo_libro */
-            switch($_SESSION['tipoLibro']){
-                case 'cartaceo':
+            switch($_GET['tipo']){
+                case 'Cartaceo':
                     echo '<style type="text/css">
                         #cartaceoGroupExist { display: block; }
                         #cartaceoGroupNotExist { display: none; }
@@ -12,7 +12,7 @@
                     </style>';
                     break;
 
-                case 'ebook':
+                case 'Ebook':
                     echo '<style type="text/css">
                         #cartaceoGroupExist { display: none; }
                         #cartaceoGroupNotExist { display: block; }
@@ -20,7 +20,7 @@
                     </style>';
                     break;
 
-                case 'entrambi':
+                case 'Entrambi':
                     echo '<style type="text/css">
                         #cartaceoGroupExist { display: block; }
                         #cartaceoGroupNotExist { display: none; }
@@ -92,13 +92,13 @@
                     <div class="containerGroupsCartaceoEbook">
                        <div id = "cartaceoGroupNotExist">
                            <div class="form-group">
-                                <a href="inserimentoLibro.php?tipo=cartaceo&isbn=<?php echo $_GET['isbn'] ?>" class="button"> Inserisci nuovo libro cartaceo  </a>
+                                <a href="inserimentoLibro.php?tipo=cartaceo&isbn=<?php echo $_GET['isbn']; ?>&tipoLibro=<?php echo $_GET['tipo']; ?>" class="button"> Inserisci nuovo libro cartaceo  </a>
                            </div>
                        </div>
                        
                        <div id = "ebookGroupNotExist">
                            <div class="form-group">
-                                <a href="inserimentoLibro.php?tipo=ebook&isbn=<?php echo $_GET['isbn'] ?>" class="button"> Inserisci nuovo libro ebook  </a>
+                                <a href="inserimentoLibro.php?tipo=ebook&isbn=<?php echo $_GET['isbn']; ?>&tipoLibro=<?php echo $_GET['tipo']; ?>" class="button"> Inserisci nuovo libro ebook  </a>
                            </div>
                        </div>
                     </div>

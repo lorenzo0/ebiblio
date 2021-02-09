@@ -20,77 +20,163 @@
           $("#footer").load("../utils/footer.html"); 
         });
     </script>
+      
+      
 
   </head>
     
-    <body>
+    <body onload="setVisibleLibroDetails()">
         <?php
             require '../../../connectionDB/connection.php';
         
+            $isbn = $_GET['Isbn'];
+            $tipoLibro = $_GET['Tipo'];
+            $titolo = $_GET['Titolo'];
+            $anno = $_GET['Anno'];
+            $genere = $_GET['Genere'];
+            $nomeEdizione = $_GET['NomeEdizione'];
+        
             try{
-                $email = $_SESSION['email-accesso'];
-                
-                $sql = "SELECT * FROM Utente WHERE Email = '$email'";
-                $res = $pdo -> query($sql);
+                switch($tipoLibro){
+                    case "Cartaceo":
+                        $sql = "SELECT * FROM Cartaceo WHERE CodiceISBN = '$isbn'";
+                        $res = $pdo -> query($sql);
+                        
+                        while ($row = $res->fetch()) {
+                            $statoConservazione = $row['StatoDiConservazione'];
+                            $statoPrestito = $row['StatoPrestito'];
+                            $numeroPagine = $row['NumeroPagine'];
+                            $numeroScaffale = $row['NumeroScaffale'];
+                        }   
+                        
+                        echo '<style>.ebookGroup { display:none;}</style>';
+                        
+                        break;
+                    case "Ebook":
+                        $sql = "SELECT * FROM Ebook WHERE CodiceISBN = '$isbn'";
+                        $res = $pdo -> query($sql);
+                        
+                        while ($row = $res->fetch()) {
+                            $dimensione = $row['Dimensione'];
+                            $pdf = $row['PDF'];
+                        }   
+                        
+                        echo '<style>.cartaceoGroup { display:none;}</style>';
+                        break;
+                    case "Entrambi":
+                        /*$sql = "SELECT * FROM Ebook WHERE CodiceISBN = '$isbn'";
+                        $res = $pdo -> query($sql);*/
+                        
+                        $sql = "SELECT * FROM Cartaceo WHERE CodiceISBN = '$isbn'";
+                        $res = $pdo -> query($sql);
+                        
+                        while ($row = $res->fetch()) {
+                            $statoConservazione = $row['StatoDiConservazione'];
+                            $statoPrestito = $row['StatoPrestito'];
+                            $numeroPagine = $row['NumeroPagine'];
+                            $numeroScaffale = $row['NumeroScaffale'];
+                        }   
+                        
+                        /*while ($row = $res->fetch()) {
+                            $dimensione = $row['Dimensione'];
+                            $pdf = $row['PDF'];
+                        } */   <
+                        
+                        break;
+                }
             }catch(PDOException $e){echo $e->getMessage();}	
-
-                while ($row = $res->fetch()) {
-                    $nome = $row['Nome'];
-                    $cognome = $row['Cognome'];
-                    $dataNascita = $row['DataNascita'];
-                    $luogoNascita = $row['LuogoNascita'];
-                    $recapitoTelefonico = $row['RecapitoTelefonico'];
-                }        
         ?>
         <div id="header"></div>
         <div class="container">
             <div class="card mt-4" style="border: 0">
-                <article class="card-body mx-auto" style="max-width: 400px;">
+                <article class="card-body mx-auto" style="max-width: 800px;">
 
-                    <h4 class="card-title mt-3 text-center">Dettagli libro <?php echo $_GET['isbn']; ?></h4>
+                    <h4 class="card-title mt-3 text-center">Dettagli libro - <?php echo $titolo; ?></h4>
 
                     <div class="imgcontainer" style="margin-bottom: 50px;">
-                        <img src="../../images/img_avatar2.png" alt="Avatar" class="avatar">
+                        <img src="../../images/book.png" alt="Avatar" class="avatar">
                     </div>
                     
                     <div class="form-group row">
-                        <label class="col-4 col-form-label">Nome:</label>
+                        <label class="col-4 col-form-label">Titolo:</label>
                         <div class="col-7">
-                            <input type=”text” class="form-control" name="nome" id="nome" value = "<?php echo $nome ?>"readonly> 
+                            <input type=”text” class="form-control" name="nome" id="nome" value = "<?php echo $titolo ?>"readonly> 
                         </div>
                     </div>
                     
                     <div class="form-group row">
-                        <label class="col-4 col-form-label">Cognome:</label>
+                        <label class="col-4 col-form-label">Anno:</label>
                         <div class="col-7">
-                            <input type=”text” class="form-control" name="cognome" id="cognome" value = "<?php echo $cognome ?>"readonly> 
+                            <input type=”text” class="form-control" name="cognome" id="cognome" value = "<?php echo $anno ?>"readonly> 
                         </div>
                     </div>
                     
                     
                     <div class="form-group row">
-                       <label class="col-4 col-form-label">Data di nascita:</label>
+                       <label class="col-4 col-form-label">Genere:</label>
                             <div class="col-7">
-                                <input type="text" class="form-control" id="dataNascita" value = "<?php echo $dataNascita ?>" readonly>
+                                <input type="text" class="form-control" id="dataNascita" value = "<?php echo $genere ?>" readonly>
                             </div>
                     </div>
                     
                     <div class="form-group row">
-                       <label class="col-4 col-form-label">Luogo di nascita:</label>
+                       <label class="col-4 col-form-label">Nome Edizione:</label>
                             <div class="col-7">
-                                <input type="text" class="form-control" id="luogoNascita" value = "<?php echo $luogoNascita ?>" readonly>
+                                <input type="text" class="form-control" id="luogoNascita" value = "<?php echo $nomeEdizione ?>" readonly>
                             </div>
                     </div>
                     
                     
-                    <div class="form-group row">
-                       <label class="col-4 col-form-label">Recapito telefonico:</label>
-                            <div class="col-7">
-                                <input type="text" class="form-control" id="RecapitoTelefonico" value = "<?php echo $recapitoTelefonico ?>" readonly>
-                            </div>
-                            <div class="col-1">
-                                <a class="btn btn-primary" href="modifica-recapito.php">Edit</a>
-                            </div>
+                    
+                    <div class="cartaceoGroup">
+                        
+                        <div class="form-group row">
+                            <label class="col-4 col-form-label">Stato Conservazione:</label>
+                                <div class="col-7">
+                                    <input type="text" class="form-control" id="luogoNascita" value = "<?php echo $statoConservazione; ?>" readonly>
+                                </div>
+                        </div>
+                        
+                        <div class="form-group row">
+                            <label class="col-4 col-form-label">Stato Prestito:</label>
+                                <div class="col-7">
+                                    <input type="text" class="form-control" id="luogoNascita" value = "<?php echo $statoPrestito; ?>" readonly>
+                                </div>
+                        </div>
+                        
+                        <div class="form-group row">
+                            <label class="col-4 col-form-label">Numero Pagine:</label>
+                                <div class="col-7">
+                                    <input type="text" class="form-control" id="luogoNascita" value = "<?php echo $numeroPagine; ?>" readonly>
+                                </div>
+                        </div>
+                        
+                        <div class="form-group row">
+                            <label class="col-4 col-form-label">Numero Scaffale:</label>
+                                <div class="col-7">
+                                    <input type="text" class="form-control" id="luogoNascita" value = "<?php echo $numeroScaffale; ?>" readonly>
+                                </div>
+                        </div>
+                        
+                    </div>
+                    
+                    <div class="ebookGroup">
+                        
+                        <div class="form-group row">
+                            <label class="col-4 col-form-label">Dimensione:</label>
+                                <div class="col-7">
+                                    <input type="text" class="form-control" id="luogoNascita" value = "<?php echo $dimensione; ?>" readonly>
+                                </div>
+                        </div>
+                        
+                        <!--se può accedere anche da qua l'utente bisogna gestire l'incremento del numero accessi-->
+                        <div class="form-group row">
+                            <label class="col-4 col-form-label">PDF:</label>
+                                <div class="col-7">
+                                    <input type="text" class="form-control" id="luogoNascita" value = "<?php echo $pdf; ?>" readonly>
+                                </div>
+                        </div>
+                        
                     </div>
                     
                 </article>

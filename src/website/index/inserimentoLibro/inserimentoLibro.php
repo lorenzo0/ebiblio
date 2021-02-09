@@ -32,32 +32,31 @@
                     <div class="imgcontainer">
                         <img src="../../images/ebook.png" alt="Avatar" class="avatar">
                     </div>
-                   <form action="inserimentoNuovoLibroDB.php" method="post" onsubmit="validateFormLibro()" enctype="multipart/form-data"> 
+                   <form action="inserimentoNuovoLibroDB.php" method="post" onsubmit="return validateFormLibro();"> 
                        
                        <div class="form-group input-group">
-                            <input type="number" placeholder="codice ISBN" class="form-control" name="codice" id="codice" value = <?php echo $_GET['isbn'] ?>required readonly>
+                            <input type="number" placeholder="codice ISBN" class="form-control" name="codice" id="codice" value = <?php echo $_GET['isbn']; ?>required readonly>
                         </div>
                        
                        <label>Vorrei inserire il libro come </label>
                         <select id="tipoLibro" name="tipoLibro" onchange="setVisibleForLibro()">
-                          <option value="none" <?php if(isset($_GET['tipo']) && $_GET['tipo'] == '') echo 'selected'; else echo '';?>>---------</option> 
-                          <option value="cartaceo" <?php if(isset($_GET['tipo']) && $_GET['tipo'] == 'cartaceo') echo 'selected'; else echo '';?>>Cartaceo</option>
-                          <option value="ebook" <?php if(isset($_GET['tipo']) && $_GET['tipo'] == 'ebook') echo 'selected'; else echo '';?>>Ebook</option>
-                          <option value="entrambi">Entrambi</option>
+                          <option value="none" <?php if(isset($_GET['tipo']) && $_GET['tipo'] == '') echo 'selected'; else echo ''; ?>>--------</option> 
+                          <option value="cartaceo" <?php if(isset($_GET['tipo']) && $_GET['tipo'] == 'Cartaceo') echo 'selected'; else if(isset($_GET['tipoLibro']) && $_GET['tipoLibro'] == 'Cartaceo') echo 'disabled'; else echo '';?>>Cartaceo</option>
+                          <option value="ebook" <?php if(isset($_GET['tipo']) && $_GET['tipo'] == 'Ebook') echo 'selected'; else if(isset($_GET['tipoLibro']) && $_GET['tipoLibro'] == 'Ebook') echo 'disabled'; else echo '';?>>Ebook</option>
+                          <option value="entrambi" <?php if(isset($_GET['tipoLibro']) && ($_GET['tipoLibro'] == 'Ebook' || $_GET['tipoLibro'] == 'Cartaceo')) echo 'disabled';?>>Entrambi</option>
                         </select>
-                       
 
                         <div class="form-group input-group">
                             <input type="text" placeholder="titolo" class="form-control" name="titolo" id="titolo" required>
-                        </div> <!-- form-group// -->
+                        </div>
 
                         <div class="form-group input-group">
                             <input type="number" placeholder="anno edizione" class="form-control" name="anno" id="anno" maxlength=4 required>
-                        </div> <!-- form-group// -->
+                        </div>
 
                         <div class="form-group input-group">
                             <input type="text" placeholder="genere" class="form-control" name="genere" id="genere" required>
-                        </div> <!-- form-group// -->
+                        </div>
 
                         <div class="form-group input-group">
                             <input type="text" placeholder="nome edizione" class="form-control" name="nomeEdizione" id="nomeEdizione" required>

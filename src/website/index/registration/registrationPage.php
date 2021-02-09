@@ -33,7 +33,7 @@
                     <div class="imgcontainer">
                         <img src="../../images/book.png" alt="Avatar" class="avatar">
                     </div>
-                <form action="registration.php" method="post" onsubmit="return validateFormRegistrazione()">
+                <form action="registration.php" method="post" onsubmit="return validateFormRegistrazione();">
                     
                     <div class="form-group input-group">
                         <input type="text" placeholder="Inserisci il tuo nome" class="form-control" name="nome" required>

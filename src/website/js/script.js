@@ -69,19 +69,19 @@ function setVisibleForLibro(){
     var x = document.getElementById("tipoLibro").value;
 
     switch(x){
-        case "cartaceo":
+        case "Cartaceo":
             document.getElementById("cartaceoGroup").style.display = 'block';
             document.getElementById("ebookGroup").style.display = 'none';
             break;
-        case "ebook":
+        case "Ebook":
             document.getElementById("cartaceoGroup").style.display = 'none';
             document.getElementById("ebookGroup").style.display = 'block';
             break;
-        case "entrambi":
+        case "Entrambi":
             document.getElementById("cartaceoGroup").style.display = 'block';
             document.getElementById("ebookGroup").style.display = 'block';
             break;
-        case "none":
+        case "None":
             document.getElementById("cartaceoGroup").style.display = 'none';
             document.getElementById("ebookGroup").style.display = 'none';
             break;
@@ -93,28 +93,28 @@ function validateFormLibro(){
 
     var x = document.getElementById("tipoLibro").value;
 
-    if(x == 'cartaceo'){
-        if(document.getElementById("statoConservazione").value == '' ||
+    if(x == 'Cartaceo'){
+        if(document.getElementById("statoConservazione").value == 'none' ||
             document.getElementById("numeroPagine").value == '' ||
             document.getElementById("numeroScaffale").value == '' )
             alert("Non sono stati inseriti tutti i campi necessari.");
         else
             return true;
-    }else if(x == 'ebook'){
+    }else if(x == 'Ebook'){
         if(document.getElementById("pdf").files.length == 0)
             alert("Non sono stati inseriti tutti i campi necessari.");
         else
             return true;
     }
-    else if(x == 'entrambi'){
-        if(document.getElementById("statoConservazione").value == '' ||
+    else if(x == 'Entrambi'){
+        if(document.getElementById("statoConservazione").value == 'none' ||
             document.getElementById("numeroPagine").value == '' ||
             document.getElementById("numeroScaffale").value == '' ||
             document.getElementById("pdf").files.length == 0)
             alert("Non sono stati inseriti tutti i campi necessari.");
         else
             return true;
-    }else if(x == 'none')
+    }else if(x == 'None')
         alert("Che tipo di libro vuoi inserire? Cartaceo oppure Ebook?");
     
     
@@ -131,3 +131,27 @@ $(function loadNavFoo(){
 });
 
 /* FINE gestione aggiunta navbar e footer in ogni pagina*/
+
+
+/* INIZIO gestione visualizzazione detagliLibro.php */
+
+function setVisibleLibroDetails(){
+    var x = $_GET['Tipo'];
+
+    switch(x){
+        case "Cartaceo":
+            document.getElementById("cartaceoGroup").style.display = 'block';
+            document.getElementById("ebookGroup").style.display = 'none';
+            break;
+        case "Ebook":
+            document.getElementById("cartaceoGroup").style.display = 'none';
+            document.getElementById("ebookGroup").style.display = 'block';
+            break;
+        case "Entrambi":
+            document.getElementById("cartaceoGroup").style.display = 'block';
+            document.getElementById("ebookGroup").style.display = 'block';
+            break;
+    }
+}
+
+/* FINE gestione visualizzazione detagliLibro.php */
