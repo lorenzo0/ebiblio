@@ -1,6 +1,4 @@
 @charset "utf-8";
-/* CSS Document */
-
 
 body {
 	font-family: 'Noto Sans', sans-serif;
@@ -133,67 +131,58 @@ img.avatar {
     margin-top: 20px;
 }
 
-/* START successed/rejected request subscription*/
-/* Responsivness picture successed/rejected request subscription*/
-.image{
-  width: 100%;
-  max-width: 400px;
-  height: auto;
-}
-
-/* Button which go back to homepage from successed/rejected request subscription */
-
-#backToHomePage{
-  margin-top: 20px;
-  background-color: #7ABB3B;
-}
-
-#requestedSubscription{
-    text-align: center;
-    margin-bottom: 20px;
-}
-
-/* END successed/rejected request subscription*/
 
 #navbarModified{
     display: block;
     overflow: auto;
 }
 
-
-/* DROPDOWN BUTTON
-
-.dropbtn {
-  background-color: #4CAF50;
-  color: white;
-  padding: 16px;
-  font-size: 16px;
-  border: none;
+/*Bottone per tornare alla homepage visualizzazioni*/
+.backHomePage{
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-color: #6db3ff;
 }
 
-.dropdown {
-  position: relative;
-  display: inline-block;
+/* INZIO Tabella visualizzazioni*/
+
+table {
+    border-collapse: collapse;
+    text-align: center;
+    font-size: 1.3em;
+    margin-top: 50px;
 }
 
-.dropdown-content {
-  display: none;
-  position: absolute;
-  background-color: #f1f1f1;
-  min-width: 160px;
-  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-  z-index: 1;
+td,
+th {
+    width: 200px;
+    text-align: center;
+    margin: 5px;
+    padding: 15px;
 }
 
-.dropdown-content a {
-  color: black;
-  padding: 12px 16px;
-  text-decoration: none;
-  display: block;
+tbody > tr{
+    margin: 20px 0px 20px 0px;
+}     
+
+img.avatarTableBiblio {
+  width: 55%;
+  border-radius: 50%;
 }
 
-.dropdown-content a:hover {background-color: #ddd;}
+img.avatarTableLibro{
+  width: 40%;
+  border-radius: 50%;
+}
 
-.dropdown:hover .dropdown-content {display: block;}
+img.avatarTablePL {
+  width: 20%;
+  border-radius: 50%;
+}
 
-.dropdown:hover .dropbtn {background-color: #3e8e41;}  */
+th{
+    font-weight: 800;
+}
+
+/* FINE Tabella visualizzazioni*/

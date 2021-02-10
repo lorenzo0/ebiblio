@@ -10,7 +10,7 @@
     <!-- Bootstrap and CSS-->
 	<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <link href="../../css/bootstrap-4.0.0.css" rel="stylesheet">
-	<link href="../../css/stile.css" rel="stylesheet">
+	<link href="../../css/foglioStile.css" rel="stylesheet">
 	<link href="https://fonts.googleapis.com/css?family=Noto+Sans&display=swap" rel="stylesheet"> 
       
     <!-- Script JS -->

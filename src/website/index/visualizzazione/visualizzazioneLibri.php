@@ -9,7 +9,7 @@
       
 	<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <link href="../../css/bootstrap-4.0.0.css" rel="stylesheet">
-	<link href="../../css/stile.css" rel="stylesheet">
+	<link href="../../css/foglioStile.css" rel="stylesheet">
 	<link href="https://fonts.googleapis.com/css?family=Noto+Sans&display=swap" rel="stylesheet">    
       
     <!-- Script JS -->
@@ -20,44 +20,6 @@
           $("#footer").load("../utils/footer.html"); 
         });
     </script>
-      
-    <style type="text/css">
-        table{
-            text-align: center;
-            font-size: 1.3em;
-        }
-        thead{
-            display: flex;
-            justify-content: space-between;
-            padding: 15px;
-        }
-        
-        tbody{
-            display: flex;
-            justify-content: space-between;
-            flex-direction: column;
-            padding: 15px;
-        }
-        
-        td{
-            width: 150px;
-            height: auto;
-            justify-content: center;
-            margin: 5px;
-            padding: 5px;
-        }
-        
-        tbody > tr{
-            margin: 15px 0px 15px 0px;
-        }
-        
-        thead > tr > td{
-            font-weight: 800;
-        }
-        
-        
-        
-    </style>
 
   </head>
     
@@ -66,33 +28,91 @@
         <div class="container">
             <div class="card mt-4" style="border: 0">
                 <article class="card-body mx-auto" style="max-width: 1200px;">
+                    
+                    <button class="backHomePage"> <a style="color:black;" href="../home/homepage.php"> Torna alla homepage </a></button>
 
                     <h4 class="card-title mt-3 text-center">Tutti i libri</h4>
 
                     <div class="imgcontainer" style="margin-bottom: 50px;">
-                        <img src="../../images/book.png" alt="Avatar" class="avatar">
+                        <a href="visualizzazioneLibri.php"><img src="../../images/book.png" alt="Avatar" class="avatar"></a>
+                    </div>
+                    
+                    <div class="filters">
+                        <center>
+                        <form method="post">
+                            
+                            
+                                <select id="filterTipoLibro" name="filterTipoLibro" style="margin-right: 10px;">
+                                  <option value="none" selected>Tipo Libro</option>  
+                                  <option value="Cartaceo">Cartaceo</option>
+                                  <option value="Ebook">Ebook</option>
+                                  <option value="Entrambi">Entrambi</option>
+                                </select>
+                            
+                            
+                                <select id="filterGenere" name="filterGenere" style="margin-right: 10px;">
+                                    <option value="none" selected>Genere</option> 
+                                   <?php 
+                                        require '../../../connectionDB/connection.php';
+
+                                        try {
+                                            $sql = "SELECT Distinct(Genere) FROM Libro";
+                                            $res=$pdo->query($sql);
+                                        }catch(PDOException $e) {
+                                            echo("Query SQL Failed: ".$e->getMessage());
+                                            exit();
+                                        }
+
+                                        while($row=$res->fetch()) {
+                                            echo "<option value='" . $row['Genere'] . "'>" . $row['Genere'] . "</option>";
+                                        }
+
+                                    ?>
+                                </select>
+                            
+                             <button type="submit" name="filter" style="background-color:#7ABB3B;"> Filtra! </button>
+                            
+                        </form>
+                        </center>
                     </div>
                     
                     <?php
-                        require '../../../connectionDB/connection.php';
 
                         try{
+                            if(isset($_POST['filter'])){
+                                if(($_POST['filterTipoLibro'] != 'none') && ($_POST['filterGenere'] != 'none')){
+                                    $genereFilter = $_POST['filterGenere'];
+                                    $tipoLibroFilter = $_POST['filterTipoLibro'];
 
-                            $sql = "SELECT * FROM Libro";
-                            $res = $pdo -> query($sql);
+                                    $sql = "SELECT * FROM Libro WHERE Genere = '$genereFilter' AND TipoLibro = '$tipoLibroFilter'";
+                                }else if(($_POST['filterTipoLibro'] != 'none') && ($_POST['filterGenere'] == 'none')){
+                                    $tipoLibroFilter = $_POST['filterTipoLibro'];
+
+                                    $sql = "SELECT * FROM Libro WHERE TipoLibro = '$tipoLibroFilter'";
+                                }else if(($_POST['filterTipoLibro'] == 'none') && ($_POST['filterGenere'] != 'none')){
+                                    $genereFilter = $_POST['filterGenere'];
+
+                                    $sql = "SELECT * FROM Libro WHERE Genere = '$genereFilter'";
+                                }
+                                
+                                $res = $pdo -> query($sql);
+                            }else{
+                                $sql = "SELECT * FROM Libro";
+                                $res = $pdo -> query($sql);
+                            }
                         }catch(PDOException $e){echo $e->getMessage();}	
 
                     echo " 
                           <table>
                             <thead>
                                 <tr>
-                                    <td></td>
-                                    <td>Codice ISBN</td> 
-                                    <td>Titolo</td> 
-                                    <td>Anno</td> 
-                                    <td>Genere</td> 
-                                    <td>Nome Edizione</td>
-                                    <td></td>
+                                    <th></th>
+                                    <th>Codice ISBN</th> 
+                                    <th>Titolo</th> 
+                                    <th>Anno</th> 
+                                    <th>Genere</th> 
+                                    <th>Nome Edizione</th>
+                                    <th></th>
                                 </tr>
                             </thead>
                             <tbody>";
@@ -109,12 +129,12 @@
                                 echo "<tr>"; 
                                 echo "<td>";
                                 if($tipoLibro == 'Cartaceo')
-                                    echo "<img src=" . "../../images/book.png" . " alt=" . "Cartaceo" . " class=" . "avatar" . ">";
+                                    echo "<img src=" . "../../images/book.png" . " alt=" . "Cartaceo" . " class=" . "avatarTableLibro" . ">";
                                 else if($tipoLibro == 'Ebook')
-                                    echo "<img src=" . "../../images/ebook.png" . " alt=" . "Cartaceo" . " class=" . "avatar" . ">";
+                                    echo "<img src=" . "../../images/ebook.png" . " alt=" . "Cartaceo" . " class=" . "avatarTableLibro" . ">";
                                 else if($tipoLibro == 'Entrambi'){
-                                    echo "<img src=" . "../../images/ebook.png" . " alt=" . "Cartaceo" . " class=" . "avatar" . ">";
-                                    echo "<img src=" . "../../images/book.png" . " alt=" . "Cartaceo" . " class=" . "avatar" . ">";
+                                    echo "<img src=" . "../../images/ebook.png" . " alt=" . "Cartaceo" . " class=" . "avatarTableLibro" . ">";
+                                    echo "<img src=" . "../../images/book.png" . " alt=" . "Cartaceo" . " class=" . "avatarTableLibro" . ">";
                                 }
                                 echo "</td>";
                                 echo "<td>" . $isbn . "</td>";
@@ -137,7 +157,3 @@
         <div id="footer"></div>
     </body>
 </html>
-
-
-
-<button class="btn" btn-primary="" btn-block="" onclick="location.href='dettagliLibro.php?Isbn=2&amp;Tipo=Entrambi&amp;Titolo=Ladra" di="" coltelli&anno="2000&amp;Genere=Tragico&amp;NomeEdizione=A" b="" c'=""> Dettagli </button>
