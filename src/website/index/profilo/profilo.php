@@ -89,8 +89,14 @@
                                 <input type="text" class="form-control" id="RecapitoTelefonico" value = "<?php echo $recapitoTelefonico ?>" readonly>
                             </div>
                             <div class="col-1">
-                                <a class="btn btn-primary" href="modifica-recapito.php">Edit</a>
+                                <a class="btn btn-primary" href="modifica-recapito.php">Modifica</a>
                             </div>
+                    </div>
+                    
+                    <div class="form-group row">
+                        <div class="col-1">
+                            <a class="btn btn-primary" href="prenotazioniEffettuate.php">Visualizza le tue prenotazioni effettuate</a>
+                        </div>
                     </div>
                     
                 </article>
