@@ -63,57 +63,10 @@
                         <input type="text" placeholder="Inserisci il tuo numero di telefono" class="form-control" name="recapito" required>
                     </div> 
                     
+                    <div class="form-group input-group">
+                        <input type="text" placeholder="Inserisci la tua professione" class="form-control" name="professione" id="professione">
+                    </div> 
                     
-                    <label>Vorresti iscriverti come </label>
-                        <select id="tipoUtente" name="tipoUtente" onchange="setVisibleForUser()">
-                          <option value="none" selected>--------</option>  
-                          <option value="Amministratore">Amministratore</option>
-                          <option value="Utilizzatore">Utilizzatore</option>
-                          <option value="Volontario">Volontario</option>
-                        </select>
-                    
-                    <div id="utilizzatoreGroup" style="display:none">
-                        <div class="form-group input-group">
-                            <input type="text" placeholder="Inserisci la tua professione" class="form-control" name="professione" id="professione">
-                        </div> 
-                        <!-- Stato e data non sono necessarie, sono deducibili dalla sessione -->
-                    </div>
-                    
-                    <div id="volontarioGroup" style="display:none">
-                        <div class="form-group input-group">
-                            <input type="text" placeholder="Inserisci il tuo mezzo di trasporto" class="form-control" name="mezzoDiTrasporto" id="mezzoDiTrasporto">
-                        </div> 
-                    </div>
-                    
-                    <div id="amministratoreGroup">
-                        
-                        <div id="biblioteca">
-                            <label>Per quale biblioteca?</label>
-                            <select name="nomeBiblioteca" id="nomeBiblioteca">
-                                <?php 
-                                    require '../../../connectionDB/connection.php';
-
-                                    try {
-                                        $sql = "SELECT * FROM Biblioteca";
-                                        $res=$pdo->query($sql);
-                                    }catch(PDOException $e) {
-                                        echo("Query SQL Failed: ".$e->getMessage());
-                                        exit();
-                                    }
-
-                                    while($row=$res->fetch()) {
-                                        echo "<option value='" . $row['Nome'] . "'>" . $row['Nome'] . "</option>";
-                                    }
-
-                                ?>
-                            </select>
-                        </div>
-                        
-                        <div class="form-group input-group">
-                            <input type="text" placeholder="Inserisci la tua qualifica" class="form-control" name="qualifica" id="qualifica">
-                        </div> 
-                    </div>
-
                     <div class="form-group">
                         <button type="submit" class="btn btn-primary btn-block"> Crea account  </button>
                     </div>     

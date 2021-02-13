@@ -93,7 +93,8 @@
                                     $genereFilter = $_POST['filterGenere'];
 
                                     $sql = "SELECT * FROM Libro WHERE Genere = '$genereFilter'";
-                                }
+                                }else
+                                    $sql = "SELECT * FROM Libro";
                                 
                                 $res = $pdo -> query($sql);
                             }else{

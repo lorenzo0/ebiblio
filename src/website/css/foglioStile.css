@@ -186,3 +186,15 @@ th{
 }
 
 /* FINE Tabella visualizzazioni*/
+
+/* INIZIO open street map */
+
+#map {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 60%;
+    height: 50%;
+}
+
+/* FINE open street map */

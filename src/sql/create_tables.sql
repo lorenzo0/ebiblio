@@ -79,6 +79,7 @@ CREATE TABLE Ebook(
     FOREIGN KEY(CodiceISBN) REFERENCES Libro(CodiceISBN)
 );
 
+
 CREATE TABLE PrenotazioneCartaceo(
     IdPrenotazioneCartaceo int(10) AUTO_INCREMENT PRIMARY KEY,
     CodiceISBNCartaceo int(10),

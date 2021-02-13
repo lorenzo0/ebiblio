@@ -92,13 +92,6 @@ if($res>0){
             }
             break;
     }
-        /*if($res>0){
-                if($res1<0)
-                    echo "<script type='text/javascript'>alert('Il record non è stato inserito correttamente nella tabella ebook.');</script>";
-            }
-        else
-            echo "<script type='text/javascript'>alert('Il record non è stato inserito correttamente.');</script>";*/
-        
 
 }else
     echo "<script type='text/javascript'>alert('Il record non è stato inserito correttamente - 1.');</script>";
