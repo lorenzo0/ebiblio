@@ -13,7 +13,6 @@
 try{	
 	 $sql = "INSERT INTO Libro VALUES ('$codiceISBN','$titolo','$anno','$genere','$nomeEdizione', '$tipoLibro')";		
      $res = $pdo->exec($sql);
-     echo $res;
 }	
 catch(PDOException $e)	{	
 	 echo($e->getMesssage());	
@@ -24,7 +23,7 @@ catch(PDOException $e)	{
 if($res>0){
 
     switch($tipoLibro){
-        case 'cartaceo':
+        case 'Cartaceo':
             $conservazione = $_POST['statoConservazione'];
             $pagine = $_POST['numeroPagine'];
             $scaffale = $_POST['numeroScaffale'];
@@ -32,11 +31,6 @@ if($res>0){
             try{	
                  $sql = "INSERT INTO cartaceo VALUES ('$codiceISBN','$conservazione','Disponibile','$pagine','$scaffale', 1)";	
                  $res = $pdo->exec($sql);
-                
-                if($res>0)
-                    echo "great!";
-                else
-                    echo "not great!";
             }	
             catch(PDOException $e)	{	
                  echo($e->getMesssage());	
@@ -45,7 +39,7 @@ if($res>0){
             
             break;
             
-        case 'ebook':
+        case 'Ebook':
             //$directory = realpath($_POST['pdf']);
             //$dimensione = filesize($directory);
             
@@ -65,7 +59,7 @@ if($res>0){
             //$sql = "INSERT INTO ebook VALUES ('$codiceISBN','$nomePDF', '$pdf',0, 0)";
             break;
             
-        case 'entrambi':
+        case 'Entrambi':
             $conservazione = $_POST['statoConservazione'];
             $pagine = $_POST['numeroPagine'];
             $scaffale = $_POST['numeroScaffale'];
@@ -74,7 +68,6 @@ if($res>0){
             try{	
                  $sql = "INSERT INTO cartaceo VALUES ('$codiceISBN','$conservazione','Disponibile','$pagine','$scaffale')";	
                  $res = $pdo->exec($sql);
-                 echo $res;
             }	
             catch(PDOException $e)	{	
                  echo($e->getMesssage());	
@@ -84,7 +77,6 @@ if($res>0){
             try{	
                  $sql1 = "INSERT INTO ebook VALUES ('$codiceISBN','$pdf')";
                  $res1 = $pdo->exec($sql);
-                 echo $res1;
             }	
             catch(PDOException $e)	{	
                  echo($e->getMesssage());	
@@ -92,9 +84,14 @@ if($res>0){
             }
             break;
     }
+    
+    if($res>0)
+        echo "<script> alert('Il record è stato inserito correttamente'); window.location.href='../visualizzazione/visualizzazioneLibri.php'; </script>";
+    else
+        echo "<script> alert('Il record non è stato inserito correttamente'); window.location.href='inserimentoISBN.html'; </script>";
 
 }else
-    echo "<script type='text/javascript'>alert('Il record non è stato inserito correttamente - 1.');</script>";
+    echo "<script> alert('Il record non è stato inserito correttamente'); window.location.href='inserimentoISBN.html'; </script>";
     
 
 ?>

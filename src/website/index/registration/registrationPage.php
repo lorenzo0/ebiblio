@@ -24,7 +24,7 @@
       
   </head>
     
-    <body onload="onLoadRegistrazione()">
+    <body>
         <div id="header"></div>
         <div class="container">
             <div class="card mt-4">

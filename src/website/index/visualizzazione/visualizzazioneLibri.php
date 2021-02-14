@@ -114,6 +114,7 @@
                                     <th>Genere</th> 
                                     <th>Nome Edizione</th>
                                     <th></th>
+                                    <th></th>
                                 </tr>
                             </thead>
                             <tbody>";
@@ -145,6 +146,7 @@
                                 echo "<td>" . $nomeEdizione . "</td>";
                                 echo "<td>" . "<button class=" . "btn btn-primary btn-block" . " onclick=" . "location.href='dettagliLibro.php?Isbn=" .
                                     "$isbn" . "&Tipo=" . urlencode($tipoLibro) . "&Titolo=" . urlencode($titolo) . "&Anno=" . "$anno" . "&Genere=" . urlencode($genere) . "&NomeEdizione=" . urlencode($nomeEdizione) . "'" . "> Dettagli </button></td>";
+                                echo "<td>" . "<button style='background-color:red;' class=" . "btn btn-primary btn-block" . " onclick=" . "location.href='../cancellazioni/cancellazioneLibro.php?Isbn=" . "$isbn" . "&Tipo=" . urlencode($tipoLibro) . "'" . "><i class='fa fa-trash'></i></button></td>";
                                 echo "</tr>"; 
                             }        
                     echo "</table></tbody>";

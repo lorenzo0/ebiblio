@@ -41,9 +41,9 @@
                         <center>
                         <form method="post">
                             
-                            
                                 <input type="checkbox" id="ethernet" name="ethernet" value="yes">
                                 <label style="margin-right: 10px;"> Ethernet </label>
+                            
                                 <input type="checkbox" id="power" name="power" value="yes" >
                                 <label style="margin-right: 10px;"> Power </label>
                             
@@ -114,16 +114,17 @@
                                     <th>Nome Biblioteca</th> 
                                     <th>Ethernet</th> 
                                     <th>Corrente</th>
-                                    <th></th>
                                 </tr>
                             </thead>
                             <tbody>";
                     
 
                             while ($row = $res->fetch()) {
-                                $nomeBiblioteca = $row['Email'];
+                                $emailBiblioteca = $row['EmailBiblioteca'];
+                                $nomeBiblioteca = $row['Nome'];
                                 $ethernet = $row['Ethernet'];
                                 $corrente = $row['Corrente'];
+                                $id = $row['Id'];
                                 
                                 echo "<tr>"; 
                                 echo "<td>";
@@ -137,14 +138,8 @@
                                 }
                                 echo "</td>";
                                 echo "<td>" . $nomeBiblioteca . "</td>";
-                                if($ethernet)
-                                    echo "<td>" . 'Si' . "</td>";
-                                else
-                                    echo "<td>" . 'No' . "</td>";
-                                if($corrente)
-                                    echo "<td>" . 'Si' . "</td>";
-                                else
-                                    echo "<td>" . 'No' . "</td>";
+                                if($ethernet)  echo "<td>" . 'Si' . "</td>"; else echo "<td>" . 'No' . "</td>";
+                                if($corrente) echo "<td>" . 'Si' . "</td>"; else echo "<td>" . 'No' . "</td>";
                                 echo "</tr>"; 
                             }        
                     echo "</table></tbody>";

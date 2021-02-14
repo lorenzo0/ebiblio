@@ -15,10 +15,10 @@ while ($row = $res->fetch()) {
     $tipoLibro = $row['TipoLibro'];
 }
 
-if($res != 0){
+if($tipoLibro != ''){
     header("location: libroPresente.php?isbn='$isbn'&tipo=$tipoLibro");
 }else
-    header("location: inserimentoLibro.php?isbn='$isbn'&tipo=$tipoLibro");
+    header("location: inserimentoLibro.php?isbn='$isbn'");
 
     
 

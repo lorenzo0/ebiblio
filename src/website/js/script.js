@@ -1,41 +1,4 @@
 /* INIZIO registrationPage.php*/
-function setVisibleForUser(){
-    
-    var x = document.getElementById("tipoUtente").value;
-
-    switch(x){
-        case "Utilizzatore":
-            document.getElementById("utilizzatoreGroup").style.display = 'block';
-            document.getElementById("volontarioGroup").style.display = 'none';
-            document.getElementById("amministratoreGroup").style.display = 'none';
-            break;
-        case "Volontario":
-            document.getElementById("volontarioGroup").style.display = 'block';
-            document.getElementById("utilizzatoreGroup").style.display = 'none';
-            document.getElementById("amministratoreGroup").style.display = 'none';
-            break;
-        case "Amministratore":
-            document.getElementById("amministratoreGroup").style.display = 'block';
-            document.getElementById("utilizzatoreGroup").style.display = 'none';
-            document.getElementById("volontarioGroup").style.display = 'none';
-            break;
-        case "none":
-            document.getElementById("utilizzatoreGroup").style.display = 'none';
-            document.getElementById("volontarioGroup").style.display = 'none';
-            document.getElementById("amministratoreGroup").style.display = 'none';
-            break;
-    }
-
-}
-
-
-function onLoadRegistrazione(){
-    document.getElementById("utilizzatoreGroup").style.display = 'none';
-    document.getElementById("volontarioGroup").style.display = 'none';
-    document.getElementById("amministratoreGroup").style.display = 'none';
-}
-
-
 function validateFormRegistrazione(){
 
     var x = document.getElementById("tipoUtente").value;
@@ -81,7 +44,7 @@ function setVisibleForLibro(){
             document.getElementById("cartaceoGroup").style.display = 'block';
             document.getElementById("ebookGroup").style.display = 'block';
             break;
-        case "None":
+        case "None" || '':
             document.getElementById("cartaceoGroup").style.display = 'none';
             document.getElementById("ebookGroup").style.display = 'none';
             break;

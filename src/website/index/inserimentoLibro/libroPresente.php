@@ -80,8 +80,7 @@
                     </div>
                    <form method="post"> 
                        
-                       <div id = "cartaceoGroupExist">
-                           
+                       <div id = "cartaceoGroupExist">                           
                            <div class="form-group">
                                 <button type="submit" class="btn btn-primary btn-block" name="inserisci"> Inserisci una copia cartacea! </button>
                             </div>

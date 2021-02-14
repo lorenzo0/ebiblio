@@ -19,7 +19,7 @@ CREATE TABLE Foto(
 	NomeFoto varchar(255),
     EmailBiblioteca varchar(255),
     FileFoto blob,
-    FOREIGN KEY(EmailBiblioteca) REFERENCES Biblioteca(Email),
+    FOREIGN KEY(EmailBiblioteca) REFERENCES Biblioteca(Email) ON DELETE CASCADE,
     PRIMARY KEY (NomeFoto, EmailBiblioteca)
 );
 
@@ -28,7 +28,7 @@ CREATE TABLE PostoLettura(
     EmailBiblioteca varchar(255),
     Ethernet boolean,
     Corrente boolean,
-    FOREIGN KEY(EmailBiblioteca) REFERENCES Biblioteca(Email),
+    FOREIGN KEY(EmailBiblioteca) REFERENCES Biblioteca(Email) ON DELETE CASCADE,
     PRIMARY KEY(Id, EmailBiblioteca)
 );
 
@@ -44,8 +44,8 @@ CREATE TABLE Libro(
 CREATE TABLE LibriDisponibili(
     EmailBiblioteca varchar(255),
     CodiceISBN int(10),
-    FOREIGN KEY(EmailBiblioteca) REFERENCES Biblioteca(Email),
-    FOREIGN KEY(CodiceISBN) REFERENCES Libro(CodiceISBN),
+    FOREIGN KEY(EmailBiblioteca) REFERENCES Biblioteca(Email) ON DELETE CASCADE,
+    FOREIGN KEY(CodiceISBN) REFERENCES Libro(CodiceISBN) ON DELETE CASCADE,
     PRIMARY KEY(EmailBiblioteca, CodiceISBN)
 );
 
@@ -57,8 +57,8 @@ CREATE TABLE Autore(
 CREATE TABLE Scrittori(
 	IdAutore integer(10),
     CodiceISBN int(10),
-    FOREIGN KEY(IdAutore) REFERENCES Autore(Id),
-    FOREIGN KEY(CodiceISBN) REFERENCES Libro(CodiceISBN)
+    FOREIGN KEY(IdAutore) REFERENCES Autore(Id) ON DELETE CASCADE,
+    FOREIGN KEY(CodiceISBN) REFERENCES Libro(CodiceISBN) ON DELETE CASCADE
 );
 
 CREATE TABLE Cartaceo(
@@ -68,7 +68,7 @@ CREATE TABLE Cartaceo(
 	NumeroPagine int(10),
     NumeroScaffale int(10),
     NumeroCopie int(10),
-    FOREIGN KEY(CodiceISBN) REFERENCES Libro(CodiceISBN)
+    FOREIGN KEY(CodiceISBN) REFERENCES Libro(CodiceISBN) ON DELETE CASCADE
 );
 
 CREATE TABLE Ebook(
@@ -76,18 +76,7 @@ CREATE TABLE Ebook(
     PDF blob,
     Dimensione double,
     NumeroAccessi int(10),
-    FOREIGN KEY(CodiceISBN) REFERENCES Libro(CodiceISBN)
-);
-
-
-CREATE TABLE PrenotazioneCartaceo(
-    IdPrenotazioneCartaceo int(10) AUTO_INCREMENT PRIMARY KEY,
-    CodiceISBNCartaceo int(10),
-    AvvioPrenotazione date,
-    FinePrenotazione date,
-    EmailUtilizzatore varchar(255),
-    FOREIGN KEY(CodiceISBNCartaceo) REFERENCES Cartaceo(CodiceISBN),
-    FOREIGN KEY(EmailUtilizzatore) REFERENCES Utilizzatore(EmailUtente)
+    FOREIGN KEY(CodiceISBN) REFERENCES Libro(CodiceISBN)  ON DELETE CASCADE
 );
 
 
@@ -105,13 +94,13 @@ CREATE TABLE Utente(
 CREATE TABLE Amministratore(
     EmailUtente varchar(255) PRIMARY KEY,
     Qualifica varchar(255),
-    FOREIGN KEY(EmailUtente) REFERENCES Utente(Email)
+    FOREIGN KEY(EmailUtente) REFERENCES Utente(Email) ON DELETE CASCADE
 );
 
 CREATE TABLE Volontario(
     EmailUtente varchar(255) PRIMARY KEY,
     MezzoDiTrasporto enum("Piedi","Bici","Auto"),
-    FOREIGN KEY(EmailUtente) REFERENCES Utente(Email)
+    FOREIGN KEY(EmailUtente) REFERENCES Utente(Email) ON DELETE CASCADE
 );
 
 CREATE TABLE Utilizzatore(
@@ -119,7 +108,18 @@ CREATE TABLE Utilizzatore(
     Professione varchar(255),
     StatoAccount enum("Attivo","Sospeso"),
     DataDiRegistrazione date,
-    FOREIGN KEY(EmailUtente) REFERENCES Utente(Email)
+    FOREIGN KEY(EmailUtente) REFERENCES Utente(Email) ON DELETE CASCADE
+);
+
+CREATE TABLE PrenotazioneCartaceo(
+    IdPrenotazioneCartaceo int(10),
+    CodiceISBNCartaceo int(10),
+    AvvioPrenotazione date,
+    FinePrenotazione date,
+    EmailUtilizzatore varchar(255),
+    FOREIGN KEY(CodiceISBNCartaceo) REFERENCES Cartaceo(CodiceISBN) ON DELETE CASCADE,
+    FOREIGN KEY(EmailUtilizzatore) REFERENCES Utilizzatore(EmailUtente) ON DELETE CASCADE,
+    PRIMARY KEY(IdPrenotazioneCartaceo, CodiceISBNCartaceo)
 );
 
 CREATE TABLE Consegna(
@@ -130,16 +130,16 @@ CREATE TABLE Consegna(
     Note varchar(200),
     Tipo enum("Restituzione","Affidamento"),
     DataConsegna date,
-    FOREIGN KEY(EmailVolontario) REFERENCES Volontario(EmailUtente),
-    FOREIGN KEY(EmailUtilizzatore) REFERENCES Utilizzatore(EmailUtente),
+    FOREIGN KEY(EmailVolontario) REFERENCES Volontario(EmailUtente) ON DELETE CASCADE,
+    FOREIGN KEY(EmailUtilizzatore) REFERENCES Utilizzatore(EmailUtente) ON DELETE CASCADE,
     FOREIGN KEY(IdPrenotazioneCartaceo) REFERENCES PrenotazioneCartaceo(IdPrenotazioneCartaceo)
 );
 
 CREATE TABLE AccessoEbook(
 	CodiceISBN int(10),
     EmailUtilizzatore varchar(255),
-    FOREIGN KEY(EmailUtilizzatore) REFERENCES Utilizzatore(EmailUtente),
-    FOREIGN KEY(CodiceISBN) REFERENCES Ebook(CodiceISBN),
+    FOREIGN KEY(EmailUtilizzatore) REFERENCES Utilizzatore(EmailUtente) ON DELETE CASCADE,
+    FOREIGN KEY(CodiceISBN) REFERENCES Ebook(CodiceISBN) ON DELETE CASCADE,
     PRIMARY KEY(CodiceISBN, EmailUtilizzatore)
 );
 
@@ -151,8 +151,8 @@ CREATE TABLE Messaggio(
     DataMessaggio date,
     Titolo varchar(255),
     Testo varchar(255),
-    FOREIGN KEY(EmailAmministratore) REFERENCES Amministratore(EmailUtente),
-    FOREIGN KEY(EmailUtilizzatore) REFERENCES Utilizzatore(EmailUtente)
+    FOREIGN KEY(EmailAmministratore) REFERENCES Amministratore(EmailUtente) ON DELETE CASCADE,
+    FOREIGN KEY(EmailUtilizzatore) REFERENCES Utilizzatore(EmailUtente) ON DELETE CASCADE
 );
 
 CREATE TABLE Segnalazione(
@@ -162,7 +162,7 @@ CREATE TABLE Segnalazione(
     DataSegnalazione date,
     Nota varchar(255),
     FOREIGN KEY(EmailAmministratore) REFERENCES Amministratore(EmailUtente),
-    FOREIGN KEY(EmailUtilizzatore) REFERENCES Utilizzatore(EmailUtente)
+    FOREIGN KEY(EmailUtilizzatore) REFERENCES Utilizzatore(EmailUtente) ON DELETE CASCADE
 );
 
 CREATE TABLE PrenotazionePostoLettura(

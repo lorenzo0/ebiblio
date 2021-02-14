@@ -1,19 +1,6 @@
 <?php
-    
-    /*istanzia una sessione che crea come se fosse un file di cookie, questo non viene gestito sul pc dell'utente ma viene gestito dalla sessione di php, è una variabile di ambiente che mi tiene molti attributi, inserisco una corrispondenza chiave-valore all'interno della sessione, 
-    ogni volta che faccio session start, recupero tutti chiave-valore inseriti all'intenro della sessione*/
                 
-    session_start();
-
-    $dsn = 'mysql:dbname=ebiblio;host=127.0.0.1';
-    $user = 'root';
-    $password = 'root';
-
-    try {
-        $pdo = new PDO($dsn, $user, $password);  
-    } catch (PDOException $e) {
-        echo 'Connection failed: ' . $e->getMessage();
-    }
+    require '../../../connectionDB/connection.php';
 
     $nomeBiblioteca= $_POST['nomeBiblioteca'];
     $indirizzo = $_POST['indirizzo'];
@@ -27,16 +14,12 @@
  
     $sql = "INSERT INTO Biblioteca (Nome, Indirizzo, Email, URLSito, Latitudine, Longitudine, Recapito, Note) VALUES ('$nomeBiblioteca','$indirizzo','$email','$sito','$latitudine', '$longitudine','$recapito','$note' )";
 
-    $pdo->exec($sql);
-    
-    $sql1='SELECT COUNT(*) AS Conteggio FROM Biblioteca  WHERE (Nome="'.$nomeBiblioteca.'")';
-    $res1=$pdo->query($sql1);
-    $row=$res1->fetch();
+    $res=$pdo->query($sql);
 
-     if ($row['Conteggio']>0) {
-       echo 'biblioteca già presente nel DB';
+     if ($res>0) {
+       echo "<script> alert('Record inserito nel DB!'); window.location.href='../visualizzazione/visualizzazioneBiblioteca.php'; </script>";
      } else {
-       echo "biblioteca inserita con successo" ;
+       echo "<script> alert('Il record NON è stato inserito!'); window.location.href='inserimentoBiblioteca.html'; </script>";
      }
 
 ?>

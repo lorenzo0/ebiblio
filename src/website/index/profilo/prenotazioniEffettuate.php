@@ -42,10 +42,7 @@
                     
                         require '../../../connectionDB/connection.php';
 
-                        try{
-                            
-                            $_SESSION['email-accesso'] = 'lollo@gmail.com';
-                            
+                        try{                            
                             $sql = "SELECT * 
                                     FROM PrenotazioneCartaceo AS P JOIN Libro ON(P.CodiceISBNCartaceo = Libro.CodiceISBN)
                                     WHERE P.EmailUtilizzatore = '" . $_SESSION['email-accesso'] . "'";

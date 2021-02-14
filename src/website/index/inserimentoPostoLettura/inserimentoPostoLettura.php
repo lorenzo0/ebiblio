@@ -1,22 +1,4 @@
 <!DOCTYPE html>
-
-<?php
-             
-    session_start();
-
-    $dsn = 'mysql:dbname=ebiblio;host=127.0.0.1';
-    $user = 'root';
-    $password = 'root';
-
-    try {
-        $pdo = new PDO($dsn, $user, $password);  
-
-    } catch (PDOException $e) {
-        echo 'Connection failed: ' . $e->getMessage();
-    }
-
-?>
-
 <html>
   <head>
     <meta charset="utf-8">
@@ -60,6 +42,7 @@
                        <label for="utilizzatore">Scegli Biblioteca:</label> 
                           <select class="form-control" id="emailBiblioteca" name="emailBiblioteca">
                                   <?php    
+                                        require '../../../connectionDB/connection.php';
                                         try {
                                         $sql = "SELECT Email FROM Biblioteca"; 
                                         $res=$pdo->query($sql);
@@ -90,7 +73,7 @@
 
                        
                     <div class="form-group">
-                        <button type="submit" class="btn btn-primary btn-block"> Inserisci Posto Lettura! </button>
+                        <button type="submit" name='inserisci' id='inserisci' class="btn btn-primary btn-block"> Inserisci Posto Lettura! </button>
                     </div>  
                </form>
                 </article>
@@ -99,18 +82,21 @@
             
             <?php
             
-            $presaCorrente = isset($_POST['presaCorrente']) ? $_POST['presaCorrente'] : 'false';
-            $presaEthernet = isset($_POST['presaEthernet']) ? $_POST['presaEthernet'] : 'false';
-    
-            $emailBiblioteca= $_POST['emailBiblioteca'];
-
-            $sql = "INSERT INTO PostoLettura (Id, EmailBiblioteca, Ethernet, Corrente) VALUES (0,'$emailBiblioteca',$presaEthernet,$presaCorrente)"; 
+            if(isset($_POST['inserisci'])){
             
-            echo $emailBiblioteca;
-            echo $presaEthernet;
-            echo $presaCorrente;
-           
-            $pdo->exec($sql); 
+                $presaCorrente = isset($_POST['presaCorrente']) ? $_POST['presaCorrente'] : 'false';
+                $presaEthernet = isset($_POST['presaEthernet']) ? $_POST['presaEthernet'] : 'false';
+
+                $emailBiblioteca= $_POST['emailBiblioteca'];
+
+                $sql = "INSERT INTO PostoLettura (Id, EmailBiblioteca, Ethernet, Corrente) VALUES (0,'$emailBiblioteca',$presaEthernet,$presaCorrente)"; 
+                $res=$pdo->query($sql);
+                
+                if($res>0)
+                    echo "<script> alert('Posto lettura inserito correttamente!'); window.location.href='../visualizzazione/visualizzazionePostiLettura.php'; </script>";
+                else
+                    echo "<script> alert('Posto lettura NON è stato inserito!'); window.location.href='inserimentoPostoLettura.php'; </script>";
+            }
 
           ?>  
             
