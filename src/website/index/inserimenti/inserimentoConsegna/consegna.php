@@ -75,12 +75,12 @@
                        
 
                     <div class="form-group">
-                        <label for="tipologiaConsegna">Tipologia di Consegna:</label>
-                          <select class="form-control" id="tipologiaConsegna" name="tipologiaConsegna">
-                            <option value= "Affidamento">Affidamento</option>
-                            <option value= "Restituzione">Restituzione</option>
-                          </select>
-                        </div>
+                    <label for="tipologiaConsegna">Tipologia di Consegna:</label>
+                      <select class="form-control" id="tipologiaConsegna" name="tipologiaConsegna">
+                        <option value= "Affidamento">Affidamento</option>
+                        <option value= "Restituzione">Restituzione</option>
+                      </select>
+                    </div>
                        
                       <div class="form-group input-group">
                         <input type="text" placeholder="note" class="form-control" name="note" id="note" required>
