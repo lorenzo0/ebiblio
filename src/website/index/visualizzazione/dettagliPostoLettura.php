@@ -38,7 +38,7 @@
                     $sql = "SELECT B.Nome, PL.Ethernet, PL.Corrente, PPL.OraFine
                             FROM PrenotazionePostoLettura AS PPL
                             JOIN PostoLettura AS PL ON(PPL.IdPostoLettura = PL.Id)
-                            JOIN Biblioteca AS B ON(PL.EmailBiblioteca = B.Email)
+                            JOIN Biblioteca AS B ON(PL.NomeBiblioteca = B.Nome)
                             WHERE PPL.IdPostoLettura = '$id' 
                             AND EmailUtilizzatore = '" . $_SESSION['email-accesso'] . "'
                             AND DataPrenotazione = '$data' AND OraInizio = '$oraInizio'";

@@ -53,7 +53,10 @@
                                         require '../../../connectionDB/connection.php';
 
                                         try {
-                                            $sql = "SELECT Distinct(Email) FROM PostoLettura JOIN Biblioteca WHERE PostoLettura.EmailBiblioteca = Biblioteca.Email";
+                                            $sql = "SELECT Distinct(Nome)
+                                                    FROM PostoLettura
+                                                    JOIN Biblioteca 
+                                                    WHERE PostoLettura.NomeBiblioteca = Biblioteca.Nome";
                                             $res=$pdo->query($sql);
                                         }catch(PDOException $e) {
                                             echo("Query SQL Failed: ".$e->getMessage());
@@ -61,7 +64,7 @@
                                         }
 
                                         while($row=$res->fetch()) {
-                                            echo "<option value='" . $row['Email'] . "'>" . $row['Email'] . "</option>";
+                                            echo "<option value='" . $row['Nome'] . "'>" . $row['Nome'] . "</option>";
                                         }
 
                                     ?>
@@ -81,27 +84,27 @@
                                     $bibliotecaFilter = $_POST['filterBiblioteca'];
                                     
                                     if(isset($_POST['ethernet']) && isset($_POST['power']))
-                                        $sql = "SELECT * FROM PostoLettura JOIN Biblioteca WHERE PostoLettura.EmailBiblioteca = Biblioteca.Email AND Ethernet = 1 AND Corrente = 1 AND Email = '$bibliotecaFilter'";
+                                        $sql = "SELECT * FROM PostoLettura JOIN Biblioteca WHERE PostoLettura.NomeBiblioteca = Biblioteca.Nome AND Ethernet = 1 AND Corrente = 1 AND Nome = '$bibliotecaFilter'";
                                     else if((!isset($_POST['ethernet'])) && isset($_POST['power']))
-                                        $sql = "SELECT * FROM PostoLettura JOIN Biblioteca WHERE PostoLettura.EmailBiblioteca = Biblioteca.Email AND Corrente = 1 AND Email = '$bibliotecaFilter'";
-                                    else if( isset($_POST['ethernet']) && (!isset($_POST['power'])))
-                                        $sql = "SELECT * FROM PostoLettura JOIN Biblioteca WHERE PostoLettura.EmailBiblioteca = Biblioteca.Email AND Ethernet = 1 AND Email = '$bibliotecaFilter'";
-                                    else
-                                        $sql = "SELECT * FROM PostoLettura JOIN Biblioteca WHERE PostoLettura.EmailBiblioteca = Biblioteca.Email AND Email = '$bibliotecaFilter'";
+                                        $sql = "SELECT * FROM PostoLettura JOIN Biblioteca WHERE PostoLettura.NomeBiblioteca = Biblioteca.Nome AND Corrente = 1 AND Nome = '$bibliotecaFilter'";
+                                    else if(isset($_POST['ethernet']) && (!isset($_POST['power'])))
+                                        $sql = "SELECT * FROM PostoLettura JOIN Biblioteca WHERE PostoLettura.NomeBiblioteca = Biblioteca.Nome AND Ethernet = 1 AND Nome = '$bibliotecaFilter'";
+                                    else 
+                                        $sql = "SELECT * FROM PostoLettura JOIN Biblioteca WHERE PostoLettura.NomeBiblioteca = Biblioteca.Nome AND Nome = '$bibliotecaFilter'";
                                 }else{
                                     if((isset($_POST['ethernet'])) && isset($_POST['power']))
-                                        $sql = "SELECT * FROM PostoLettura JOIN Biblioteca WHERE PostoLettura.EmailBiblioteca = Biblioteca.Email AND Ethernet = 1 AND Corrente = 1";
+                                        $sql = "SELECT * FROM PostoLettura JOIN Biblioteca WHERE PostoLettura.NomeBiblioteca = Biblioteca.Nome AND Ethernet = 1 AND Corrente = 1";
                                     else if((!isset($_POST['ethernet'])) && isset($_POST['power']))
-                                        $sql = "SELECT * FROM PostoLettura JOIN Biblioteca WHERE PostoLettura.EmailBiblioteca = Biblioteca.Email AND Corrente = 1";
+                                        $sql = "SELECT * FROM PostoLettura JOIN Biblioteca WHERE PostoLettura.NomeBiblioteca = Biblioteca.Nome AND Corrente = 1";
                                     else if(isset($_POST['ethernet']) && (!isset($_POST['power'])))
-                                        $sql = "SELECT * FROM PostoLettura JOIN Biblioteca WHERE PostoLettura.EmailBiblioteca = Biblioteca.Email AND Ethernet = 1";
+                                        $sql = "SELECT * FROM PostoLettura JOIN Biblioteca WHERE PostoLettura.NomeBiblioteca = Biblioteca.Nome AND Ethernet = 1";
                                     else
-                                        $sql = "SELECT * FROM PostoLettura JOIN Biblioteca WHERE PostoLettura.EmailBiblioteca = Biblioteca.Email";
+                                        $sql = "SELECT * FROM PostoLettura JOIN Biblioteca WHERE PostoLettura.NomeBiblioteca = Biblioteca.Nome";
                                 }
                                 
                                 $res = $pdo -> query($sql);
                             }else{
-                                $sql = "SELECT * FROM PostoLettura JOIN Biblioteca WHERE PostoLettura.EmailBiblioteca = Biblioteca.Email";
+                                $sql = "SELECT * FROM PostoLettura JOIN Biblioteca WHERE PostoLettura.NomeBiblioteca = Biblioteca.Nome";
                                 $res = $pdo -> query($sql);
                             }
                         }catch(PDOException $e){echo $e->getMessage();}	
@@ -120,7 +123,6 @@
                     
 
                             while ($row = $res->fetch()) {
-                                $emailBiblioteca = $row['EmailBiblioteca'];
                                 $nomeBiblioteca = $row['Nome'];
                                 $ethernet = $row['Ethernet'];
                                 $corrente = $row['Corrente'];

@@ -51,12 +51,12 @@
                                     $_SESSION['email-accesso'] = 'utilizzatore2@gmail.it';
 
                                     try{
-                                        $sql = "SELECT Nome, Email FROM Biblioteca";
+                                        $sql = "SELECT Nome FROM Biblioteca";
                                         $res = $pdo -> query($sql);
                                     }catch(PDOException $e){echo $e->getMessage();}	
 
                                     while ($row = $res->fetch()) {
-                                        echo '<option value=' . $row['Email'] . '>' . $row['Nome'] . '</option>';
+                                        echo '<option value=' . $row['Nome'] . '>' . $row['Nome'] . '</option>';
                                     }
 
                                 ?>

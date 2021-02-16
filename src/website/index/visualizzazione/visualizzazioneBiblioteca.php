@@ -44,10 +44,10 @@
 
                         try{
                             
-                            $sql = "SELECT Nome, Indirizzo, Email, Recapito, URLSito, COUNT(postolettura.EmailBiblioteca) AS NumeroPostiLettura
+                            $sql = "SELECT Nome, Indirizzo, Email, Recapito, URLSito, COUNT(postolettura.NomeBiblioteca) AS NumeroPostiLettura
                                     FROM BIBLIOTECA, POSTOLETTURA
-                                    WHERE Biblioteca.Email = postolettura.EmailBiblioteca
-                                    GROUP BY postolettura.EmailBiblioteca";
+                                    WHERE Biblioteca.Nome = postolettura.NomeBiblioteca
+                                    GROUP BY postolettura.NomeBiblioteca";
                             $res = $pdo -> query($sql);
                             
                         }catch(PDOException $e){echo $e->getMessage();}

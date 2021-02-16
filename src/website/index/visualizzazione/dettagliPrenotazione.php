@@ -30,7 +30,7 @@
             <div class="card mt-4" style="border: 0">
                 <article class="card-body mx-auto" style="max-width: 1200px;">
                     
-                    <button class="backHomePage"> <a style="color:black;" href="visualizzazionePrenotazioni.php"> Torna alla homepage </a></button>
+                    <button class="backHomePage"> <a style="color:black;" href="visualizzazionePrenotazioni.php"> Torna alla lista </a></button>
 
                     <h4 class="card-title mt-3 text-center">Dettaglio prenotazione - <?php echo $_GET['Id']; ?></h4>
 

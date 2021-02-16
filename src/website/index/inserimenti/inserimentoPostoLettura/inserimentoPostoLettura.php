@@ -9,8 +9,8 @@
       
     <!-- Bootstrap -->
 	<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <link href="../../css/bootstrap-4.0.0.css" rel="stylesheet">
-	<link href="../../css/foglioStile.css" rel="stylesheet">
+    <link href="../../../css/bootstrap-4.0.0.css" rel="stylesheet">
+	<link href="../../../css/foglioStile.css" rel="stylesheet">
 	<link href="https://fonts.googleapis.com/css?family=Noto+Sans&display=swap" rel="stylesheet">    
   </head>
     
@@ -24,7 +24,7 @@
             <ul class="navbar-nav mr-auto">
 
             </ul>
-              <a class="nav-link metalink" href="#"><img src="../../images/bookcase.png" alt="brand"/></a>
+              <a class="nav-link metalink" href="#"><img src="../../../images/bookcase.png" alt="brand"/></a>
 
           </div>
         </nav>
@@ -33,18 +33,18 @@
                 <article class="card-body mx-auto" style="max-width: 400px;">
                     <h4 class="card-title mt-3 text-center">Inserimento Posto Lettura</h4>
                     <div class="imgcontainer">
-                        <img src="../../images/postoLettura.png" alt="Avatar" class="avatar">
+                        <img src="../../../images/postoLettura.png" alt="Avatar" class="avatar">
                     </div>
                    <form action="inserimentoPostoLettura.php" method="post"> 
                        
                        
                      <div class="form-group">
                        <label for="utilizzatore">Scegli Biblioteca:</label> 
-                          <select class="form-control" id="emailBiblioteca" name="emailBiblioteca">
+                          <select class="form-control" id="nomeBiblioteca" name="nomeBiblioteca">
                                   <?php    
-                                        require '../../../connectionDB/connection.php';
+                                        require '../../../../connectionDB/connection.php';
                                         try {
-                                        $sql = "SELECT Email FROM Biblioteca"; 
+                                        $sql = "SELECT Nome FROM Biblioteca"; 
                                         $res=$pdo->query($sql);
     
                                             } catch(PDOException $e) {
@@ -53,7 +53,7 @@
                                             }
 
                                              while($row = $res->fetch()) {
-                                                echo "<option value=" . $row['Email'] . ">". $row['Email'] . "</option>";                                 
+                                                echo "<option value=" . $row['Nome'] . ">". $row['Nome'] . "</option>";                                 
                                              }
                                     ?> 
                           </select>
@@ -87,13 +87,13 @@
                 $presaCorrente = isset($_POST['presaCorrente']) ? $_POST['presaCorrente'] : 'false';
                 $presaEthernet = isset($_POST['presaEthernet']) ? $_POST['presaEthernet'] : 'false';
 
-                $emailBiblioteca= $_POST['emailBiblioteca'];
+                $nomeBiblioteca= $_POST['nomeBiblioteca'];
 
-                $sql = "INSERT INTO PostoLettura (Id, EmailBiblioteca, Ethernet, Corrente) VALUES (0,'$emailBiblioteca',$presaEthernet,$presaCorrente)"; 
+                $sql = "INSERT INTO PostoLettura (Id, NomeBiblioteca, Ethernet, Corrente) VALUES (0,'$nomeBiblioteca',$presaEthernet,$presaCorrente)"; 
                 $res=$pdo->query($sql);
                 
                 if($res>0)
-                    echo "<script> alert('Posto lettura inserito correttamente!'); window.location.href='../visualizzazione/visualizzazionePostiLettura.php'; </script>";
+                    echo "<script> alert('Posto lettura inserito correttamente!'); window.location.href='../../visualizzazione/visualizzazionePostiLettura.php'; </script>";
                 else
                     echo "<script> alert('Posto lettura NON è stato inserito!'); window.location.href='inserimentoPostoLettura.php'; </script>";
             }

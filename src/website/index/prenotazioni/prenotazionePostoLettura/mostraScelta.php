@@ -53,22 +53,22 @@
                         try{
                             
                             if($_POST['Biblioteca'] != 'none'){ 
-                            $email = $_POST['Biblioteca'];
+                            $nome = $_POST['Biblioteca'];
                             $sql = "SELECT Nome, Id
-                                    FROM PostoLettura join biblioteca on (EmailBiblioteca = Email)
+                                    FROM PostoLettura join biblioteca on (NomeBiblioteca = Nome)
                                     WHERE Id NOT IN (SELECT IdPostoLettura
                                                      FROM PrenotazionePostoLettura 
                                                      JOIN PostoLettura ON (IdPostoLettura = Id)
-                                                     JOIN biblioteca ON (EmailBiblioteca = Email)
+                                                     JOIN biblioteca ON (NomeBiblioteca = Nome)
                                                      WHERE 9 BETWEEN $oraInizio AND $oraFine
-                                                     AND Email = '$email' AND Ethernet=$ethernet AND Corrente=$corrente);";
+                                                     AND Nome = '$nome' AND Ethernet=$ethernet AND Corrente=$corrente);";
                              }else{
                                 $sql = "SELECT Nome, Id
-                                    FROM PostoLettura join biblioteca on (EmailBiblioteca = Email)
+                                    FROM PostoLettura join biblioteca on (NomeBiblioteca = Nome)
                                     WHERE Id NOT IN (SELECT IdPostoLettura
                                                      FROM PrenotazionePostoLettura 
                                                      JOIN PostoLettura ON (IdPostoLettura = Id)
-                                                     JOIN biblioteca ON (EmailBiblioteca = Email)
+                                                     JOIN biblioteca ON (NomeBiblioteca = Nome)
                                                      WHERE 9 BETWEEN $oraInizio AND $oraFine
                                                      AND Ethernet=$ethernet AND Corrente=$corrente);";
                             }

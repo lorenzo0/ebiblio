@@ -25,6 +25,27 @@
   </head>
     
     <body>
+        <?php 
+        
+            require '../../../connectionDB/connection.php';
+                                    
+            $_SESSION['email-accesso'] = 'emailAMM1@gmail.it';
+
+            try {
+                $sql = "SELECT NomeBibliotecaAmministrata
+                        FROM Amministratore 
+                        WHERE EmailUtente = '" . $_SESSION['email-accesso'] . "'";
+                $res=$pdo->query($sql);
+            }catch(PDOException $e) {
+                echo("Query SQL Failed: ".$e->getMessage());
+                exit();
+            }
+
+            while($row=$res->fetch()) {
+                $nomeBiblioteca = $row['NomeBibliotecaAmministrata'];
+            }
+        
+        ?>
         <div id="header"></div>
         <div class="container">
             <div class="card mt-4" style="border: 0">
@@ -45,11 +66,12 @@
                                 <select id="filterEmailUtilizzatore" name="filterEmailUtilizzatore" style="margin-right: 10px;">
                                     <option value='none' selected>Email utilizzatore</option> 
                                    <?php 
-                                        require '../../../connectionDB/connection.php';
-
+                                        
                                         try {
                                             $sql = "SELECT P.EmailUtilizzatore
                                                     FROM PrenotazioneCartaceo AS P
+                                                    JOIN Biblioteca AS B ON (P.NomeBiblioteca = B.Nome)
+                                                    WHERE NomeBiblioteca = '$nomeBiblioteca'
                                                     GROUP BY P.EmailUtilizzatore;";
                                             $res=$pdo->query($sql);
                                         }catch(PDOException $e) {
@@ -59,6 +81,7 @@
 
                                         while($row=$res->fetch()) {
                                             echo "<option value='" . $row['EmailUtilizzatore'] . "'>" . $row['EmailUtilizzatore'] . "</option>";
+                                            //echo "<option value='> --- </option>";
                                         }
 
                                     ?>
@@ -82,6 +105,7 @@
                                         FROM PrenotazioneCartaceo AS P
                                         JOIN Utente AS U ON (P.EmailUtilizzatore = U.Email)
                                         WHERE P.EmailUtilizzatore = '$emailUtilizzatore'
+                                        AND NomeBiblioteca = '$nomeBiblioteca'
                                         GROUP BY P.IdPrenotazioneCartaceo;";
                                 
                                 $res = $pdo -> query($sql);
@@ -90,6 +114,7 @@
                                 $sql = "SELECT P.IdPrenotazioneCartaceo, U.Nome, U.Cognome, Count(P.IdPrenotazioneCartaceo) AS Libri
                                         FROM PrenotazioneCartaceo AS P
                                         JOIN Utente AS U ON (P.EmailUtilizzatore = U.Email)
+                                        WHERE NomeBiblioteca = '$nomeBiblioteca'
                                         GROUP BY P.IdPrenotazioneCartaceo;";
                                 $res = $pdo -> query($sql);
                             }

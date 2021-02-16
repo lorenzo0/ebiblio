@@ -7,7 +7,7 @@ USE ebiblio;
 CREATE TABLE Biblioteca(
 	Nome varchar(255) PRIMARY KEY,
     Indirizzo varchar(255),
-    Email varchar(255) UNIQUE,
+    Email varchar(255),
     URLSito varchar(255),
     Latitudine int(3),
     Longitudine int(3),
@@ -17,19 +17,19 @@ CREATE TABLE Biblioteca(
 
 CREATE TABLE Foto(
 	NomeFoto varchar(255),
-    EmailBiblioteca varchar(255),
+    NomeBiblioteca varchar(255),
     FileFoto blob,
-    FOREIGN KEY(EmailBiblioteca) REFERENCES Biblioteca(Email) ON DELETE CASCADE,
-    PRIMARY KEY (NomeFoto, EmailBiblioteca)
+    FOREIGN KEY(NomeBiblioteca) REFERENCES Biblioteca(Nome) ON DELETE CASCADE,
+    PRIMARY KEY (NomeFoto, NomeBiblioteca)
 );
 
 CREATE TABLE PostoLettura(
 	Id int(10) AUTO_INCREMENT,
-    EmailBiblioteca varchar(255),
+    NomeBiblioteca varchar(255),
     Ethernet boolean,
     Corrente boolean,
-    FOREIGN KEY(EmailBiblioteca) REFERENCES Biblioteca(Email) ON DELETE CASCADE,
-    PRIMARY KEY(Id, EmailBiblioteca)
+    FOREIGN KEY(NomeBiblioteca) REFERENCES Biblioteca(Nome) ON DELETE CASCADE,
+    PRIMARY KEY(Id, NomeBiblioteca)
 );
 
 CREATE TABLE Libro(
@@ -42,11 +42,11 @@ CREATE TABLE Libro(
 );
 
 CREATE TABLE LibriDisponibili(
-    EmailBiblioteca varchar(255),
+    NomeBiblioteca varchar(255),
     CodiceISBN int(10),
-    FOREIGN KEY(EmailBiblioteca) REFERENCES Biblioteca(Email) ON DELETE CASCADE,
+    FOREIGN KEY(NomeBiblioteca) REFERENCES Biblioteca(Nome) ON DELETE CASCADE,
     FOREIGN KEY(CodiceISBN) REFERENCES Libro(CodiceISBN) ON DELETE CASCADE,
-    PRIMARY KEY(EmailBiblioteca, CodiceISBN)
+    PRIMARY KEY(NomeBiblioteca, CodiceISBN)
 );
 
 CREATE TABLE Autore(
@@ -93,8 +93,10 @@ CREATE TABLE Utente(
 
 CREATE TABLE Amministratore(
     EmailUtente varchar(255) PRIMARY KEY,
+    NomeBibliotecaAmministrata varchar(255),
     Qualifica varchar(255),
-    FOREIGN KEY(EmailUtente) REFERENCES Utente(Email) ON DELETE CASCADE
+    FOREIGN KEY(EmailUtente) REFERENCES Utente(Email) ON DELETE CASCADE,
+    FOREIGN KEY(NomeBibliotecaAmministrata) REFERENCES Biblioteca(Nome) 
 );
 
 CREATE TABLE Volontario(
@@ -117,8 +119,10 @@ CREATE TABLE PrenotazioneCartaceo(
     AvvioPrenotazione date,
     FinePrenotazione date,
     EmailUtilizzatore varchar(255),
+    NomeBiblioteca varchar(255),
     FOREIGN KEY(CodiceISBNCartaceo) REFERENCES Cartaceo(CodiceISBN) ON DELETE CASCADE,
     FOREIGN KEY(EmailUtilizzatore) REFERENCES Utilizzatore(EmailUtente) ON DELETE CASCADE,
+    FOREIGN KEY(NomeBiblioteca) REFERENCES Biblioteca(Nome) ON DELETE CASCADE,
     PRIMARY KEY(IdPrenotazioneCartaceo, CodiceISBNCartaceo)
 );
 
