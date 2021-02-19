@@ -27,7 +27,7 @@
         <div class="container">
             <div class="card mt-4" style="border: 0">
                 <article class="card-body mx-auto" style="max-width: 400px;">
-                    <h4 class="card-title mt-3 text-center">Prenotazione Posto Lettura</h4>
+                    <h4 class="card-title mt-3 text-center">Prenotazione Libro Cartaceo</h4>
                     <div class="imgcontainer">
                         <img src="../../../images/postoLettura.png" alt="Avatar" class="avatar">
                     </div>
@@ -41,8 +41,26 @@
                             <input type="text" placeholder="Titolo libro" class="form-control" name="Titolo" id="Titolo" required>
                        </div> 
                        
+                       
+                       <label> Seleziona il genere del libro </label>
                        <div class="form-group input-group">
-                            <input type="text" placeholder="Genere" class="form-control" name="Genere" id="Genere" required>
+                            <select name="Genere" id="Genere" class="form-control" >
+                                <option value='none'> ----- </option>
+                                <?php
+                                
+                                    require '../../../../connectionDB/connection.php';   
+
+                                    try{
+                                        $sql = "SELECT Distinct(Genere) FROM Libro";
+                                        $res = $pdo -> query($sql);
+                                    }catch(PDOException $e){echo $e->getMessage();}	
+
+                                    while ($row = $res->fetch()) {
+                                        echo '<option value=' . $row['Genere'] . '>' . $row['Genere'] . '</option>';
+                                    }
+
+                                ?>
+                            </select>
                        </div> 
                        
                         <div class="form-group input-group">
@@ -50,8 +68,6 @@
                             <select name="Biblioteca" id="Biblioteca" class="form-control" >
                                 <option value='none'> ----- </option>
                                 <?php
-                                
-                                    require '../../../../connectionDB/connection.php';   
 
                                     try{
                                         $sql = "SELECT Nome FROM Biblioteca";

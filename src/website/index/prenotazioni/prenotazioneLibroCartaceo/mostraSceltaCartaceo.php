@@ -29,9 +29,9 @@
             <div class="card mt-4" style="border: 0">
                 <article class="card-body mx-auto" style="max-width: 1200px;">
                     
-                    <button class="backHomePage"> <a style="color:black;" href="../../home/homepage.php"> Torna alla homepage </a></button>
+                    <button class="backHomePage"> <a style="color:black;" href="controllaDisponibilitaCartaceo.php"> Torna alla ricerca </a></button>
 
-                    <h4 class="card-title mt-3 text-center">Tutte le biblioteche</h4>
+                    <h4 class="card-title mt-3 text-center">Libri ora disponibili</h4>
 
                     <div class="imgcontainer" style="margin-bottom: 50px;">
                         <a href="visualizzazioneBiblioteca.php"><img src="../../../images/library.png" alt="Avatar" class="avatar"></a>
@@ -127,7 +127,7 @@
                                 echo "<td>" . $titolo . "</td>";
                                 echo "<td>" . $nomeBiblioteca . "</td>";
                                 echo "<td>" . $statoConservazione . "</td>";
-                                echo "<td>" . "<button style='background-color: #7ABB3B;'class=" . "btn btn-primary btn-block" . " onclick=" . "location.href='prenotaPostoLettura.php?Id=" . "$codiceIsbn" . "&Inizio=" . $nomeBiblioteca . "'" . "> Prenota! </button></td>";
+                                echo "<td>" . "<button style='background-color: #7ABB3B;'class=" . "btn btn-primary btn-block" . " onclick=" . "location.href='prenotaCartaceo.php?Id=" . "$codiceIsbn" . "&Nome=" . $nomeBiblioteca . "'" . "> Prenota! </button></td>";
                                 echo "</tr>"; 
                             }        
                     echo "</table></tbody>";
