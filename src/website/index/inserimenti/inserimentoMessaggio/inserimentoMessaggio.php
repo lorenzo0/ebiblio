@@ -35,7 +35,7 @@
             $data = date("Y-m-d");
             
             $sql = "INSERT INTO Messaggio VALUES(0, '$emailAmministratore', '$emailUtilizzatore', '$data', '$titolo', '$messaggio')";
-            $res = $pdo -> exec($sql);
+            $res = $pdo -> query($sql);
             
             if($res==0)
                 echo "<script> alert('Il messaggio non è stato inserito correttamente, riprova!'); window.location.href='inserimentoMessaggio.php'; </script>";

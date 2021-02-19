@@ -116,7 +116,7 @@
                         $sql = "INSERT INTO Consegna (IdConsegna, IdPrenotazioneCartaceo, EmailVolontario,  EmailUtilizzatore, Note, Tipo, DataConsegna) VALUES (0,'$idPrenotazione', '$emailVolontario','$emailUtilizzatore', '$note', '$tipologiaConsegna', '$data')";
                         
                     
-                        $res2 = $pdo->exec($sql);
+                        $res2 = $pdo->query($sql);
                         
                         if ($res>0) {
                            echo "<script> alert('Consegna inserita correttamente!'); window.location.href='../home/home.php'; </script>";

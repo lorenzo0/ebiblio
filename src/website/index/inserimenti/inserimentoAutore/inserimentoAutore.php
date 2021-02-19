@@ -31,7 +31,7 @@
                 $nomeAutore = $_POST['nomeAutore'];
 
                 $sql = "INSERT INTO Autore VALUES (0,'$nomeAutore')";
-                $res = $pdo->exec($sql);
+                $res = $pdo->query($sql);
 
                 if($res>0)
                     echo "<script> alert('Autore inserito correttamente'); window.location.href='../../home/home.php'; </script>";

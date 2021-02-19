@@ -29,7 +29,7 @@ while($row=$res->fetch()) {
 
 try{	
 	 $sql = "INSERT INTO Libro VALUES ('$codiceISBN','$titolo','$anno','$genere','$nomeEdizione', '$tipoLibro')";		
-     $res = $pdo->exec($sql);
+     $res = $pdo->query($sql);
 }	
 catch(PDOException $e)	{	
 	 echo($e->getMesssage());	
@@ -49,10 +49,10 @@ if($res>0){
             
             try{	
                  $sql = "INSERT INTO cartaceo VALUES ($codiceISBN,'$conservazione','Disponibile','$pagine','$scaffale')";	
-                 $res = $pdo->exec($sql);
+                 $res = $pdo->query($sql);
                  
                  $sql_dispCartaceo = "INSERT INTO LibriDisponibili VALUES ('$nomeBiblioteca',$codiceISBN, $numeroCopie )";
-                 $pdo -> exec($sql_dispCartaceo);
+                 $pdo -> query($sql_dispCartaceo);
             }	
             catch(PDOException $e)	{	
                  echo($e->getMesssage());	
@@ -67,7 +67,7 @@ if($res>0){
             
             try{	
                  $sql1 = "INSERT INTO Ebook (CodiceISBN, PDF, Dimensione, NumeroAccessi) VALUES ('$codiceISBN', '$pdf', 80, 0)";
-                 $pdo->exec($sql);
+                 $pdo->query($sql);
 
             }	
             catch(PDOException $e)	{	
@@ -88,10 +88,10 @@ if($res>0){
             
             try{	
                  $sql = "INSERT INTO cartaceo VALUES ($codiceISBN,'$conservazione','Disponibile','$pagine','$scaffale')";	
-                 $res = $pdo->exec($sql);
+                 $res = $pdo->query($sql);
                 
                  $sql_dispCartaceo = "INSERT INTO LibriDisponibili VALUES ('$nomeBiblioteca',$codiceISBN, $numeroCopie )";
-                 $pdo -> exec($sql_dispCartaceo);
+                 $pdo -> query($sql_dispCartaceo);
             }	
             catch(PDOException $e)	{	
                  echo($e->getMesssage());	
@@ -100,7 +100,7 @@ if($res>0){
             
             try{	
                  $sql1 = "INSERT INTO ebook VALUES ('$codiceISBN','$pdf')";
-                 $res1 = $pdo->exec($sql);
+                 $res1 = $pdo->query($sql);
             }	
             catch(PDOException $e)	{	
                  echo($e->getMesssage());	

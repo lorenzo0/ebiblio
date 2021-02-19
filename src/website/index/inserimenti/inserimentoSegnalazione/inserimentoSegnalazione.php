@@ -32,7 +32,7 @@
             $data = date("Y/m/d");
             
             $sql = "INSERT INTO Segnalazione VALUES(0, '$emailAmministratore', '$emailUtilizzatore', '$data', '$nota')";
-            $res = $pdo -> exec($sql);
+            $res = $pdo -> query($sql);
             
             if($res=0)
                 echo "<script> alert('La segnalazione non è stata inserita correttamente, riprova!'); window.location.href='inserimentoSegnalazione.php'; </script>";

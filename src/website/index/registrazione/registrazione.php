@@ -56,7 +56,7 @@
                         $currentData = date("Y/m/d");
                         try {
                             $sql = "INSERT INTO Utilizzatore VALUES('$emailUtente', '$professione', 'Attivo', '$currentData')";
-                            $res=$pdo->exec($sql);
+                            $res=$pdo->query($sql);
                         }catch(PDOException $e) {
                             echo("Query SQL Failed: ".$e->getMessage());
                             exit();
