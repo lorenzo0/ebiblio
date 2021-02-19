@@ -10,6 +10,23 @@
     $nomeEdizione = $_POST['nomeEdizione'];
     $tipoLibro = $_POST['tipoLibro'];
 
+$_SESSION['email-accesso'] = 'emailAMM2@gmail.it';
+
+try {
+    $sql = "SELECT NomeBibliotecaAmministrata
+            FROM Amministratore 
+            WHERE EmailUtente = '" . $_SESSION['email-accesso'] . "'";
+    $res=$pdo->query($sql);
+}catch(PDOException $e) {
+    echo("Query SQL Failed: ".$e->getMessage());
+    exit();
+}
+
+while($row=$res->fetch()) {
+    $nomeBiblioteca = $row['NomeBibliotecaAmministrata'];
+}
+
+
 try{	
 	 $sql = "INSERT INTO Libro VALUES ('$codiceISBN','$titolo','$anno','$genere','$nomeEdizione', '$tipoLibro')";		
      $res = $pdo->exec($sql);
@@ -27,10 +44,15 @@ if($res>0){
             $conservazione = $_POST['statoConservazione'];
             $pagine = $_POST['numeroPagine'];
             $scaffale = $_POST['numeroScaffale'];
+            $numeroCopie = $_POST['numeroCopie'];
+
             
             try{	
-                 $sql = "INSERT INTO cartaceo VALUES ('$codiceISBN','$conservazione','Disponibile','$pagine','$scaffale', 1)";	
+                 $sql = "INSERT INTO cartaceo VALUES ($codiceISBN,'$conservazione','Disponibile','$pagine','$scaffale')";	
                  $res = $pdo->exec($sql);
+                 
+                 $sql_dispCartaceo = "INSERT INTO LibriDisponibili VALUES ('$nomeBiblioteca',$codiceISBN, $numeroCopie )";
+                 $pdo -> exec($sql_dispCartaceo);
             }	
             catch(PDOException $e)	{	
                  echo($e->getMesssage());	
@@ -46,13 +68,13 @@ if($res>0){
             try{	
                  $sql1 = "INSERT INTO Ebook (CodiceISBN, PDF, Dimensione, NumeroAccessi) VALUES ('$codiceISBN', '$pdf', 80, 0)";
                  $pdo->exec($sql);
+
             }	
             catch(PDOException $e)	{	
                  echo($e->getMesssage());
                  exit();	
             }	
-            
-            //$sql = "INSERT INTO ebook VALUES ('$codiceISBN','$nomePDF', '$pdf',0, 0)";
+    
             break;
             
         case 'Entrambi':
@@ -60,10 +82,16 @@ if($res>0){
             $pagine = $_POST['numeroPagine'];
             $scaffale = $_POST['numeroScaffale'];
             $pdf = $_POST['pdf'];
+            $numeroCopie = $_POST['numeroCopie'];
+
+            
             
             try{	
-                 $sql = "INSERT INTO cartaceo VALUES ('$codiceISBN','$conservazione','Disponibile','$pagine','$scaffale')";	
+                 $sql = "INSERT INTO cartaceo VALUES ($codiceISBN,'$conservazione','Disponibile','$pagine','$scaffale')";	
                  $res = $pdo->exec($sql);
+                
+                 $sql_dispCartaceo = "INSERT INTO LibriDisponibili VALUES ('$nomeBiblioteca',$codiceISBN, $numeroCopie )";
+                 $pdo -> exec($sql_dispCartaceo);
             }	
             catch(PDOException $e)	{	
                  echo($e->getMesssage());	

@@ -41,8 +41,12 @@
                     
                         require '../../../../connectionDB/connection.php';
                     
-                        if(isset($_POST['Ethernet'])) $ethernet = 1; else $ethernet = 0;
-                        if(isset($_POST['Power'])) $corrente = 1; else $corrente = 0;
+                        if(isset($_POST['Ethernet']) &&($_POST['Ethernet']=='yes')) $ethernet = 1; else $ethernet = 0;
+                        if(isset($_POST['Power']) && ($_POST['Power']=='yes')) $corrente = 1; else $corrente = 0;
+                    
+                        echo $ethernet;
+                        echo $corrente;
+                    
                         $data = $_POST['Data'];
                         $oraInizio = intval($_POST['OraInizio']);
                         $durata = intval($_POST['Durata']);
@@ -52,25 +56,26 @@
                         try{
                             
                             if($_POST['Biblioteca'] != 'none'){ 
-                            $nome = $_POST['Biblioteca'];
-                            $sql = "SELECT Nome, Id
-                                    FROM PostoLettura join biblioteca on (NomeBiblioteca = Nome)
-                                    WHERE Id NOT IN (SELECT IdPostoLettura
-                                                     FROM PrenotazionePostoLettura 
-                                                     JOIN PostoLettura ON (IdPostoLettura = Id)
-                                                     JOIN biblioteca ON (NomeBiblioteca = Nome)
-                                                     WHERE 9 BETWEEN $oraInizio AND $oraFine
-                                                     AND Nome = '$nome' AND Ethernet=$ethernet AND Corrente=$corrente);";
+                                $nome = $_POST['Biblioteca'];
+                                $sql = "SELECT NomeBiblioteca, Id, Ethernet, Corrente
+                                        FROM PostoLettura 
+                                        WHERE Ethernet=$ethernet AND Corrente=$corrente
+                                        AND Id NOT IN (SELECT IdPostoLettura 
+                                                         FROM PrenotazionePostoLettura 
+                                                         JOIN PostoLettura ON (IdPostoLettura = Id) 
+                                                         WHERE OraFine BETWEEN '" . $oraInizio . ":00:00' and '" . $oraFine . ":00:00'
+                                                         AND DataPrenotazione = '$data' AND NomeBiblioteca = '$nome')";
                              }else{
-                                $sql = "SELECT Nome, Id
-                                    FROM PostoLettura join biblioteca on (NomeBiblioteca = Nome)
-                                    WHERE Id NOT IN (SELECT IdPostoLettura
-                                                     FROM PrenotazionePostoLettura 
-                                                     JOIN PostoLettura ON (IdPostoLettura = Id)
-                                                     JOIN biblioteca ON (NomeBiblioteca = Nome)
-                                                     WHERE 9 BETWEEN $oraInizio AND $oraFine
-                                                     AND Ethernet=$ethernet AND Corrente=$corrente);";
+                                $sql = "SELECT NomeBiblioteca, Id, Ethernet, Corrente
+                                        FROM PostoLettura 
+                                        WHERE Ethernet=$ethernet AND Corrente=$corrente
+                                        AND Id NOT IN (SELECT IdPostoLettura 
+                                                         FROM PrenotazionePostoLettura 
+                                                         JOIN PostoLettura ON (IdPostoLettura = Id) 
+                                                         WHERE OraFine BETWEEN '" . $oraInizio . ":00:00' and '" . $oraFine . ":00:00'
+                                                         AND DataPrenotazione = '$data');";
                             }
+                            
                             $res = $pdo -> query($sql);
                             
                         }catch(PDOException $e){echo $e->getMessage();}
@@ -92,8 +97,10 @@
                     
 
                             while ($row = $res->fetch()) {
-                                $nomeBiblioteca = $row['Nome'];
+                                $nomeBiblioteca = $row['NomeBiblioteca'];
                                 $idPL = $row['Id'];
+                                $ethernetTrovato = $row['Ethernet'];
+                                $correnteTrovato = $row['Corrente'];
                                 
                                 echo "<tr>"; 
                                 echo "<td><img src=" . "../../../images/desk.png" . " alt=" . "Book" . " class=" . "avatarTableBiblio" . "></td>";
@@ -104,10 +111,13 @@
                                     if($ethernet=1) echo 'Disponibile'; else echo 'Non disponibile';
                                 echo "</td>";
                                 echo "<td>";
-                                if($corrente=1) echo 'Disponibile'; else echo 'Non disponibile';
+                                    if($corrente=1) echo 'Disponibile'; else echo 'Non disponibile';
                                 echo "</td>";
                                 echo "<td>" . "<button style='background-color: #7ABB3B;'class=" . "btn btn-primary btn-block" . " onclick=" . "location.href='prenotaPostoLettura.php?Id=" . "$idPL" . "&Inizio=" . $oraInizio . "&Fine=" . $oraFine . "&Data=" . $data . "'" . "> Prenota! </button></td>";
                                 echo "</tr>"; 
+                                echo $correnteTrovato;
+                                echo $ethernetTrovato;
+                                echo '--';
                             }        
                     echo "</table></tbody>";
                     ?>

@@ -44,6 +44,7 @@ CREATE TABLE Libro(
 CREATE TABLE LibriDisponibili(
     NomeBiblioteca varchar(255),
     CodiceISBN int(10),
+    NumeroCopie int(10),
     FOREIGN KEY(NomeBiblioteca) REFERENCES Biblioteca(Nome) ON DELETE CASCADE,
     FOREIGN KEY(CodiceISBN) REFERENCES Libro(CodiceISBN) ON DELETE CASCADE,
     PRIMARY KEY(NomeBiblioteca, CodiceISBN)
@@ -67,7 +68,6 @@ CREATE TABLE Cartaceo(
 	StatoPrestito enum("Disponibile","Prenotato","Consegnato"),
 	NumeroPagine int(10),
     NumeroScaffale int(10),
-    NumeroCopie int(10),
     FOREIGN KEY(CodiceISBN) REFERENCES Libro(CodiceISBN) ON DELETE CASCADE
 );
 

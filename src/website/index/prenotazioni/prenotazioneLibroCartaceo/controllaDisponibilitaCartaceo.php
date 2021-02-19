@@ -31,25 +31,27 @@
                     <div class="imgcontainer">
                         <img src="../../../images/postoLettura.png" alt="Avatar" class="avatar">
                     </div>
-                   <form action="mostraScelta.php" method="post"> 
+                   <form action="mostraSceltaCartaceo.php" method="post"> 
+                       
+                       <div class="form-group input-group">
+                            <input type="number" placeholder="Codice ISBN libro" class="form-control" name="Isbn" id="Isbn">
+                       </div> 
+                       
+                       <div class="form-group input-group">
+                            <input type="text" placeholder="Titolo libro" class="form-control" name="Titolo" id="Titolo" required>
+                       </div> 
+                       
+                       <div class="form-group input-group">
+                            <input type="text" placeholder="Genere" class="form-control" name="Genere" id="Genere" required>
+                       </div> 
                        
                         <div class="form-group input-group">
-                            <input type="checkbox" id="Ethernet" name="Ethernet" value="yes">
-                            <label style="margin-left: 15px; margin-right: 50px;"> Ethernet </label>
-                            
-                            <input type="checkbox" id="Power" name="Power" value="yes">
-                            <label style="margin-left: 15px;"> Power </label>
-                       </div>
-                       
-                        <div class="form-group input-group">
-                            <label> Hai una biblioteca in particolare dove vorresti andare?</label>
-                            <select name="Biblioteca" id="Biblioteca" class="form-control">
+                            <label> Hai una biblioteca in particolare dove vorresti cercare il libro?</label>
+                            <select name="Biblioteca" id="Biblioteca" class="form-control" >
                                 <option value='none'> ----- </option>
                                 <?php
                                 
                                     require '../../../../connectionDB/connection.php';   
-                                
-                                    $_SESSION['email-accesso'] = 'utilizzatore2@gmail.it';
 
                                     try{
                                         $sql = "SELECT Nome FROM Biblioteca";
@@ -62,33 +64,6 @@
 
                                 ?>
                             </select>
-                        </div> 
-                       
-                       <label> Inserisci la data in cui vorresti prenotare</label>
-                       <div class="form-group input-group">
-                            <input type="date" class="form-control" name="Data" required>
-                        </div> 
-                       
-                       <div class="form-group input-group">
-                            <label> A che ora vorresti iniziare la tua prenotazione? </label>
-                               <select class="form-control" id="OraInizio" name="OraInizio" required>
-                                    <?php   
-
-                                        for($i=9;$i<20;$i++){
-                                            echo '<option value=' . $i. '>' . $i . ':00' . '</option>';
-                                        }
-
-                                    ?>
-                               </select>
-                        </div> 
-                       
-                       <div class="form-group input-group">
-                            <label> Per quanto tempo vuoi prenotare il posto lettura? </label>
-                              <select class="form-control" id="Durata" name="Durata" required>
-                                <option value= 1>1 ora</option>
-                                <option value= 2>2 ore</option>
-                                <option value= 3>3 ore</option>
-                              </select>
                         </div>
                        
                        <div class="form-group">

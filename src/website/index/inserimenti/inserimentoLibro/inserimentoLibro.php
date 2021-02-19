@@ -13,7 +13,7 @@
     <link href="../../../css/bootstrap-4.0.0.css" rel="stylesheet">
 	<link href="../../../css/foglioStile.css" rel="stylesheet">
 	<link href="https://fonts.googleapis.com/css?family=Noto+Sans&display=swap" rel="stylesheet">    
-    <script src="../../js/script.js"></script>
+    <script src="../../../js/script.js"></script>
     <script>
         $(function loadNavFoo(){
           $("#navbar").load("../../utils/navbar.html"); 
@@ -81,6 +81,10 @@
 
                            <div class="form-group input-group">
                                 <input type="text" placeholder="numero scaffale" class="form-control" name="numeroScaffale" id="numeroScaffale">
+                           </div> 
+                           
+                           <div class="form-group input-group">
+                                <input type="number" placeholder="numero copie" class="form-control" name="numeroCopie" id="numeroCopie">
                            </div> 
                        </div>
                            
