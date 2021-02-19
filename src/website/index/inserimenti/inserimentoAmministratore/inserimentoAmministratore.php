@@ -3,11 +3,11 @@
     /*istanzia una sessione che crea come se fosse un file di cookie, questo non viene gestito sul pc dell'utente ma viene gestito dalla sessione di php, è una variabile di ambiente che mi tiene molti attributi, inserisco una corrispondenza chiave-valore all'interno della sessione, 
     ogni volta che faccio session start, recupero tutti chiave-valore inseriti all'intenro della sessione*/
                
-    //require '../../../connectionDB/connection.php';
+    require '../../../../connectionDB/connection.php';
 
-    session_start();
+    //session_start();
 
-    $dsn = 'mysql:dbname=ebiblio;host=127.0.0.1';
+    /*$dsn = 'mysql:dbname=ebiblio;host=127.0.0.1';
     $user = 'root';
     $password = 'root';
 
@@ -16,7 +16,7 @@
 
     } catch (PDOException $e) {
         echo 'Connection failed: ' . $e->getMessage();
-    }
+    }*/
 
     $nomeUtente= $_POST['nomeUtente'];
     $cognomeUtente = $_POST['cognomeUtente'];

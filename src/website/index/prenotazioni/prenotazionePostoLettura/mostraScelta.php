@@ -13,19 +13,18 @@
 	<link href="../../../css/foglioStile.css" rel="stylesheet">
 	<link href="https://fonts.googleapis.com/css?family=Noto+Sans&display=swap" rel="stylesheet">  
       
-    <!-- Script JS -->
     <script src="../../../js/script.js"></script>
     <script>
         $(function loadNavFoo(){
-          $("#header").load("../../utils/navbar.html"); 
+          $("#navbar").load("../../utils/navbar.html"); 
           $("#footer").load("../../utils/footer.html"); 
         });
     </script>
 
   </head>
-    
+    <header></header>
     <body>
-        <div id="header"></div>
+        <div id="navbar"></div>
         <div class="container">
             <div class="card mt-4" style="border: 0">
                 <article class="card-body mx-auto" style="max-width: 1200px;">

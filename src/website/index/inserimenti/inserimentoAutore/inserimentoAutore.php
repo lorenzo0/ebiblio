@@ -1,7 +1,9 @@
 <?php
+
+    require '../../../../connectionDB/connection.php';
     session_start();
 
-    $dsn = 'mysql:dbname=ebiblio;host=127.0.0.1';
+    /*$dsn = 'mysql:dbname=ebiblio;host=127.0.0.1';
     $user = 'root';
     $password = 'root';
 
@@ -10,7 +12,7 @@
 
     } catch (PDOException $e) {
         echo 'Connection failed: ' . $e->getMessage();
-    }
+    }*/
 
     $nomeAutore = $_POST['nomeAutore'];
  

@@ -16,13 +16,13 @@
     <script src="../../js/script.js"></script>
     <script>
         $(function loadNavFoo(){
-          $("#header").load("../utils/navbar.html"); 
-          $("#footer").load("../utils/footer.html"); 
+          $("#navbar").load("../utils/navbar.html");
+          $("#footer").load("../utils/footer.html");
         });
     </script>
       
   </head>
-    
+    <header></header>
     <body>
         
         <?php 
@@ -40,7 +40,7 @@
             }
         ?>
         
-        <div id="header"></div>
+        <div id="navbar"></div>
         <div class="container">
             <div class="card mt-4" style="border: 0">
                 <article class="card-body mx-auto" style="max-width: 400px;">
@@ -55,13 +55,12 @@
                        
                        <div class="form-group input-group">
                             <button type="submit" class="btn btn-primary btn-block" name="inserisci"> Aggiorna il tuo recapito! </button>
-                       </div> 
+                       </div>
                    </form>
-               
                 </article>
             </div>
-
         </div>
-        <div id="footer"></div>
+        
+    <div id="footer"></div>
     </body>
 </html>

@@ -16,13 +16,13 @@
     <script src="../../js/script.js"></script>
     <script>
         $(function loadNavFoo(){
-          $("#header").load("../utils/navbar.html"); 
+          $("#navbar").load("../utils/navbar.html"); 
           $("#footer").load("../utils/footer.html"); 
         });
     </script>
 
   </head>
-    
+    <header></header>
     <body>
         <?php
             require '../../../connectionDB/connection.php';
@@ -42,7 +42,7 @@
                     $recapitoTelefonico = $row['RecapitoTelefonico'];
                 }        
         ?>
-        <div id="header"></div>
+        <div id="navbar"></div>
         <div class="container">
             <div class="card mt-4" style="border: 0">
                 <article class="card-body mx-auto" style="max-width: 400px;">
@@ -50,7 +50,7 @@
                     <h4 class="card-title mt-3 text-center">Your profile</h4>
 
                     <div class="imgcontainer" style="margin-bottom: 50px;">
-                        <img src="../../images/img_avatar2.png" alt="Avatar" class="avatar">
+                        <img src="../../images/users.png" alt="Avatar" class="avatar">
                     </div>
                     
                     <div class="form-group row">

@@ -1,6 +1,6 @@
 <?php
 
-require '../../../connectionDB/connection.php';
+require '../../../../connectionDB/connection.php';
 
 $isbn = $_POST['codiceIsbn'];
 

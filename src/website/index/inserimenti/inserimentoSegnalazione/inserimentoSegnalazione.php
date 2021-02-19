@@ -8,18 +8,22 @@
 	<script src="https://kit.fontawesome.com/188e218822.js"></script>
       
 	<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <link href="../../css/bootstrap-4.0.0.css" rel="stylesheet">
-	<link href="../../css/foglioStile.css" rel="stylesheet">
+    <link href="../../../css/bootstrap-4.0.0.css" rel="stylesheet">
+	<link href="../../../css/foglioStile.css" rel="stylesheet">
 	<link href="https://fonts.googleapis.com/css?family=Noto+Sans&display=swap" rel="stylesheet">    
-      
-    <!-- Script JS -->
-    <script src="../../js/script.js"></script>
-      
+    <script src="../../../js/script.js"></script>
+    <script>
+        $(function loadNavFoo(){
+          $("#navbar").load("../../utils/navbar.html"); 
+          $("#footer").load("../../utils/footer.html"); 
+        });
+   </script>
   </head>
+    <header></header>
     
     <?php
     
-    require '../../../connectionDB/connection.php';
+    require '../../../../connectionDB/connection.php';
     
         if(isset($_POST['segnalazione'])){
             $emailAmministratore = $_SESSION['email-accesso'];
@@ -37,27 +41,15 @@
         }
         
     ?>
-    
+    <header></header>
     <body>
-        <nav class="navbar navbar-expand-lg navbar-dark bg-verde">
-          <a class="navbar-brand" href="#"><img src="../../images/bookcase.png" alt="brand"/></a>
-          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-          </button>
-          <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav mr-auto">
-
-            </ul>
-              <a class="nav-link metalink" href="#"><img src="../../images/bookcase.png" alt="brand"/></a>
-
-          </div>
-        </nav>
+        <div id="navbar"></div>
         <div class="container">
             <div class="card mt-4" style="border: 0">
                 <article class="card-body mx-auto" style="max-width: 400px;">
                     <h4 class="card-title mt-3 text-center">Segnala un utente utilizzatore</h4>
                     <div class="imgcontainer">
-                        <img src="../../images/warning.png" alt="Avatar" class="avatar">
+                        <img src="../../../images/warning.png" alt="Avatar" width="50">
                     </div>
                    <form method="post"> 
                        
@@ -92,14 +84,6 @@
              
 
         </div>
-        <footer class="text-center">
-          <div class="container">
-            <div class="row">
-              <div class="col-12 pt-3">
-                <p> Progetto di Base di dati - 2020 </p>
-              </div>
-            </div>
-          </div>
-        </footer>
+        <div id="footer"></div>
     </body>
 </html>

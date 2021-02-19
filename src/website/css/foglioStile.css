@@ -1,5 +1,19 @@
 @charset "utf-8";
 
+header {
+    background-image: url(../../../src/website/images/header3.png);
+    max-width: 110%;
+    height: 40vh;
+    background-position: center top;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-attachment: local;
+    position: relative;
+    min-width: 865px;
+    overflow-x: hidden;
+    z-index: -1;
+}
+
 body {
 	font-family: 'Noto Sans', sans-serif;
 }
@@ -8,6 +22,9 @@ section {
 	margin-top: 1rem;
 	margin: 5rem;
 
+}
+.bg-rosso {
+	background-color: #bb2e29;
 }
 .bg-verde {
 	background-color: #7ABB3B;
@@ -23,13 +40,32 @@ a.metalink {
 
 .cerca {
 	color: #fff;
-    background-color: #606f9c;
+    background-color: #002a4f;
     border-color: #606f9c;
 }
 .cerca:hover {
+	color: #002a4f;
+    background-color: #fff;
+    border-color: #474747;
+}
+.login {
 	color: #fff;
-    background-color: #B8CE2E;
-    border-color: #B8CE2E;
+    background-color: #002a4f;
+    border-color: #606f9c;
+}
+.login:hover {
+	color: #002a4f;
+    background-color: #fff;
+    border-color: #474747;
+}
+.tab-navbar {
+	color: #fff;
+    border-color: #606f9c;
+}
+.tab-navbar:hover {
+	color: #002a4f;
+    background-color: #fff;
+    border-color: #474747;
 }
 
 /*risorse*/
@@ -66,6 +102,40 @@ a.card-link {
     background-color: #B8CE2E;
     border-color: #B8CE2E;
 }
+/*NAVBAR*/
+ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background-color: #bb2e29;
+}
+
+li {
+  float: left;
+}
+
+li a {
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+    border-right: 1px solid #fff;
+}
+li:last-child {
+    border-right: none;
+    background-color: #606f9c;
+}
+
+li a:hover:not(.active) {
+  background-color: #fff;
+}
+
+.active {
+    background-color: #fff;
+    color: #606f9c;
+}
 
 /*footer*/
 
@@ -87,10 +157,9 @@ a.card-link {
 
 
 footer {
-	background-color: #426E17;
+	background-color: #bb2e29;
 	color: #fff;
-    position: absolute;
-    min-width: -webkit-fill-available;
+    text-align: center;
 }
 
 /* LOGIN AND REGISTRATION FORM*/

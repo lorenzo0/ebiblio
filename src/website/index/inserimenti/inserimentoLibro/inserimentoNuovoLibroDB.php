@@ -1,6 +1,6 @@
 <?php
                 
-    require '../../../connectionDB/connection.php';
+    require '../../../../connectionDB/connection.php';
     unset($_SESSION['tipoLibro']);
 
     $codiceISBN = $_POST['codice'];
@@ -40,11 +40,7 @@ if($res>0){
             break;
             
         case 'Ebook':
-            //$directory = realpath($_POST['pdf']);
-            //$dimensione = filesize($directory);
             
-            /*$nomePDF = $_FILES['pdf']['name'];
-            $pdf = file_get_contents($_FILES['pdf']['tmp_name']);*/
             $pdf = $_POST['pdf'];
             
             try{	

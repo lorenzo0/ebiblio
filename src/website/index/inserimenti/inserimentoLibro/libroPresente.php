@@ -1,8 +1,8 @@
 <?php
 
-            require '../../../connectionDB/connection.php';
+            require '../../../../connectionDB/connection.php';
 
-            /* Se vogliamo aggiungere il campo tipo_libro */
+            /* Se vogliamo aggiungere il campo tipo_libro 
             switch($_GET['tipo']){
                 case 'Cartaceo':
                     echo '<style type="text/css">
@@ -27,7 +27,7 @@
                         #ebookGroupNotExist { display: none; }
                     </style>';
                     break;
-            }
+            }*/
         ?>
 
 
@@ -41,21 +41,21 @@
 	<script src="https://kit.fontawesome.com/188e218822.js"></script>
       
 	<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <link href="../../css/bootstrap-4.0.0.css" rel="stylesheet">
-	<link href="../../css/foglioStile.css" rel="stylesheet">
+    <link href="../../../css/bootstrap-4.0.0.css" rel="stylesheet">
+	<link href="../../../css/foglioStile.css" rel="stylesheet">
 	<link href="https://fonts.googleapis.com/css?family=Noto+Sans&display=swap" rel="stylesheet">    
       
     <!-- Script JS -->
     <script src="../../js/script.js"></script>
     <script>
         $(function loadNavFoo(){
-          $("#header").load("../utils/navbar.html"); 
-          $("#footer").load("../utils/footer.html"); 
+          $("#navbar").load("../../utils/navbar.html"); 
+          $("#footer").load("../../utils/footer.html"); 
         });
     </script>
       
   </head>
-    
+    <header></header>
     <body>
         
         <?php 
@@ -70,13 +70,13 @@
             }
         ?>
         
-        <div id="header"></div>
+        <div id="navbar"></div>
         <div class="container">
             <div class="card mt-4" style="border: 0">
                 <article class="card-body mx-auto" style="max-width: 400px;">
                     <h4 class="card-title mt-3 text-center">Aggiorna i dati del tuo libro</h4>
                     <div class="imgcontainer">
-                        <img src="../../images/ebook.png" alt="Avatar" class="avatar">
+                        <img src="../../../images/ebook.png" alt="Avatar" class="avatar">
                     </div>
                    <form method="post"> 
                        
@@ -107,15 +107,8 @@
              
 
         </div>
-        <footer class="text-center">
-          <div class="container">
-            <div class="row">
-              <div class="col-12 pt-3">
-                <p> Progetto di Base di dati - 2020 </p>
-              </div>
-            </div>
-          </div>
-        </footer>
+        <div id="footer"></div>
     </body>
-    <div id="footer"></div>
+    
+    
 </html>
