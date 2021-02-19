@@ -31,11 +31,11 @@
         
             if(isset($_POST['inserisci'])){
                 $sql = "UPDATE utente SET RecapitoTelefonico = '". $_POST['recapito'] ."' WHERE Email = '".$_SESSION['email-accesso']."'";
-                $res = $pdo->exec($sql);
+                $res = $pdo->query($sql);
                 if($res=0)
-                    echo "<script> alert('Non è stato aggiornato correttamente il valore!'); window.location.href='profilo.php'; </script>";
+                    echo "<script> alert('Non è stato aggiornato correttamente il valore!'); window.location.href='modifica-recapito.php'; </script>";
                 else
-                    echo "<script> alert('Valore aggiornato correttamente!'); window.location.href='profilo.php'; </script>";
+                    echo "<script> alert('Valore aggiornato correttamente!'); window.location.href='../profilo/profilo.php'; </script>";
                 
             }
         ?>

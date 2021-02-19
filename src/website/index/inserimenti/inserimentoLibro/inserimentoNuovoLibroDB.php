@@ -110,12 +110,12 @@ if($res>0){
     }
     
     if($res>0)
-        echo "<script> alert('Il record è stato inserito correttamente'); window.location.href='../visualizzazione/visualizzazioneLibri.php'; </script>";
+        echo "<script> alert('Il libro è stato inserito correttamente'); window.location.href='../../visualizzazione/visualizzazioneLibri.php'; </script>";
     else
-        echo "<script> alert('Il record non è stato inserito correttamente'); window.location.href='inserimentoISBN.html'; </script>";
+        echo "<script> alert('Il libro non è stato inserito correttamente'); window.location.href='inserimentoISBN.php'; </script>";
 
 }else
-    echo "<script> alert('Il record non è stato inserito correttamente'); window.location.href='inserimentoISBN.html'; </script>";
+    echo "<script> alert('Il libro non è stato inserito correttamente'); window.location.href='inserimentoISBN.html'; </script>";
     
 
 ?>

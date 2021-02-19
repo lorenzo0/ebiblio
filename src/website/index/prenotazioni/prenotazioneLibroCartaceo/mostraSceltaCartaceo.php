@@ -34,7 +34,7 @@
                     <h4 class="card-title mt-3 text-center">Libri ora disponibili</h4>
 
                     <div class="imgcontainer" style="margin-bottom: 50px;">
-                        <a href="visualizzazioneBiblioteca.php"><img src="../../../images/library.png" alt="Avatar" class="avatar"></a>
+                        <img src="../../../images/library.png" alt="Avatar" class="avatar">
                     </div>
                     
                     <?php

@@ -28,8 +28,7 @@
                     <div class="imgcontainer">
                         <img src="../../../images/desk.png" alt="Avatar" class="avatar">
                     </div>
-                   <form action="inserimentoPostoLettura.php" method="post"> 
-                       
+                   <form method="post"> 
                        
                      <div class="form-group">
                        <label for="utilizzatore">Scegli Biblioteca:</label> 

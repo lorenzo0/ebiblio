@@ -62,7 +62,7 @@
         
             if(isset($_POST['inserisci'])){
                 $sql = "UPDATE cartaceo SET NumeroCopie = NumeroCopie + 1 WHERE CodiceISBN = ".$_GET['isbn'];
-                $res = $pdo->exec($sql);
+                $res = $pdo->query($sql);
                 if($res=0)
                     echo "<script type='text/javascript'>alert('Non è stata inserita una copia!');</script>";
                 else

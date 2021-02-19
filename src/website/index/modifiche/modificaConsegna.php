@@ -43,7 +43,7 @@
                             Tipo='".$_POST['Tipo']."',
                             Dataconsegna='".$_POST['Data']."'
                             WHERE IdConsegna=".$_GET['IdConsegna'];
-                    $res = $pdo->exec($sql);
+                    $res = $pdo->query($sql);
                 }catch(PDOException $e){echo $e->getMessage();}	
                 
                 if($res>0)

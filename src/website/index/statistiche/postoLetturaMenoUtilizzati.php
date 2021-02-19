@@ -30,7 +30,7 @@
             <div class="card mt-4" style="border: 0">
                 <article class="card-body mx-auto" style="max-width: 1200px;">
                     
-                    <!--  <button class="backHomePage"> <a style="color:black;" href="visualizzazionePrenotazioni.php"> Torna alla lista </a></button>-->
+                    <button class="backHomePage"> <a style="color:black;" href="../home/home.php"> Torna alla homepage </a></button>
 
                     <h4 class="card-title mt-3 text-center">Classifica dei posti lettura meno utilizzati - rispetto al numero totale di prenotazioni effettuate</h4>
 
@@ -39,8 +39,6 @@
                     <?php
                     
                         require '../../../connectionDB/connection.php';
-                    
-                    //VISUALIZZAZIONE CLASSIFICA DEI POSTI LETTURA MENO UTILIZZATE RISPETTO AL NUMERO TOTALE DI PRENOTAZIONI EFFETTUATE
                     
                         try{
                             

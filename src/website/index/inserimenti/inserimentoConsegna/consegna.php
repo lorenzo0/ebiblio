@@ -34,7 +34,7 @@
                     <div class="imgcontainer">
                         <img src="../../../images/phone-call.png" alt="Avatar" class="avatar">
                     </div>
-                   <form action="delivery.php" method="post"> 
+                   <form method="post"> 
                        
                     <div class="form-group">
                        <label for="utilizzatore">Scegli Consegna da effettuare:</label> 
@@ -118,11 +118,11 @@
                     
                         $res2 = $pdo->exec($sql);
                         
-                        if($res2>0) {
-                            echo "great"; 
-                        } else {
-                            echo "not great";
-                        }
+                        if ($res>0) {
+                           echo "<script> alert('Consegna inserita correttamente!'); window.location.href='../home/home.php'; </script>";
+                         } else {
+                           echo "<script> alert('La consegna NON è stata inserita correttamente!'); window.location.href='consegna.php'; </script>";
+                         }
                     }
                 ?> 
             

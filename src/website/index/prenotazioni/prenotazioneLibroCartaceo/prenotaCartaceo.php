@@ -12,7 +12,7 @@ $fine =  date('y-m-d', strtotime("+15 days"));
 
 try{
     $sql = "INSERT INTO PrenotazioneCartaceo VALUES(0, $IsbnLibro, '$inizio', '$fine', '$email', '$nomeBiblioteca')";
-    $res = $pdo -> exec($sql);
+    $res = $pdo -> query($sql);
     
 }catch(PDOException $e){echo $e->getMessage();}	
 

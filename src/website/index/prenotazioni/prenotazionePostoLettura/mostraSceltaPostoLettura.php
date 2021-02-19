@@ -31,7 +31,7 @@
                     
                     <button class="backHomePage"> <a style="color:black;" href="controllaDisponibilitaPostoLettura.php"> Torna alla ricerca </a></button>
 
-                    <h4 class="card-title mt-3 text-center">Tutte le biblioteche</h4>
+                    <h4 class="card-title mt-3 text-center">Posti lettura a disposizione</h4>
 
                     <div class="imgcontainer" style="margin-bottom: 50px;">
                         <a href="visualizzazioneBiblioteca.php"><img src="../../../images/library.png" alt="Avatar" class="avatar"></a>
@@ -43,9 +43,6 @@
                     
                         if(isset($_POST['Ethernet']) &&($_POST['Ethernet']=='yes')) $ethernet = 1; else $ethernet = 0;
                         if(isset($_POST['Power']) && ($_POST['Power']=='yes')) $corrente = 1; else $corrente = 0;
-                    
-                        echo $ethernet;
-                        echo $corrente;
                     
                         $data = $_POST['Data'];
                         $oraInizio = intval($_POST['OraInizio']);
@@ -115,9 +112,6 @@
                                 echo "</td>";
                                 echo "<td>" . "<button style='background-color: #7ABB3B;'class=" . "btn btn-primary btn-block" . " onclick=" . "location.href='prenotaPostoLettura.php?Id=" . "$idPL" . "&Inizio=" . $oraInizio . "&Fine=" . $oraFine . "&Data=" . $data . "'" . "> Prenota! </button></td>";
                                 echo "</tr>"; 
-                                echo $correnteTrovato;
-                                echo $ethernetTrovato;
-                                echo '--';
                             }        
                     echo "</table></tbody>";
                     ?>

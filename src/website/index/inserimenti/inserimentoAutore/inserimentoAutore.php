@@ -1,34 +1,67 @@
-<?php
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Ebiblio - Autore</title>
+	<script src="https://kit.fontawesome.com/188e218822.js"></script>
+      
+	<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <link href="../../../css/bootstrap-4.0.0.css" rel="stylesheet">
+	<link href="../../../css/foglioStile.css" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css?family=Noto+Sans&display=swap" rel="stylesheet"> 
+      
+    <script src="../../../js/script.js"></script>
+    <script>
+        $(function loadNavFoo(){
+          $("#navbar").load("../../utils/navbar.html"); 
+          $("#footer").load("../../utils/footer.html"); 
+        });
+    </script>
+  </head>
+    <header></header>
+    <body>
+        <?php
 
-    require '../../../../connectionDB/connection.php';
-    session_start();
+            require '../../../../connectionDB/connection.php';
+        
+            if(isset($_POST['submit'])){
 
-    /*$dsn = 'mysql:dbname=ebiblio;host=127.0.0.1';
-    $user = 'root';
-    $password = 'root';
+                $nomeAutore = $_POST['nomeAutore'];
 
-    try {
-        $pdo = new PDO($dsn, $user, $password);  
+                $sql = "INSERT INTO Autore VALUES (0,'$nomeAutore')";
+                $res = $pdo->exec($sql);
 
-    } catch (PDOException $e) {
-        echo 'Connection failed: ' . $e->getMessage();
-    }*/
+                if($res>0)
+                    echo "<script> alert('Autore inserito correttamente'); window.location.href='../../home/home.php'; </script>";
+                else
+                    echo "<script> alert('L'amministratore NON è stato inserito correttamente'); window.location.href='inserimentoAmministratore.php'; </script>";
+            }
 
-    $nomeAutore = $_POST['nomeAutore'];
- 
-    $sql = "INSERT INTO Autore (Id, NomeAutore) VALUES (0,'$nomeAutore')";
-    $pdo->exec($sql);
+        ?>
+        <div id="navbar"></div>
+        <div class="container">
+            <div class="card mt-4" style="border: 0">
+                <article class="card-body mx-auto" style="max-width: 400px;">
+                    <h4 class="card-title mt-3 text-center">Inserirsci Autore</h4>
+                    <div class="imgcontainer">
+                        <img src="../../../images/writer.png" alt="Avatar" class="avatar">
+                    </div>
+                   <form method="post"> 
+                    
 
-    //Controllo presenza autore su DB
-    $sql1='SELECT COUNT(*) AS Conteggio FROM Autore WHERE (NomeAutore="'.$nomeAutore.'")';
-    $res1=$pdo->query($sql1);
-    $row=$res1->fetch();
-
-     if ($row['Conteggio']>0) {
-       echo 'Autore già presente nel DB';
-     } else {
-       echo "Autore inserito con successo" ;
-     }
-
-
-?>
+                        <input type="text" placeholder="Nome Autore" class="form-control" name="nomeAutore" id="nomeAutore" required>
+                       
+                       
+                    
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-primary btn-block" name='submit' id='submit'> Inserisci Autore </button>
+                    </div>           
+               </form>
+                </article>
+            </div>
+        </div>
+        <div id="footer"></div>
+    </body>
+</html>

@@ -25,6 +25,52 @@
   </head>
     <header></header>
     <body>
+        <?php
+
+            require '../../../connectionDB/connection.php';
+        
+            if(isset($_POST['submit'])){
+
+                $nomeUtente = $_POST['nome'];
+                $cognomeUtente = $_POST['cognome'];
+                $emailUtente = $_POST['email'];
+                $passwordUtente = $_POST['passwordUtente'];
+                $passwordUtente = md5($passwordUtente);
+                $dataNascitaUtente = $_POST['dataNascita'];
+                $tipoUtente = $_POST['tipoUtente'];
+                $luogoNascitaUtente = $_POST['luogoNascita'];
+                $recapitoUtente = $_POST['recapito'];
+                $professione = $_POST['professione'];
+
+
+
+                try {
+                    $sql = "INSERT INTO Utente VALUES('$emailUtente', '$nomeUtente', '$cognomeUtente', '$passwordUtente', '$dataNascitaUtente', '$luogoNascitaUtente', '$recapitoUtente', '$tipoUtente')";
+                    $res=$pdo->query($sql);
+                }catch(PDOException $e) {
+                    echo("Query SQL Failed: ".$e->getMessage());
+                    exit();
+                }
+
+                if($res != 0){
+                        $currentData = date("Y/m/d");
+                        try {
+                            $sql = "INSERT INTO Utilizzatore VALUES('$emailUtente', '$professione', 'Attivo', '$currentData')";
+                            $res=$pdo->exec($sql);
+                        }catch(PDOException $e) {
+                            echo("Query SQL Failed: ".$e->getMessage());
+                            exit();
+                        }
+                    }
+
+
+                if($res != 0)
+                    echo "<script> alert('Richiesta processata correttamente!'); window.location.href='../login/loginPage.html'; </script>";
+                else
+                    echo "<script> alert('La richiesta NON è stata processata correttamente!'); window.location.href='registrationPage.php'; </script>";
+            }
+
+        ?>
         <div id="navbar"></div>
         <div class="container">
             <div class="card mt-4">
@@ -33,7 +79,7 @@
                     <div class="imgcontainer">
                         <img src="../../images/book.png" alt="Avatar" class="avatar">
                     </div>
-                <form action="registration.php" method="post" onsubmit="return validateFormRegistrazione();">
+                <form method="post" onsubmit="return validateFormRegistrazione();">
                     
                     <div class="form-group input-group">
                         <input type="text" placeholder="Inserisci il tuo nome" class="form-control" name="nome" required>
@@ -68,7 +114,7 @@
                     </div> 
                     
                     <div class="form-group">
-                        <button type="submit" class="btn btn-primary btn-block"> Crea account  </button>
+                        <button type="submit" name='submit' id='submit' class="btn btn-primary btn-block"> Crea account  </button>
                     </div>     
                 <p class="text-center">Hai già un account? <a href="../login/loginPage.html">Accedi!</a> </p>      
 

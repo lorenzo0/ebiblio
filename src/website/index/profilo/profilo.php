@@ -94,9 +94,15 @@
                     </div>
                     
                     <div class="form-group row">
-                        <div class="col-1">
                             <a class="btn btn-primary" href="prenotazioniEffettuate.php">Visualizza le tue prenotazioni effettuate</a>
-                        </div>
+                    </div>
+                    
+                    <div class="form-group row">
+                            <a class="btn btn-primary" href="messaggiPersonali.php">Visualizza i messaggi ricevuti - TODO</a>
+                    </div>
+                    
+                    <div class="form-group row">
+                            <a class="btn btn-primary" href="messaggiPersonali.php">Visualizza le segnalazioni ricevute - TODO</a>
                     </div>
                     
                 </article>
