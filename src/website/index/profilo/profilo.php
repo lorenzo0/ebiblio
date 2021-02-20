@@ -98,11 +98,11 @@
                     </div>
                     
                     <div class="form-group row">
-                            <a class="btn btn-primary" href="messaggiPersonali.php">Visualizza i messaggi ricevuti - TODO</a>
+                            <a class="btn btn-primary" href="conversazioni.php">Visualizza i messaggi ricevuti </a>
                     </div>
                     
                     <div class="form-group row">
-                            <a class="btn btn-primary" href="messaggiPersonali.php">Visualizza le segnalazioni ricevute - TODO</a>
+                            <a class="btn btn-primary" href="visualizzazioneSegnalazioni.php">Visualizza le segnalazioni ricevute</a>
                     </div>
                     
                 </article>
