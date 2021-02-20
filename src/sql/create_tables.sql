@@ -3,7 +3,9 @@ CREATE SCHEMA ebiblio;
 USE ebiblio;
 
 /* Creazione tabelle*/
-
+insert into Biblioteca(Nome, Indirizzo, Email, URLSito)
+values ("Biblioteca Universitaria di Bologna", "Via Zamboni, 33-35 Bologna 40126 BO",  "bub.info@unibo.it",
+"http://www.bub.unibo.it");
 CREATE TABLE Biblioteca(
 	Nome varchar(255) PRIMARY KEY,
     Indirizzo varchar(255),
@@ -40,11 +42,11 @@ CREATE TABLE Libro(
     NomeEdizione varchar(255),
     TipoLibro enum("Cartaceo","Ebook", "Entrambi")
 );
-
+insert into LibriDisponibili
+values("Biblioteca Universitaria di Bologna", 12345678);
 CREATE TABLE LibriDisponibili(
     NomeBiblioteca varchar(255),
     CodiceISBN int(10),
-    NumeroCopie int(10),
     FOREIGN KEY(NomeBiblioteca) REFERENCES Biblioteca(Nome) ON DELETE CASCADE,
     FOREIGN KEY(CodiceISBN) REFERENCES Libro(CodiceISBN) ON DELETE CASCADE,
     PRIMARY KEY(NomeBiblioteca, CodiceISBN)
@@ -68,6 +70,7 @@ CREATE TABLE Cartaceo(
 	StatoPrestito enum("Disponibile","Prenotato","Consegnato"),
 	NumeroPagine int(10),
     NumeroScaffale int(10),
+    NumeroCopie int(10),
     FOREIGN KEY(CodiceISBN) REFERENCES Libro(CodiceISBN) ON DELETE CASCADE
 );
 
@@ -90,6 +93,7 @@ CREATE TABLE Utente(
     RecapitoTelefonico varchar(255),
     TipoUtente varchar(255)
 );
+/* TipoUtente enum('utilizzatore','volontario','amministratore','') NOT NULL*/
 
 CREATE TABLE Amministratore(
     EmailUtente varchar(255) PRIMARY KEY,
@@ -269,13 +273,21 @@ GRANT INSERT ON prenotazionepostolettura to utenteUtilizzatore;
      "impedendo qualsiasi accesso alla piattaforma da parte dell’utente sanzionato"
 	
     L'utente amministratore può fare tutto
-    
     L'utente volontario può avere accesso (insert + select + update + delete) evento di consegna
     
     L'utente utilizzatore può leggere tutti i dati ed inserire una nuova prenotazione posto lettura e cartaceo
 */
 
+INSERT INTO LIBRO
+VALUES (12345678, "il piccolo principe", 2000, "bambini", "gold", "cartaceo");
 
+INSERT INTO BIBLIOTECA
+VALUES (12345678, "il piccolo principe", 2000, "bambini", "gold", "cartaceo");
 
+SELECT l.CodiceISBN, l.Titolo
+FROM libro as l
+WHERE l.Titolo="il piccolo principe";
 
+INSERT INTO LIBRO
+VALUES (12345678, "il piccolo principe", 2000, "bambini", "gold", "cartaceo");
 
