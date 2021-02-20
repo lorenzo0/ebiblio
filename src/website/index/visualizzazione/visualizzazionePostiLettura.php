@@ -29,7 +29,7 @@
             <div class="card mt-4" style="border: 0">
                 <article class="card-body mx-auto" style="max-width: 1200px;">
                     
-                    <button class="backHomePage"> <a style="color:black;" href="../home/homepage.php"> Torna alla homepage </a></button>
+                    <button class="backHomePage"> <a style="color:black;" href="../home/home.php"> Torna alla homepage </a></button>
 
                     <h4 class="card-title mt-3 text-center">Tutti i posti lettura</h4>
 

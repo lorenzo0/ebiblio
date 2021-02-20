@@ -33,7 +33,7 @@
                 $sql = "INSERT INTO Autore VALUES (0,'$nomeAutore')";
                 $res = $pdo->query($sql);
 
-                if($res>0)
+                if($res->rowCount() > 0)
                     echo "<script> alert('Autore inserito correttamente'); window.location.href='../../home/home.php'; </script>";
                 else
                     echo "<script> alert('L'amministratore NON è stato inserito correttamente'); window.location.href='inserimentoAmministratore.php'; </script>";
@@ -50,11 +50,8 @@
                     </div>
                    <form method="post"> 
                     
-
                         <input type="text" placeholder="Nome Autore" class="form-control" name="nomeAutore" id="nomeAutore" required>
                        
-                       
-                    
                     <div class="form-group">
                         <button type="submit" class="btn btn-primary btn-block" name='submit' id='submit'> Inserisci Autore </button>
                     </div>           

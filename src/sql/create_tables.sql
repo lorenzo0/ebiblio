@@ -11,9 +11,9 @@ CREATE TABLE Biblioteca(
     Indirizzo varchar(255),
     Email varchar(255),
     URLSito varchar(255),
-    Latitudine int(3),
-    Longitudine int(3),
-    Recapito varchar(255),
+    Latitudine double(20,5),
+    Longitudine double(20,5),
+    Recapito int(15),
     Note varchar(255)
 );
 

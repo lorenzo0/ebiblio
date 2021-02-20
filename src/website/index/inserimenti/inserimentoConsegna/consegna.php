@@ -62,7 +62,7 @@
                     <div class="form-group">
                         <?php 
                             if($cont==0) 
-                                echo '<p style="color:red;">Tutte le prenotazioni sono state già consegnate!</p>';
+                                echo '<label style="color:red;">Tutte le prenotazioni sono state già consegnate!</label>';
                             else
                                 echo '<a href="../visualizzazione/visualizzazionePrenotazioni.php"> Vedi i dettagli di tutte le prenotazioni </a>'
                         ?>

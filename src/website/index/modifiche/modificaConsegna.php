@@ -46,7 +46,7 @@
                     $res = $pdo->query($sql);
                 }catch(PDOException $e){echo $e->getMessage();}	
                 
-                if($res>0)
+                if($res->rowCount() > 0)
                     echo "<script> alert('Valore aggiornato correttamente!'); window.location.href='../home/home.php'; </script>";
                 else
                     echo "<script> alert('Qualcosa è andato storto..'); window.location.href='trovaConsegna.php'; </script>";
