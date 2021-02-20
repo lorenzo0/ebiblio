@@ -6,8 +6,8 @@ $IsbnLibro = $_GET['Id'];
 $nomeBiblioteca = $_GET['Nome'];
 $email = $_SESSION['email-accesso'];
 
-$inizio = date("y-m-d");
-$fine =  date('y-m-d', strtotime("+15 days"));
+$inizio = date("Y-m-d");
+$fine =  date('Y-m-d', strtotime("+15 days"));
 
 
 try{
@@ -16,6 +16,7 @@ try{
     
 }catch(PDOException $e){echo $e->getMessage();}	
 
+echo $sql;
 
 if($res->rowCount() > 0)
     echo "<script> alert('Prenotazione effettuata correttamente!'); window.location.href='../../home/home.php'; </script>";

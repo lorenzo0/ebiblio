@@ -35,13 +35,12 @@
             $res = $pdo -> query($sql);
             
             if($res->rowCount() > 0)
-               echo "<script> alert('Segnalazione inserita correttamente!'); window.location.href='../../home/homePage.php'; </script>";
+               echo "<script> alert('Segnalazione inserita correttamente!'); window.location.href='../../home/home.php'; </script>";
             else
                 echo "<script> alert('La segnalazione non è stata inserita correttamente, riprova!'); window.location.href='inserimentoSegnalazione.php'; </script>";
         }
         
     ?>
-    <header></header>
     <body>
         <div id="navbar"></div>
         <div class="container">

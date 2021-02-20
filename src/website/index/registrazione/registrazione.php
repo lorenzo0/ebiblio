@@ -93,7 +93,7 @@
                     </div> 
                     
                     <div class="form-group input-group">
-                        <input type="password" placeholder="Inserisci la tua password" class="form-control" name="passwordUtente" required>
+                        <input type="password" placeholder="Inserisci la tua password (6 caratteri minimo)" class="form-control" name="passwordUtente" minlength="6"  required>
                     </div> 
                     
                     <div class="form-group input-group">

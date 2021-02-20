@@ -8,22 +8,23 @@
 	<script src="https://kit.fontawesome.com/188e218822.js"></script>
       
 	<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <link href="../../../css/bootstrap-4.0.0.css" rel="stylesheet">
-	<link href="../../../css/foglioStile.css" rel="stylesheet">
+    <link href="../../css/bootstrap-4.0.0.css" rel="stylesheet">
+	<link href="../../css/foglioStile.css" rel="stylesheet">
 	<link href="https://fonts.googleapis.com/css?family=Noto+Sans&display=swap" rel="stylesheet"> 
       
-    <script src="../../../js/script.js"></script>
+    <script src="../../js/script.js"></script>
     <script>
         $(function loadNavFoo(){
-          $("#navbar").load("../../utils/navbar.html"); 
-          $("#footer").load("../../utils/footer.html"); 
+          $("#navbar").load("../utils/navbar.html"); 
+          $("#footer").load("../utils/footer.html"); 
         });
    </script>
   </head>
     <header></header>
     <body>
         <?php
-            require '../../../../connectionDB/connection.php';
+        
+            require '../../../connectionDB/connection.php';
         
             if(isset($_POST['submit'])){
                 $nomeUtente= $_POST['nomeUtente'];
@@ -35,6 +36,7 @@
                 $luogoNascita = $_POST['luogoNascita'];
                 $recapito = $_POST['recapito'];
                 $qualifica = $_POST['qualifica'];
+                $nomeBiblio = $_POST['Biblioteca'];
 
                 $sql = "INSERT INTO Utente (Email, Nome, Cognome, PasswordUtente, DataNascita, LuogoNascita, RecapitoTelefonico, TipoUtente) VALUES ('$emailUtente','$nomeUtente','$cognomeUtente','$password','$dataNascita','$luogoNascita', '$recapito', 'Amministratore')";
 
@@ -42,17 +44,17 @@
 
                 if($res->rowCount() > 0){
                     try{
-                         $sql1 = "INSERT INTO Amministratore (EmailUtente, Qualifica) VALUES ('$emailUtente', '$qualifica')";
+                         $sql1 = "INSERT INTO Amministratore VALUES ('$emailUtente', '$nomeBiblio', '$qualifica')";
                          $res = $pdo->query($sql1);    
                     } catch(PDOException $e) {
                         echo($e->getMesssage());	
                         exit();	
                     } 
 
-                    if($res>0)
-                        echo "<script> alert('Amministratore inserito correttamente'); window.location.href='../../login/login.html'; </script>";
+                    if($res->rowCount()>0)
+                        echo "<script> alert('Amministratore inserito correttamente'); window.location.href='../login/login.php'; </script>";
                     else
-                        echo "<script> alert('L'amministratore NON è stato inserito correttamente'); window.location.href='inserimentoAmministratore.html'; </script>";
+                        echo "<script> alert('L'amministratore NON è stato inserito correttamente'); window.location.href='registrazioneAmministratore.php'; </script>";
                 }
             }
 
@@ -61,9 +63,9 @@
         <div class="container">
             <div class="card mt-4" style="border: 0">
                 <article class="card-body mx-auto" style="max-width: 400px;">
-                    <h4 class="card-title mt-3 text-center">Inserirsci Utente</h4>
+                    <h4 class="card-title mt-3 text-center">Inserirsci Amministratore</h4>
                     <div class="imgcontainer">
-                        <img src="../../../images/users.png" alt="Avatar" class="avatar">
+                        <img src="../../images/users.png" alt="Avatar" class="avatar">
                     </div>
                    <form method="post"> 
                     
@@ -92,12 +94,35 @@
                        </div> 
 
                         <div class="form-group input-group">
-                          <input type="text" placeholder="Recapito" class="form-control" name="recapito" id="recapito" required>
+                          <input type="number" placeholder="Recapito" class="form-control" name="recapito" id="recapito" required>
                        </div> 
                        
                        <div class="form-group input-group">
                           <input type="text" placeholder="Qualifica" class="form-control" name="qualifica" id="qualifica" required>
                        </div> 
+                       
+                       <label> Di quale biblioteca questo utente è amministratore? </label>
+                       <select id="Biblioteca" name="Biblioteca" style="margin-right: 10px;">
+                            <option value="none" selected>Biblioteca</option> 
+                           <?php 
+                           
+                           require '../../../connectionDB/connection.php';
+
+                                try {
+                                    $sql = "SELECT Nome
+                                            FROM Biblioteca";
+                                    $res=$pdo->query($sql);
+                                }catch(PDOException $e) {
+                                    echo("Query SQL Failed: ".$e->getMessage());
+                                    exit();
+                                }
+
+                                while($row=$res->fetch()) {
+                                    echo "<option value='" . $row['Nome'] . "'>" . $row['Nome'] . "</option>";
+                                }
+
+                            ?>
+                        </select>
 
                     <div class="form-group">
                         <button type="submit" name='submit' id='submit' class="btn btn-primary btn-block"> Crea Utente </button>

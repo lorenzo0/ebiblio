@@ -38,7 +38,7 @@
             $res = $pdo -> query($sql);
             
             if($res->rowCount() > 0)
-               echo "<script> alert('Messaggio inserito correttamente!'); window.location.href='../../home/homePage.php'; </script>";
+               echo "<script> alert('Messaggio inserito correttamente!'); window.location.href='../../home/home.php'; </script>";
             else
                 echo "<script> alert('Il messaggio non è stato inserito correttamente, riprova!'); window.location.href='inserimentoMessaggio.php'; </script>";
         }
