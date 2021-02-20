@@ -56,8 +56,6 @@
                         <img src="../../../images/library.png" alt="Avatar" class="avatar">
                     </div>
                    <form method="post"> 
-                    
-                     
                         
                        <div class="form-group input-group">
                           <input type="text" placeholder="Nome Biblioteca" class="form-control" name="nomeBiblioteca" id="nomeBiblioteca" required>
