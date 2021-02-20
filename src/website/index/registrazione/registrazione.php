@@ -37,7 +37,6 @@
                 $passwordUtente = $_POST['passwordUtente'];
                 $passwordUtente = md5($passwordUtente);
                 $dataNascitaUtente = $_POST['dataNascita'];
-                $tipoUtente = $_POST['tipoUtente'];
                 $luogoNascitaUtente = $_POST['luogoNascita'];
                 $recapitoUtente = $_POST['recapito'];
                 $professione = $_POST['professione'];
@@ -45,7 +44,7 @@
 
 
                 try {
-                    $sql = "INSERT INTO Utente VALUES('$emailUtente', '$nomeUtente', '$cognomeUtente', '$passwordUtente', '$dataNascitaUtente', '$luogoNascitaUtente', '$recapitoUtente', '$tipoUtente')";
+                    $sql = "INSERT INTO Utente VALUES('$emailUtente', '$nomeUtente', '$cognomeUtente', '$passwordUtente', '$dataNascitaUtente', '$luogoNascitaUtente', '$recapitoUtente', 'Utilizzatore')";
                     $res=$pdo->query($sql);
                 }catch(PDOException $e) {
                     echo("Query SQL Failed: ".$e->getMessage());
@@ -64,7 +63,7 @@
                     }
 
 
-                if($res != 0)
+                if($res->rowCount() > 0)
                     echo "<script> alert('Richiesta processata correttamente!'); window.location.href='../login/loginPage.html'; </script>";
                 else
                     echo "<script> alert('La richiesta NON è stata processata correttamente!'); window.location.href='registrationPage.php'; </script>";
@@ -116,7 +115,7 @@
                     <div class="form-group">
                         <button type="submit" name='submit' id='submit' class="btn btn-primary btn-block"> Crea account  </button>
                     </div>     
-                <p class="text-center">Hai già un account? <a href="../login/loginPage.html">Accedi!</a> </p>      
+                <p class="text-center">Hai già un account? <a href="../login/login.php">Accedi!</a> </p>      
 
                 </form>
                 </article>

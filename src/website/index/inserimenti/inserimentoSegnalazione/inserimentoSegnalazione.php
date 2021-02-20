@@ -34,10 +34,10 @@
             $sql = "INSERT INTO Segnalazione VALUES(0, '$emailAmministratore', '$emailUtilizzatore', '$data', '$nota')";
             $res = $pdo -> query($sql);
             
-            if($res=0)
-                echo "<script> alert('La segnalazione non è stata inserita correttamente, riprova!'); window.location.href='inserimentoSegnalazione.php'; </script>";
-            else
+            if($res->rowCount() > 0)
                echo "<script> alert('Segnalazione inserita correttamente!'); window.location.href='../../home/homePage.php'; </script>";
+            else
+                echo "<script> alert('La segnalazione non è stata inserita correttamente, riprova!'); window.location.href='inserimentoSegnalazione.php'; </script>";
         }
         
     ?>

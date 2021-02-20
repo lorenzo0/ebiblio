@@ -17,7 +17,7 @@ try{
 }catch(PDOException $e){echo $e->getMessage();}	
 
 
-if($res != 0)
+if($res->rowCount() > 0)
     echo "<script> alert('Prenotazione effettuata correttamente!'); window.location.href='../../home/home.php'; </script>";
 else
     echo "<script> alert('La prenotazione NON è stato effettuata, riprova!'); window.location.href='controllaDisponibilita.php'; </script>";

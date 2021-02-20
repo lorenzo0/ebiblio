@@ -27,23 +27,22 @@
     
             require '../../../connectionDB/connection.php';
 
+            if(isset($_POST['submit'])){
+                $emailUtente = $_POST['email'];
+                $passwordUtente = $_POST['password'];
+                $passwordUtente = md5($passwordUtente);
 
-            $emailUtente = $_POST['email'];
-            $passwordUtente = $_POST['password'];
-            $passwordUtente = md5($passwordUtente);
+                try{
+                    $sql = "SELECT * FROM utente WHERE Email='$emailUtente' AND PasswordUtente='$passwordUtente'";
+                    $res = $pdo->query($sql); 
+                }catch(PDOException $e){echo $e->getMessage();}	
 
-            try{
-                $sql = "SELECT * FROM utente WHERE Email='$emailUtente' AND PasswordUtente='$passwordUtente'";
-                $res = $pdo->query($sql); 
-            }catch(PDOException $e){echo $e->getMessage();}	
-
-            if($res>0){
-                $_SESSION['email-accesso'] = $emailUtente;
-                echo "<script> alert('Benvenuto!'); window.location.href='../home/home.php'; </script>";
-            }else
-                echo "<script> alert('I dati non risultano corretti, sicuro di esserti registrato?'); window.location.href='loginPage.html'; </script>";
-
-
+                if($res->rowCount() > 0){
+                    $_SESSION['email-accesso'] = $emailUtente;
+                    echo "<script> alert('Benvenuto!'); window.location.href='../home/home.php'; </script>";
+                }else
+                    echo "<script> alert('I dati non risultano corretti, sicuro di esserti registrato?'); window.location.href='login.php'; </script>";
+            }
         ?>
         <div id="navbar"></div>
         <div class="container">
@@ -53,7 +52,7 @@
                     <div class="imgcontainer">
                         <img src="../../images/library.png" alt="Avatar" class="avatar">
                     </div>
-                <form action="loginPage.php" method="post">
+                <form method="post">
                     <div class="form-group input-group">
                         <input type="text" placeholder="Inserisci la tua email" class="form-control" name="email" id="email" required>
                     </div>
@@ -63,7 +62,7 @@
                     </div>
 
                     <div class="form-group">
-                        <button type="submit" class="btn btn-primary btn-block"> Login  </button>
+                        <button type="submit" name='submit' id='submit' class="btn btn-primary btn-block"> Login  </button>
                     </div>    
                 <p class="text-center">Non hai un'account? <a href="../registrazione/registrazione.php">Registrati!</a> </p>      
 

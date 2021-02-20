@@ -23,7 +23,7 @@
         <?php
                 
             if(isset($_POST['submit'])){
-                require '../../../connectionDB/connection.php';
+                require '../../../../connectionDB/connection.php';
 
                 $nomeBiblioteca= $_POST['nomeBiblioteca'];
                 $indirizzo = $_POST['indirizzo'];
@@ -39,7 +39,7 @@
 
                 $res=$pdo->query($sql);
 
-                 if ($res>0) {
+                if($res->rowCount() > 0) {
                    echo "<script> alert('Biblioteca inserita correttamente!'); window.location.href='../home/home.php'; </script>";
                  } else {
                    echo "<script> alert('La biblioteca NON è stata inserita correttamente!'); window.location.href='inserimentoBiblioteca.php'; </script>";
@@ -76,15 +76,15 @@
                        </div> 
                        
                         <div class="form-group input-group">
-                          <input type="number" placeholder="Latitudine" class="form-control" name="latitudine" id="latitudine" required>
+                          <input type="number" placeholder="Latitudine" class="form-control" name="latitudine" id="latitudine" step="0.00001" required>
                        </div> 
                        
                         <div class="form-group input-group">
-                          <input type="number" placeholder="Latitudine" class="form-control" name="longitudine" id="longitudine" required>
+                          <input type="number" placeholder="Latitudine" class="form-control" name="longitudine" id="longitudine" step="0.00001" required>
                        </div> 
 
                         <div class="form-group input-group">
-                          <input type="text" placeholder="Recapito" class="form-control" name="recapito" id="recapito" required>
+                          <input type="number" placeholder="Recapito" class="form-control" name="recapito" id="recapito" required>
                        </div> 
                        
                        <div class="form-group input-group">

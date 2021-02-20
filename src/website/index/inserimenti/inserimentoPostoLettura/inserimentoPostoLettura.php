@@ -36,17 +36,17 @@
                                   <?php    
                                         require '../../../../connectionDB/connection.php';
                                         try {
-                                        $sql = "SELECT Nome FROM Biblioteca"; 
-                                        $res=$pdo->query($sql);
+                                            $sql = "SELECT Nome FROM Biblioteca"; 
+                                            $res=$pdo->query($sql);
     
-                                            } catch(PDOException $e) {
-                                                echo("Query SQL Failed: ".$e->getMessage());
-                                                exit();
-                                            }
+                                        } catch(PDOException $e) {
+                                            echo("Query SQL Failed: ".$e->getMessage());
+                                            exit();
+                                        }
 
-                                             while($row = $res->fetch()) {
-                                                echo "<option value=" . $row['Nome'] . ">". $row['Nome'] . "</option>";                                 
-                                             }
+                                         while($row = $res->fetch()) {
+                                            echo "<option value=" . $row['Nome'] . ">". $row['Nome'] . "</option>";                                 
+                                         }
                                     ?> 
                           </select>
                         </div>
