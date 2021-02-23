@@ -41,18 +41,18 @@
                     
                         require '../../../../connectionDB/connection.php';
                     
-                        $titolo = mysql_real_escape_string($_POST['Titolo']);
-                        $genere = mysql_real_escape_string($_POST['Genere']);
+                        $titolo = $_POST['Titolo'];
+                        $genere = $_POST['Genere'];
                         
                     
 
                         try{
                             
                             if($_POST['Biblioteca'] != 'none'){ 
-                                $nome = mysql_real_escape_string($_POST['Biblioteca']);
+                                $nome = $_POST['Biblioteca'];
                                 if($_POST['Isbn'] != ''){
                                     
-                                    $isbn = mysql_real_escape_string($_POST['Isbn']);
+                                    $isbn = $_POST['Isbn'];
                             
                                     $sql = "SELECT Libro.CodiceISBN, Titolo, NomeBiblioteca, StatoDiConservazione
                                             FROM Libro 
@@ -100,7 +100,8 @@
                                             AND Libro.Titolo = '$titolo';";
                                 }
                             }
-                            7 = $pdo -> query($sql);
+                            $res = $pdo -> query($sql);
+                            echo $sql;
                             
                         }catch(PDOException $e){echo $e->getMessage();}
 

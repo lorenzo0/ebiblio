@@ -44,8 +44,7 @@
                        
                        <label> Seleziona il genere del libro </label>
                        <div class="form-group input-group">
-                            <select name="Genere" id="Genere" class="form-control" >
-                                <option value='none'> ----- </option>
+                            <select name="Genere" id="Genere" class="form-control" required>
                                 <?php
                                 
                                     require '../../../../connectionDB/connection.php';   

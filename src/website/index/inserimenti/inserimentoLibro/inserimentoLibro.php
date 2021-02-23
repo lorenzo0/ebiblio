@@ -10,7 +10,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Ebiblio - Ebook</title>
+    <title>Ebiblio</title>
 	<script src="https://kit.fontawesome.com/188e218822.js"></script>
       
 	<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
@@ -21,7 +21,21 @@
     <script>
         $(function loadNavFoo(){
           $("#footer").load("../../utils/footer.html"); 
-        });
+        }); 
+        
+        
+        $(document).ready(function(){  
+              var i=1;  
+              $('#aggiungi').click(function(){  
+                   i++;  
+                   $('#dynamic_field').append('<tr id="row'+i+'"><td><select name="autore[]" id="autore[]" class="form-control"><?php try{ $sql = "SELECT Distinct(NomeAutore), Id FROM Autore"; $res = $pdo -> query($sql); }catch(PDOException $e){echo $e->getMessage();} while ($row = $res->fetch()) {  echo '<option value=' . $row['Id'] . '>' . $row['NomeAutore'] . '</option>';}?></select></td>  <td><button type="button" name="remove" id="'+i+'" class="btn btn-danger btn_remove">X</button></td></tr>');  
+              });  
+              $(document).on('click', '.btn_remove', function(){  
+                   var button_id = $(this).attr("id");   
+                   $('#row'+button_id+'').remove();  
+              });  
+         }); 
+   
     </script>
       
   </head>
@@ -41,14 +55,14 @@
         </div>
         <div class="container">
             <div class="card mt-4" style="border: 0">
-                <article class="card-body mx-auto" style="max-width: 400px;">
+                <article class="card-body mx-auto" style="max-width: 600px;">
                     <h4 class="card-title mt-3 text-center">Inserisci Libro</h4>
                     <div class="imgcontainer">
                         <img src="../../../images/library.png" alt="Avatar" class="avatar">
                     </div>
                    <form action="inserimentoNuovoLibroDB.php" method="post" onsubmit="return validateFormLibro();"> 
                        
-                       <div class="form-group input-group">
+                        <div class="form-group input-group">
                             <input type="number" placeholder="codice ISBN" class="form-control" name="codice" id="codice" value = <?php echo $_GET['isbn']; ?>required readonly>
                         </div>
                        
@@ -74,6 +88,30 @@
 
                         <div class="form-group input-group">
                             <input type="text" placeholder="nome edizione" class="form-control" name="nomeEdizione" id="nomeEdizione" required>
+                        </div>
+                       
+                       <div class="form-group">  
+                           <table class="table table-bordered" id="dynamic_field" style="margin-top:0px;">  
+                                <tr>  
+                                     <td>
+                                         <select name="autore[]" id="autore[]" class="form-control">
+                                            <?php
+
+                                                try{
+                                                    $sql = "SELECT Distinct(NomeAutore), Id FROM Autore";
+                                                    $res = $pdo -> query($sql);
+                                                }catch(PDOException $e){echo $e->getMessage();}	
+
+                                                while ($row = $res->fetch()) {
+                                                    echo '<option value=' . $row['Id'] . '>' . $row['NomeAutore'] . '</option>';
+                                                }
+
+                                            ?>
+                                        </select>
+                                    </td>  
+                                     <td><button type="button" name="aggiungi" id="aggiungi" class="btn btn-success">Aggiungi</button></td>  
+                                </tr>  
+                           </table> 
                         </div> 
                        
                        

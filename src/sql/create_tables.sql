@@ -3,9 +3,6 @@ CREATE SCHEMA ebiblio;
 USE ebiblio;
 
 /* Creazione tabelle*/
-insert into Biblioteca(Nome, Indirizzo, Email, URLSito)
-values ("Biblioteca Universitaria di Bologna", "Via Zamboni, 33-35 Bologna 40126 BO",  "bub.info@unibo.it",
-"http://www.bub.unibo.it");
 CREATE TABLE Biblioteca(
 	Nome varchar(255) PRIMARY KEY,
     Indirizzo varchar(255),
@@ -58,7 +55,7 @@ CREATE TABLE Autore(
 );
 
 CREATE TABLE Scrittori(
-	IdAutore integer(10),
+	IdAutore int(10),
     CodiceISBN int(10),
     FOREIGN KEY(IdAutore) REFERENCES Autore(Id) ON DELETE CASCADE,
     FOREIGN KEY(CodiceISBN) REFERENCES Libro(CodiceISBN) ON DELETE CASCADE
@@ -277,17 +274,4 @@ GRANT INSERT ON prenotazionepostolettura to utenteUtilizzatore;
     
     L'utente utilizzatore può leggere tutti i dati ed inserire una nuova prenotazione posto lettura e cartaceo
 */
-
-INSERT INTO LIBRO
-VALUES (12345678, "il piccolo principe", 2000, "bambini", "gold", "cartaceo");
-
-INSERT INTO BIBLIOTECA
-VALUES (12345678, "il piccolo principe", 2000, "bambini", "gold", "cartaceo");
-
-SELECT l.CodiceISBN, l.Titolo
-FROM libro as l
-WHERE l.Titolo="il piccolo principe";
-
-INSERT INTO LIBRO
-VALUES (12345678, "il piccolo principe", 2000, "bambini", "gold", "cartaceo");
 

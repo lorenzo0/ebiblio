@@ -10,6 +10,9 @@
     $nomeEdizione = $_POST['nomeEdizione'];
     $tipoLibro = $_POST['tipoLibro'];
     $disponilita = 'Disponibile';
+    $autori=$_POST['autore'];
+    
+    $_SESSION['EmailUtente'] = 'admin@admin.it';
 
     try {
         $sql = "SELECT NomeBibliotecaAmministrata
@@ -35,6 +38,22 @@
          $sql->bindParam(5, $nomeEdizione, PDO::PARAM_STR);
          $sql->bindParam(6, $tipoLibro, PDO::PARAM_STR);
          $res = $sql->execute();
+        
+         $sql = $pdo -> prepare("INSERT INTO Scrittori VALUES(?,?)");
+        
+         for($i=0; $i<count($names); $i++){
+            for($y=$i+1; $y<(count($names)-$i); $y++){
+                if($names[$i] == $names[$y])
+                    unset($names[$y]);
+            }
+          }
+        
+         for($i=0; $i<count($autori); $i++){
+            $sql->bindValue(1, $autori[$i], PDO::PARAM_INT);
+            $sql->bindValue(2, $codiceISBN, PDO::PARAM_INT);
+            $sql->execute();
+         }
+        
     }	
     catch(PDOException $e)	{	
          echo($e->getMesssage());	
