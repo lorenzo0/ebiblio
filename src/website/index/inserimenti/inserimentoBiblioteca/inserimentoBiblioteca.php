@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Ebiblio - Biblioteca</title>
+    <title>Ebiblio</title>
 	<script src="https://kit.fontawesome.com/188e218822.js"></script>
       
 	<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
@@ -13,7 +13,6 @@
 	<link href="https://fonts.googleapis.com/css?family=Noto+Sans&display=swap" rel="stylesheet"> <script src="../../../js/script.js"></script>
     <script>
         $(function loadNavFoo(){
-          $("#navbar").load("../../utils/navbar.html"); 
           $("#footer").load("../../utils/footer.html"); 
         });
    </script>  
@@ -21,10 +20,12 @@
     <header></header>
     <body>
         <?php
-                
+             require '../../../../connectionDB/connection.php';
+            if ($_SESSION['TipoUtente']!="Amministratore"){
+                echo "<script> alert('Non possiedi le credenziali per accedere a questa pagina'); window.location.href='../../home/home.php'</script>"; 
+            }
             if(isset($_POST['submit'])){
-                require '../../../../connectionDB/connection.php';
-
+    
                 $nomeBiblioteca= $_POST['nomeBiblioteca'];
                 $indirizzo = $_POST['indirizzo'];
                 $email = $_POST['email'];
@@ -48,15 +49,26 @@
                 $sql->bindParam(8, $note, PDO::PARAM_STR);
                 $res = $sql->execute();
 
-                if($res > 0) {
+                if($res > 0) 
                    echo "<script> alert('Biblioteca inserita correttamente!'); window.location.href='../home/home.php'; </script>";
-                 } else {
+                else 
                    echo "<script> alert('La biblioteca NON è stata inserita correttamente!'); window.location.href='inserimentoBiblioteca.php'; </script>";
-                 }
+                 
             }
 
         ?>
-        <div id="navbar"></div>
+        <div class="topnav">
+            <a href="../../home/home.php">Home</a>
+            <a href="../inserimentoAmministratore/inserimentoAmministratore.html">Inserisci utente</a>
+            <a href="../inserimentoAutore/inserimentoAutore.php">Inserisci autore</a>
+            <a href="inserimentoBiblioteca.php" class="active">Inserisci biblioteca</a>
+            <a href="../inserimentoPostoLettura/inserimentoPostoLettura.php">Posto lettura</a>
+            <a href="../inserimentoLibro/inserimentoLibro.php">Inserisci libro</a>            
+            <a href="../inserimentoSegnalazione/inserimentoSegnalazione.php">Nuova segnalazione</a>  
+            <a href="../inserimentoMessaggio/inserimentoMessaggio.php">Messaggi</a>
+            <button class="logout" style="float:right" onClick="location='../login/logout.php'">Logout</button>
+            <button class="logout" style="float:right" onClick="location='../profilo/profilo.php'">Account</button>
+        </div>
         <div class="container">
             <div class="card mt-4" style="border: 0">
                 <article class="card-body mx-auto" style="max-width: 400px;">

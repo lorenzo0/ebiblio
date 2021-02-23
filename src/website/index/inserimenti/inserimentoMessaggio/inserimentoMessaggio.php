@@ -25,9 +25,12 @@
     <?php
     
     require '../../../../connectionDB/connection.php';
+    /*if ($_SESSION['TipoUtente']!="Amministratore"){
+        echo "<script> alert('Non possiedi le credenziali per accedere a questa pagina'); window.location.href='../../home/home.php'</script>"; 
+    }*/
     
         if(isset($_POST['messaggioButton'])){
-            $emailAmministratore = $_SESSION['email-accesso'];
+            $emailAmministratore = $_SESSION['EmailUtente'];
             $emailUtilizzatore = $_POST['emailUtilizzatore'];
             $titolo = $_POST['titolo'];
             $messaggio = $_POST['messaggio'];
@@ -51,7 +54,18 @@
     ?>
     <header></header>
     <body>
-        <div id="navbar"></div>
+        <div class="topnav">
+            <a href="../../home/home.php">Home</a>
+            <a href="../inserimentoAmministratore/inserimentoAmministratore.html">Inserisci utente</a>
+            <a href="../inserimentoAutore/inserimentoAutore.php">Inserisci autore</a>
+            <a href="../inserimentoBiblioteca/inserimentoBiblioteca.php" >Inserisci biblioteca</a>
+            <a href="../inserimentoPostoLettura/inserimentoPostoLettura.php">Posto lettura</a>
+            <a href="../inserimentoLibro/inserimentoLibro.php">Inserisci libro</a>            
+            <a href="../inserimentoSegnalazione/inserimentoSegnalazione.php">Nuova segnalazione</a>  
+            <a href="inserimentoMessaggio.php" class="active">Messaggi</a>
+            <button class="logout" style="float:right" onClick="location='../login/logout.php'">Logout</button>
+            <button class="logout" style="float:right" onClick="location='../profilo/profilo.php'">Account</button>
+        </div>
         <div class="container">
             <div class="card mt-4" style="border: 0">
                 <article class="card-body mx-auto" style="max-width: 400px;">

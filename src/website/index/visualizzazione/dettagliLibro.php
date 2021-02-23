@@ -24,6 +24,7 @@
     
     <header></header>
     <body onload="setVisibleLibroDetails()">
+        
         <?php
             require '../../../connectionDB/connection.php';
         
@@ -84,7 +85,17 @@
                 }
             }catch(PDOException $e){echo $e->getMessage();}	
         ?>
-        <div id="navbar"></div>
+        <div class="topnav">
+            <a href="../home/home.php" >Home</a>
+            <a href="../../openStreetMap/map.html">MAP</a>
+            <a href="../visualizzazione/visualizzazioneBiblioteca.php" >Tutte le biblioteche</a>
+            <a href="visualizzazioneLibri.php" class="active">Tutti i libri</a>
+            
+            <div class="login-container">
+                <button onClick="location='../login/login.php'">Accedi</button>
+                <button onClick="location='../registrazione/registrazione.php'">Registrati</button>
+            </div>
+        </div>   
         <div class="container">
             <div class="card mt-4" style="border: 0">
                 <article class="card-body mx-auto" style="max-width: 800px;">

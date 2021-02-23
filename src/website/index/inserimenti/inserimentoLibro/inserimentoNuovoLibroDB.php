@@ -14,7 +14,7 @@
     try {
         $sql = "SELECT NomeBibliotecaAmministrata
                 FROM Amministratore 
-                WHERE EmailUtente = '" . $_SESSION['email-accesso'] . "'";
+                WHERE EmailUtente = '" . $_SESSION['EmailUtente'] . "'";
         $res=$pdo->query($sql);
     }catch(PDOException $e) {
         echo("Query SQL Failed: ".$e->getMessage());

@@ -16,7 +16,6 @@
     <script src="../../js/script.js"></script>
     <script>
         $(function loadNavFoo(){
-          $("#navbar").load("../utils/navbar.html"); 
           $("#footer").load("../utils/footer.html"); 
         });
     </script>
@@ -24,12 +23,20 @@
   </head>
     <header></header>
     <body>
-        <div id="navbar"></div>
+        <div class="topnav">
+            <a href="../home/home.php" >Home</a>
+            <a href="../../openStreetMap/map.html">MAP</a>
+            <a href="../visualizzazione/visualizzazioneBiblioteca.php" >Tutte le biblioteche</a>
+            <a href="visualizzazioneLibri.php" class="active">Tutti i libri</a>
+            
+            <div class="login-container">
+                <button onClick="location='../login/login.php'">Accedi</button>
+                <button onClick="location='../registrazione/registrazione.php'">Registrati</button>
+            </div>
+        </div>        
         <div class="container">
             <div class="card mt-4" style="border: 0">
                 <article class="card-body mx-auto" style="max-width: 1200px;">
-                    
-                    <button class="backHomePage"> <a style="color:black;" href="../home/home.php"> Torna alla homepage </a></button>
 
                     <h4 class="card-title mt-3 text-center">Tutti i libri</h4>
 
@@ -70,7 +77,7 @@
                                     ?>
                                 </select>
                             
-                             <button type="submit" name="filter" style="background-color:#7ABB3B;"> Filtra! </button>
+                             <button type="submit" name="filter" class="btn cerca"> Filtra! </button>
                             
                         </form>
                         </center>
@@ -146,7 +153,7 @@
                                 echo "<td>" . $nomeEdizione . "</td>";
                                 echo "<td>" . "<button class=" . "btn btn-primary btn-block" . " onclick=" . "location.href='dettagliLibro.php?Isbn=" .
                                     "$isbn" . "&Tipo=" . urlencode($tipoLibro) . "&Titolo=" . urlencode($titolo) . "&Anno=" . "$anno" . "&Genere=" . urlencode($genere) . "&NomeEdizione=" . urlencode($nomeEdizione) . "'" . "> Dettagli </button></td>";
-                                echo "<td>" . "<button style='background-color:red;' class=" . "btn btn-primary btn-block" . " onclick=" . "location.href='../cancellazioni/cancellazioneLibro.php?Isbn=" . "$isbn" . "&Tipo=" . urlencode($tipoLibro) . "'" . "><i class='fa fa-trash'></i></button></td>";
+                                echo "<td>" . "<button style='background-color:#bb2e29;' class=" . "btn btn-primary btn-block" . " onclick=" . "location.href='../cancellazioni/cancellazioneLibro.php?Isbn=" . "$isbn" . "&Tipo=" . urlencode($tipoLibro) . "'" . "><i class='fa fa-trash'></i></button></td>";
                                 echo "</tr>"; 
                             }        
                     echo "</table></tbody>";

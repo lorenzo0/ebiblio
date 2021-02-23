@@ -13,8 +13,7 @@
 	<link href="https://fonts.googleapis.com/css?family=Noto+Sans&display=swap" rel="stylesheet">    
     <script src="../../../js/script.js"></script>
     <script>
-        $(function loadNavFoo(){
-          $("#navbar").load("../../utils/navbar.html"); 
+        $(function loadNavFoo(){ 
           $("#footer").load("../../utils/footer.html"); 
         });
    </script>
@@ -23,10 +22,13 @@
     
     <?php
     
-    require '../../../../connectionDB/connection.php';
+        require '../../../../connectionDB/connection.php';
+        /*if ($_SESSION['TipoUtente']!="Amministratore"){
+            echo "<script> alert('Non possiedi le credenziali per accedere a questa pagina'); window.location.href='../../home/home.php'</script>"; 
+        }*/
     
         if(isset($_POST['segnalazione'])){
-            $emailAmministratore = $_SESSION['email-accesso'];
+            $emailAmministratore = $_SESSION['EmailUtente'];
             $emailUtilizzatore = $_POST['emailUtilizzatore'];
             $nota = $_POST['note'];
             $data = date("Y/m/d");
@@ -49,7 +51,18 @@
         
     ?>
     <body>
-        <div id="navbar"></div>
+        <div class="topnav">
+            <a href="../../home/home.php">Home</a>
+            <a href="../inserimentoAmministratore/inserimentoAmministratore.html">Inserisci utente</a>
+            <a href="../inserimentoAutore/inserimentoAutore.php">Inserisci autore</a>
+            <a href="inserimentoBiblioteca.php" >Inserisci biblioteca</a>
+            <a href="../inserimentoPostoLettura/inserimentoPostoLettura.php">Posto lettura</a>
+            <a href="../inserimentoLibro/inserimentoLibro.php">Inserisci libro</a>            
+            <a href="inserimentoSegnalazione.php class="active"">Nuova segnalazione</a>  
+            <a href="../inserimentoMessaggio/inserimentoMessaggio.php">Messaggi</a>
+            <button class="logout" style="float:right" onClick="location='../login/logout.php'">Logout</button>
+            <button class="logout" style="float:right" onClick="location='../profilo/profilo.php'">Account</button>
+        </div>
         <div class="container">
             <div class="card mt-4" style="border: 0">
                 <article class="card-body mx-auto" style="max-width: 400px;">

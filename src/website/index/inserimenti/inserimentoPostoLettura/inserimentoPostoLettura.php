@@ -20,7 +20,24 @@
   </head>
     <header></header>
     <body>
-        <div id="navbar"></div>        
+         <?php 
+            require '../../../../connectionDB/connection.php'
+            /*if ($_SESSION['TipoUtente']!="Amministratore"){
+                echo "<script> alert('Non possiedi le credenziali per accedere a questa pagina'); window.location.href='../../home/home.php'</script>"; 
+            }*/
+        ;?>
+         <div class="topnav">
+            <a href="../../home/home.php">Home</a>
+            <a href="../inserimentoAmministratore/inserimentoAmministratore.html">Inserisci utente</a>
+            <a href="../inserimentoAutore/inserimentoAutore.php">Inserisci autore</a>
+            <a href="../inserimentoBiblioteca/inserimentoBiblioteca.php" >Inserisci biblioteca</a>
+            <a href="inserimentoPostoLettura.php" class="active">Posto lettura</a>
+            <a href="../inserimentoLibro/inserimentoLibro.php">Inserisci libro</a>            
+            <a href="../inserimentoSegnalazione/inserimentoSegnalazione.php">Nuova segnalazione</a>  
+            <a href="inserimentoMessaggio.php" >Messaggi</a>
+            <button class="logout" style="float:right" onClick="location='../login/logout.php'">Logout</button>
+            <button class="logout" style="float:right" onClick="location='../profilo/profilo.php'">Account</button>
+        </div>
         <div class="container">
             <div class="card mt-4" style="border: 0">
                 <article class="card-body mx-auto" style="max-width: 400px;">
@@ -34,7 +51,6 @@
                        <label for="utilizzatore">Scegli Biblioteca:</label> 
                           <select class="form-control" id="nomeBiblioteca" name="nomeBiblioteca">
                                   <?php    
-                                        require '../../../../connectionDB/connection.php';
                                         try {
                                             $sql = "SELECT Nome FROM Biblioteca"; 
                                             $res=$pdo->query($sql);
@@ -73,6 +89,8 @@
       
             
             <?php
+            
+            
             
             if(isset($_POST['inserisci'])){
             

@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Ebiblio</title>
+    <title>Ebiblio - Biblioteche</title>
       
     <script src="https://kit.fontawesome.com/188e218822.js"></script>
       
@@ -25,12 +25,20 @@
   </head>
     <header></header>
     <body>
-        <div id="navbar"></div>
+        <div class="topnav">
+            <a href="../home/home.php" >Home</a>
+            <a href="../../openStreetMap/map.html">MAP</a>
+            <a href="visualizzazioneBiblioteca.php" class="active" >Tutte le biblioteche</a>
+            <a href="../visualizzazione/visualizzazioneLibri.php">Tutti i libri</a>
+            
+            <div class="login-container">
+                <button onClick="location='../login/login.php'">Accedi</button>
+                <button onClick="location='../registrazione/registrazione.php'">Registrati</button>
+            </div>
+        </div>
         <div class="container">
             <div class="card mt-4" style="border: 0">
                 <article class="card-body mx-auto" style="max-width: 1200px;">
-                    
-                    <button class="backHomePage"> <a style="color:black;" href="../home/home.php"> Torna alla homepage </a></button>
 
                     <h4 class="card-title mt-3 text-center">Tutte le biblioteche</h4>
 

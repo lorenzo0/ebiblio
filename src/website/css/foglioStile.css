@@ -1,9 +1,9 @@
 @charset "utf-8";
 
 header {
-    background-image: url(../../../src/website/images/header3.png);
-    max-width: 110%;
-    height: 40vh;
+    background-image: url(../../../src/website/images/ebiblio.png);
+    max-width: 100%;
+    height: 165px;
     background-position: center top;
     background-repeat: no-repeat;
     background-size: cover;
@@ -40,8 +40,8 @@ a.metalink {
 
 .cerca {
 	color: #fff;
-    background-color: #002a4f;
-    border-color: #606f9c;
+    background-color: #bb2e29;
+    border-color: #bb2e29;
 }
 .cerca:hover {
 	color: #002a4f;
@@ -58,15 +58,7 @@ a.metalink {
     background-color: #fff;
     border-color: #474747;
 }
-.tab-navbar {
-	color: #fff;
-    border-color: #606f9c;
-}
-.tab-navbar:hover {
-	color: #002a4f;
-    background-color: #fff;
-    border-color: #474747;
-}
+
 
 /*risorse*/
 
@@ -102,60 +94,8 @@ a.card-link {
     background-color: #B8CE2E;
     border-color: #B8CE2E;
 }
-/*NAVBAR*/
-ul {
-  list-style-type: none;
-  margin: 0;
-  padding: 0;
-  overflow: hidden;
-  background-color: #bb2e29;
-}
 
-li {
-  float: left;
-}
-
-li a {
-    display: block;
-    color: white;
-    text-align: center;
-    padding: 14px 16px;
-    text-decoration: none;
-    border-right: 1px solid #fff;
-}
-li:last-child {
-    border-right: none;
-    background-color: #606f9c;
-}
-
-li a:hover:not(.active) {
-  background-color: #fff;
-}
-
-.active {
-    background-color: #fff;
-    color: #606f9c;
-}
-
-/*footer*/
-
-.links {
-	list-style-type: none;
-	padding-left: 0.25rem;
-	line-height: 1.8em;
-}
-
-.links a {
-	color: #DFDEDE;
-	text-decoration: none;
-}
-
-.links a:hover {
-	color: #606f9c;
-	text-decoration: none;
-}
-
-
+/*FOOTER*/
 footer {
 	background-color: #bb2e29;
 	color: #fff;
@@ -200,11 +140,6 @@ img.avatar {
     margin-top: 20px;
 }
 
-
-#navbarModified{
-    display: block;
-    overflow: auto;
-}
 
 /*Bottone per tornare alla homepage visualizzazioni*/
 .backHomePage{
@@ -267,3 +202,83 @@ th{
 }
 
 /* FINE open street map */
+
+
+
+
+/* Style the navbar */
+.topnav {
+    overflow: hidden;
+    background-color: #bb2e29;
+    
+}
+
+/* Navbar links */
+.topnav a {
+    float: left;
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+    font-size: 17px;
+    border-right: 2px solid #fff;
+}
+
+/* Navbar links on mouse-over */
+.topnav a:hover {
+  background-color: #002a4f;
+  color: white;
+}
+
+/* Active/current link */
+.topnav a.active {
+    background-color: #002a4f;
+    color: #fff;
+    font-weight: bold;
+}
+.topnav a.active2 {
+    background-color: #002a4f;
+    color: #fff;
+    font-weight: bold;
+}
+
+/* Style the input container */
+.topnav .login-container {
+  float: right;
+}
+
+/* Style the button inside the input container */
+.topnav .login-container button {
+    float: right;
+    text-align: center;
+    padding: 8px;
+    margin-top: 6px;
+    margin-left: 2px;
+    margin-right: 4px;
+    background: #002a4f;
+    color: #fff;
+    font-size: 17px;
+    border: none;
+    cursor: pointer;
+}
+
+.topnav .login-container button:hover {
+  background: #fff;
+    color: #002a4f;
+}
+
+.logout{
+    float: right;
+    text-align: center;
+    padding: 8px;
+    margin-top: 6px;
+    margin-left: 2px;
+    margin-right: 4px;
+    background: #002a4f;
+    color: #fff;
+    font-size: 17px;
+    border: none;
+    cursor: pointer;
+}
+

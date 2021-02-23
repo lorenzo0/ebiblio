@@ -4,7 +4,7 @@
 
     $IsbnLibro = $_GET['Id'];
     $nomeBiblioteca = $_GET['Nome'];
-    $email = $_SESSION['email-accesso'];
+    $email = $_SESSION['EmailUtente'];
 
     $inizio = date("Y-m-d");
     $fine =  date('Y-m-d', strtotime("+15 days"));
