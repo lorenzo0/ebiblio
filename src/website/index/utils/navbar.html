@@ -5,16 +5,25 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="../css/bootstrap-4.0.0.css" rel="stylesheet">
+      <script type="text/javascript">
+        $(document).ready(function () {
+        var url = window.location;
+        $('ul.nav a[href="'+ url +'"]').parent().addClass('active');
+        $('ul.nav a').filter(function() {
+             return this.href == url;
+        }).parent().addClass('active');
+    });
+</script> 
   </head>
     
     <!-- AGGIUNGERE REDIRECT HOMEPAGE LOGHI -->
     
     <body>
         <ul>
-          <li><a href="#home" class="active">Home</a></li>
-          <li><a href="#news">View Library</a></li>
+          <li><a href="#home" >Home</a></li>
+          <li><a href="../login/login.php">Login</a></li>
           <li><a href="#contact">Contact</a></li>
-          <li style="float:right"><a href="../login/loginPage.html">Login</a></li>
+          <li style="float:right"><a href="../login/login.php">Login</a></li>
         </ul>
         
         

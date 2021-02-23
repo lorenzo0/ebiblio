@@ -6,7 +6,7 @@ $idPL = $_GET['Id'];
 $oraInizio = $_GET['Inizio'] . ':00:00';
 $oraFine = $_GET['Fine'] . ':00:00';
 $data = $_GET['Data'];
-$email = $_SESSION['email-accesso'];
+$email = $_SESSION['EmailUtente'];
 
 
 

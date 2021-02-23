@@ -4,7 +4,7 @@
       <meta charset="utf-8">
       <meta http-equiv="X-UA-Compatible" content="IE=edge">
       <meta name="viewport" content="width=device-width, initial-scale=1">
-      <title>Ebiblio - Home Page</title>
+      <title>Ebiblio - Home Page Utilizzatore</title>
       <script src="https://kit.fontawesome.com/188e218822.js"></script>
 
       <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
@@ -19,13 +19,77 @@
       </script>
       
   </head>
-    <header></header>
-    <body style="background-color:#002a4f; color:#fff">
-        <?php
+    <?php
         
             require '../../../connectionDB/connection.php';
             
-            if(isset($_POST['search'])){
+            $tipoUtente= $_SESSION['TipoUtente'];
+            $emailUtente = $_SESSION['EmailUtente'];
+            
+            echo "Tipo utente " . $tipoUtente . ".<br>";
+            echo "Email utente " . $emailUtente . ".<br>";
+            
+            
+            
+        
+    ?>
+    <header></header>
+    <body style="background-color:#002a4f; color:#fff">
+        <div class="topnav">
+            <a href="myHome.php" style=" background-color:#002a4f" class="active">Home</a>
+            <a href="../visualizzazione/visualizzazioneBiblioteca.php">Tutte le biblioteche</a>
+            <a href="../visualizzazione/visualizzazioneLibri.php">Tutti i libri</a>
+            <button class="logout" style="float:right" onClick="location='../login/logout.php'">Logout</button>
+            <button class="logout" style="float:right" onClick="location='../profilo/profilo.php'">Account</button>
+            
+        </div>
+        
+        <div class="container" style="background-color:#002a4f; color:#fff">
+            <div class="card mt-4" style="border: 0; background-color:#002a4f; color:#fff">
+                <article class="card-body mx-auto" style="max-width: 400px;">
+                    <h4 class="card-title mt-3 text-center">CERCA UN LIBRO!</h4>
+                    <div class="imgcontainer">
+                        <img src="../../images/book.png" alt="Avatar" class="avatar">
+                        <img src="../../images/ebook.png" alt="Avatar" class="avatar">
+                    </div>
+                    <form action="myHome.php" method="post">
+                    <div class="input-group mb-3">
+                      <div class="input-group-prepend" >
+                        <span class="input-group-text" id="inputGroup-sizing-default"><b>Titolo</b></span>
+                      </div>
+                      <input type="text" class="form-control" placeholder="Titolo..." id="Titolo" name="Titolo">
+                    </div>
+                    
+                    <div class="input-group mb-3">
+                      <div class="input-group-prepend" >
+                        <span class="input-group-text" id="inputGroup-sizing-default">ISBN</span>
+                      </div>
+                      <input type="text" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-default" placeholder="000-00-000000-0-0" id="Isbn" name="Isbn">
+                    </div>
+                    
+                    <div class="input-group input-group-sm mb-3">
+                      <div class="input-group-prepend" >
+                        <span class="input-group-text" id="inputGroup-sizing-default">Autore</span>
+                      </div>
+                      <input type="text" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-default" placeholder="..." id="Autore" name="Autore">
+                    
+                        
+                    
+                      <div class="input-group-prepend" >
+                        <span class="input-group-text" id="inputGroup-sizing-default">Genere</span>
+                      </div>
+                      <input type="text" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-default" placeholder="..." id="Genere" name="Genere">
+                    </div>
+
+                    <div class="form-group">
+                        <button type="search" name="search" id="search" class="btn btn-block cerca">Cerca</button> 
+                    </div>
+                    </form>
+                </article>
+            </div>
+        </div>
+        <?php 
+        if(isset($_POST['search'])){
                 $titoloLibro = $_POST['Titolo'];
                 $ISBN = $_POST['Isbn'];
                 //$autoreLibro = $_POST['Autore'];
@@ -123,83 +187,16 @@
                         echo "<td>" . $anno . "</td>";
                         echo "<td>" . $genere . "</td>";
                         echo "<td>" . $nomeEdizione . "</td>";
-                        if($_SESSION['TipoUtente']!='Utilizzatore'){
-                        echo "<td>" . "<button class=" . "btn btn-primary btn-block" . " onclick=" . "location.href='../prenotazioni/prenotazioneLibroCartaceo/mostraSceltaCartaceo.php?Isbn=" .
-                            "$isbn" . "&Tipo=" . urlencode($tipoLibro) . "&Titolo=" . urlencode($titolo) . "&Anno=" . "$anno" . "&Genere=" . urlencode($genere) . "&NomeEdizione=" . urlencode($nomeEdizione) . "'" . "> IF </button></td>"; 
-                        }elseif($_SESSION['TipoUtente']=='Utilizzatore'){echo "<td>" . "<button class=" . "btn btn-primary btn-block" . " onclick=" . "location.href='../prenotazioni/prenotazioneLibroCartaceo/mostraSceltaCartaceo.php?Isbn=" .
-                            "$isbn" . "&Tipo=" . urlencode($tipoLibro) . "&Titolo=" . urlencode($titolo) . "&Anno=" . "$anno" . "&Genere=" . urlencode($genere) . "&NomeEdizione=" . urlencode($nomeEdizione) . "'" . "> ELSE </button></td>"; }
+                        if($_SESSION['TipoUtente']=='Utilizzatore'){
+                        echo "<td>" . "<button class=" . "btn btn-primary btn-block" . " onclick=" . "location.href='../prenotazioni/prenotazioneLibroCartaceo/prenotaFromHome.php?Isbn=" . "$isbn" . "&Titolo=" . urlencode($titolo) . "&Genere=" . urlencode($genere) . "&Biblioteca=" . urlencode($biblioteca) . "'" . "> PRENOTA </button></td>"; 
+                        }else if($_SESSION['TipoUtente']=='Amministratore'){echo "<td>" . "<button class=" . "btn btn-primary btn-block" . " onclick=" . "location.href='../inserimenti/inserimentoLibro.php?Isbn=" . "$isbn" . "&Tipo=" . urlencode($tipoLibro) . "&Titolo=" . urlencode($titolo) . "&Anno=" . "$anno" . "&Genere=" . urlencode($genere) . "&NomeEdizione=" . urlencode($nomeEdizione) . "'" . "> MODIFICA </button></td>"; }
                     }        
                     echo "</table></tbody>";
                     }else{
                         echo "<br/>NONE";
                     }
             }
-            
-        
         ?>
-        <div class="topnav">
-            <a href="home.php" style=" background-color:#fff "class="active2">Home</a>
-            <a href="../../openStreetMap/map.html">MAP</a>
-            <a href="../visualizzazione/visualizzazioneBiblioteca.php">Tutte le biblioteche</a>
-            <a href="../visualizzazione/visualizzazioneLibri.php">Tutti i libri</a>
-            
-            <div class="login-container">
-                <button onClick="location='../login/login.php'">Accedi</button>
-                <button onClick="location='../registrazione/registrazione.php'">Registrati</button>
-            </div>
-        </div>
-        <div>
-            <div class="card" style="border: 0; width:100%">
-                <article class="card-body mx-auto" style="width: 100%; background-color:#fff; color:#002a4f">
-                    <h2 class="card-title mt-3 text-center">BENVENUTO IN E-BIBLIO</h2>
-                    <h6 class="card-title mt-2 text-center">E-biblio e' una piattaforma on-line per la prenotazione di..</h6>
-                </article>
-            </div>
-        </div>
-        <div class="container" style="background-color:#002a4f; color:#fff">
-            <div class="card mt-4" style="border: 0; background-color:#002a4f; color:#fff">
-                <article class="card-body mx-auto" style="max-width: 400px;">
-                    <h4 class="card-title mt-3 text-center">CERCA UN LIBRO!</h4>
-                    <div class="imgcontainer">
-                        <img src="../../images/book.png" alt="Avatar" class="avatar">
-                        <img src="../../images/ebook.png" alt="Avatar" class="avatar">
-                    </div>
-                    <form action="home.php" method="post">
-                    <div class="input-group mb-3">
-                      <div class="input-group-prepend" >
-                        <span class="input-group-text" id="inputGroup-sizing-default"><b>Titolo</b></span>
-                      </div>
-                      <input type="text" class="form-control" placeholder="Titolo..." id="Titolo" name="Titolo">
-                    </div>
-                    
-                    <div class="input-group mb-3">
-                      <div class="input-group-prepend" >
-                        <span class="input-group-text" id="inputGroup-sizing-default">ISBN</span>
-                      </div>
-                      <input type="text" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-default" placeholder="000-00-000000-0-0" id="Isbn" name="Isbn">
-                    </div>
-                    
-                    <div class="input-group input-group-sm mb-3">
-                      <div class="input-group-prepend" >
-                        <span class="input-group-text" id="inputGroup-sizing-default">Autore</span>
-                      </div>
-                      <input type="text" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-default" placeholder="..." id="Autore" name="Autore">
-                    
-                        
-                    
-                      <div class="input-group-prepend" >
-                        <span class="input-group-text" id="inputGroup-sizing-default">Genere</span>
-                      </div>
-                      <input type="text" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-default" placeholder="..." id="Genere" name="Genere">
-                    </div>
-
-                    <div class="form-group">
-                        <button type="search" name="search" id="search" class="btn btn-block cerca">Cerca</button> 
-                    </div>
-                    </form>
-                </article>
-            </div>
-        </div>
         
         
         

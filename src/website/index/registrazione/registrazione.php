@@ -64,13 +64,20 @@
 
 
                 if($res->rowCount() > 0)
-                    echo "<script> alert('Richiesta processata correttamente!'); window.location.href='../login/loginPage.html'; </script>";
+                    echo "<script> alert('Richiesta processata correttamente!'); window.location.href='../login/login.html'; </script>";
                 else
-                    echo "<script> alert('La richiesta NON è stata processata correttamente!'); window.location.href='registrationPage.php'; </script>";
+                    echo "<script> alert('La richiesta NON è stata processata correttamente!'); window.location.href='registration.php'; </script>";
             }
 
         ?>
-        <div id="navbar"></div>
+        <div class="topnav">
+            <a href="home.php" style=" background-color:#fff "class="active2">Home</a>
+            <a href="../../openStreetMap/map.html">MAP</a>
+            <a href="../visualizzazione/visualizzazioneBiblioteca.php">Tutte le biblioteche</a>
+            <a href="../visualizzazione/visualizzazioneLibri.php">Tutti i libri</a>
+            
+            
+        </div>
         <div class="container">
             <div class="card mt-4">
                 <article class="card-body mx-auto" style="max-width: 400px;">

@@ -30,7 +30,7 @@
             require '../../../connectionDB/connection.php';
         
             if(isset($_POST['inserisci'])){
-                $sql = "UPDATE utente SET RecapitoTelefonico = '". $_POST['recapito'] ."' WHERE Email = '".$_SESSION['email-accesso']."'";
+                $sql = "UPDATE utente SET RecapitoTelefonico = '". $_POST['recapito'] ."' WHERE Email = '".$_SESSION['EmailUtente']."'";
                 $res = $pdo->query($sql);
                 if($res->rowCount() > 0)
                     echo "<script> alert('Valore aggiornato correttamente!'); window.location.href='../profilo/profilo.php'; </script>";

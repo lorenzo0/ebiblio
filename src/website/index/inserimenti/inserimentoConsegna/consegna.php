@@ -1,7 +1,10 @@
 <!DOCTYPE html>
 
 <?php
-        require '../../../../connectionDB/connection.php';      
+        require '../../../../connectionDB/connection.php';
+        if ($_SESSION['TipoUtente']!="Volontario"){
+            echo "<script> alert('Non possiedi le credenziali per accedere a questa pagina'); window.location.href='../../home/home.php'</script>"; 
+        }
  ?>
 
 <html>
@@ -19,14 +22,24 @@
    <script src="../../../js/script.js"></script>
     <script>
         $(function loadNavFoo(){
-          $("#navbar").load("../../utils/navbar.html"); 
           $("#footer").load("../../utils/footer.html"); 
         });
    </script>
   </head>
     <header></header>
     <body>
-        <div id="navbar"></div>
+        <div class="topnav">
+            <a href="../../home/home.php">Home</a>
+            <a href="../inserimenti/inserimentoAmministratore/inserimentoAmministratore.html">Inserisci utente</a>
+            <a href="../inserimenti/inserimentoAutore/inserimentoAutore.php">Inserisci autore</a>
+            <a href="inserimentoBiblioteca.php" class="active">Inserisci biblioteca</a>
+            <a href="../inserimenti/inserimentoPostoLettura/inserimentoPostoLettura.php">Posto lettura</a>
+            <a href="../inserimenti/inserimentoLibro/inserimentoLibro.php">Inserisci libro</a>            
+            <a href="../inserimenti/inserimentoSegnalazione/inserimentoSegnalazione.php">Nuova segnalazione</a>  
+            <a href="../inserimenti/inserimentoMessaggio/inserimentoMessaggio.php">Messaggi</a>
+            <button class="logout" style="float:right" onClick="location='../login/logout.php'">Logout</button>
+            <button class="logout" style="float:right" onClick="location='../profilo/profilo.php'">Account</button>
+        </div>
         <div class="container">
             <div class="card mt-4" style="border: 0">
                 <article class="card-body mx-auto" style="max-width: 400px;">
@@ -103,7 +116,7 @@
                          $data = $_POST['data'];
                          $note= $_POST['note'];
                          $tipologiaConsegna = $_POST['tipologiaConsegna']; 
-                         $emailVolontario = $_SESSION['email-accesso'];
+                         $emailVolontario = $_SESSION['EmailUtente'];
                        
                         $sql_emailUtilizzatore = "Select * FROM PrenotazioneCartaceo WHERE IdPrenotazioneCartaceo = $idPrenotazione";
                         $res= $pdo->query($sql_emailUtilizzatore);

@@ -39,7 +39,7 @@
                             JOIN PostoLettura AS PL ON(PPL.IdPostoLettura = PL.Id)
                             JOIN Biblioteca AS B ON(PL.NomeBiblioteca = B.Nome)
                             WHERE PPL.IdPostoLettura = '$id' 
-                            AND EmailUtilizzatore = '" . $_SESSION['email-accesso'] . "'
+                            AND EmailUtilizzatore = '" . $_SESSION['EmailUtente'] . "'
                             AND DataPrenotazione = '$data' AND OraInizio = '$oraInizio'";
                     $res = $pdo -> query($sql);
  
@@ -52,7 +52,14 @@
                 $oraFine = $row['OraFine'];
             }  
         ?>
-        <div id="navbar"></div>
+         <div class="topnav">
+            <a href="myHome.php" style=" background-color:#002a4f" class="active">Home</a>
+            <a href="../visualizzazione/visualizzazioneBiblioteca.php">Tutte le biblioteche</a>
+            <a href="../visualizzazione/visualizzazioneLibri.php">Tutti i libri</a>
+            <button class="logout" style="float:right" onClick="location='../login/logout.php'">Logout</button>
+            <button class="logout" style="float:right" onClick="location='../profilo/profilo.php'">Account</button>
+            
+        </div>
         <div class="container">
             <div class="card mt-4" style="border: 0">
                 <article class="card-body mx-auto" style="max-width: 800px;">

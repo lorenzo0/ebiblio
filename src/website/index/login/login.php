@@ -34,12 +34,26 @@
 
                 try{
                     $sql = "SELECT * FROM utente WHERE Email='$emailUtente' AND PasswordUtente='$passwordUtente'";
-                    $res = $pdo->query($sql); 
+                    $res = $pdo->query($sql);
                 }catch(PDOException $e){echo $e->getMessage();}	
 
                 if($res->rowCount() > 0){
-                    $_SESSION['email-accesso'] = $emailUtente;
-                    echo "<script> alert('Benvenuto!'); window.location.href='../home/home.php'; </script>";
+                    $_SESSION['EmailUtente'] = $emailUtente;
+                    try{
+                        $sql = "SELECT TipoUtente FROM utente WHERE Email='$emailUtente'";
+                        $res= $pdo->query($sql);
+                        $row = $res->fetch();
+                        $tipoUtente= $row['TipoUtente'];
+                        $_SESSION['TipoUtente']=$tipoUtente;
+                    }catch(PDOException $e){echo $e->getMessage();}	
+                    if($tipoUtente=="Amministratore"){
+                         header('Location: ../home/adminHome.php');
+                    }else if($tipoUtente == "Utilizzatore"){
+                        header('Location: ../home/myHome.php');
+                    }else{
+                        header('Location: ../home/volHome.php');
+                    }
+                    
                 }else
                     echo "<script> alert('I dati non risultano corretti, sicuro di esserti registrato?'); window.location.href='login.php'; </script>";
             }

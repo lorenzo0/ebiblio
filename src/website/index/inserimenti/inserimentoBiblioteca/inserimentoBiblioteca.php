@@ -13,7 +13,6 @@
 	<link href="https://fonts.googleapis.com/css?family=Noto+Sans&display=swap" rel="stylesheet"> <script src="../../../js/script.js"></script>
     <script>
         $(function loadNavFoo(){
-          $("#navbar").load("../../utils/navbar.html"); 
           $("#footer").load("../../utils/footer.html"); 
         });
    </script>  
@@ -21,9 +20,12 @@
     <header></header>
     <body>
         <?php
-                
+             require '../../../../connectionDB/connection.php';
+            if ($_SESSION['TipoUtente']!="Amministratore"){
+                echo "<script> alert('Non possiedi le credenziali per accedere a questa pagina'); window.location.href='../../home/home.php'</script>"; 
+            }
             if(isset($_POST['submit'])){
-                require '../../../../connectionDB/connection.php';
+                
 
                 $nomeBiblioteca= $_POST['nomeBiblioteca'];
                 $indirizzo = $_POST['indirizzo'];
@@ -40,14 +42,25 @@
                 $res=$pdo->query($sql);
 
                 if($res->rowCount() > 0) {
-                   echo "<script> alert('Biblioteca inserita correttamente!'); window.location.href='../home/home.php'; </script>";
+                   echo "<script> alert('Biblioteca inserita correttamente!'); window.location.href='../../home/home.php'; </script>";
                  } else {
                    echo "<script> alert('La biblioteca NON è stata inserita correttamente!'); window.location.href='inserimentoBiblioteca.php'; </script>";
                  }
             }
 
         ?>
-        <div id="navbar"></div>
+        <div class="topnav">
+            <a href="../../home/home.php">Home</a>
+            <a href="../inserimentoAmministratore/inserimentoAmministratore.html">Inserisci utente</a>
+            <a href="../inserimentoAutore/inserimentoAutore.php">Inserisci autore</a>
+            <a href="inserimentoBiblioteca.php" class="active">Inserisci biblioteca</a>
+            <a href="../inserimentoPostoLettura/inserimentoPostoLettura.php">Posto lettura</a>
+            <a href="../inserimentoLibro/inserimentoLibro.php">Inserisci libro</a>            
+            <a href="../inserimentoSegnalazione/inserimentoSegnalazione.php">Nuova segnalazione</a>  
+            <a href="../inserimentoMessaggio/inserimentoMessaggio.php">Messaggi</a>
+            <button class="logout" style="float:right" onClick="location='../login/logout.php'">Logout</button>
+            <button class="logout" style="float:right" onClick="location='../profilo/profilo.php'">Account</button>
+        </div>
         <div class="container">
             <div class="card mt-4" style="border: 0">
                 <article class="card-body mx-auto" style="max-width: 400px;">

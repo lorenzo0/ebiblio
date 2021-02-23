@@ -24,7 +24,14 @@
   </head>
     <header></header>
     <body>
-        <div id="navbar"></div>
+         <div class="topnav">
+            <a href="myHome.php" style=" background-color:#002a4f" class="active">Home</a>
+            <a href="../visualizzazione/visualizzazioneBiblioteca.php">Tutte le biblioteche</a>
+            <a href="../visualizzazione/visualizzazioneLibri.php">Tutti i libri</a>
+            <button class="logout" style="float:right" onClick="location='../login/logout.php'">Logout</button>
+            <button class="logout" style="float:right" onClick="location='../profilo/profilo.php'">Account</button>
+            
+        </div>
         <div class="container">
             <div class="card mt-4" style="border: 0">
                 <article class="card-body mx-auto" style="max-width: 1200px;">
@@ -44,12 +51,12 @@
                         try{                            
                             $sql = "SELECT * 
                                     FROM PrenotazioneCartaceo AS P JOIN Libro ON(P.CodiceISBNCartaceo = Libro.CodiceISBN)
-                                    WHERE P.EmailUtilizzatore = '" . $_SESSION['email-accesso'] . "'";
+                                    WHERE P.EmailUtilizzatore = '" . $_SESSION['EmailUtente'] . "'";
                             $res = $pdo -> query($sql);
                             
                             $sql1 = "SELECT IdPostoLettura, DataPrenotazione as dataPL, OraInizio
                                     FROM PrenotazionePostoLettura
-                                    WHERE PrenotazionePostoLettura.EmailUtilizzatore = '" . $_SESSION['email-accesso'] . "'";
+                                    WHERE PrenotazionePostoLettura.EmailUtilizzatore = '" . $_SESSION['EmailUtente'] . "'";
                             $res1 = $pdo -> query($sql1);
                             
                         }catch(PDOException $e){echo $e->getMessage();}

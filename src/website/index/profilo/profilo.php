@@ -16,7 +16,6 @@
     <script src="../../js/script.js"></script>
     <script>
         $(function loadNavFoo(){
-          $("#navbar").load("../utils/navbar.html"); 
           $("#footer").load("../utils/footer.html"); 
         });
     </script>
@@ -24,11 +23,17 @@
   </head>
     <header></header>
     <body>
+        
         <?php
             require '../../../connectionDB/connection.php';
         
             try{
-                $email = $_SESSION['email-accesso'];
+                $tipoUtente= $_SESSION['TipoUtente'];
+                $email = $_SESSION['EmailUtente'];
+            
+                //echo "Tipo utente " . $tipoUtente . ".<br>";
+                //echo "Email utente " . $email . ".<br>";
+                
                 
                 $sql = "SELECT * FROM Utente WHERE Email = '$email'";
                 $res = $pdo -> query($sql);
@@ -42,7 +47,14 @@
                     $recapitoTelefonico = $row['RecapitoTelefonico'];
                 }        
         ?>
-        <div id="navbar"></div>
+        <div class="topnav">
+            <a herf="profilo.php" class="active">Account</a>
+            <a href="../home/myHome.php">Home</a>
+            <a href="../visualizzazione/visualizzazioneBiblioteca.php">Tutte le biblioteche</a>
+            <a href="../visualizzazione/visualizzazioneLibri.php">Tutti i libri</a>
+            <button class="logout" style="float:right" onClick="location='../login/logout.php'">Logout</button>
+            
+        </div>
         <div class="container">
             <div class="card mt-4" style="border: 0">
                 <article class="card-body mx-auto" style="max-width: 400px;">
