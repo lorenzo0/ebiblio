@@ -35,11 +35,20 @@
                 $note = $_POST['note'];
 
 
-                $sql = "INSERT INTO Biblioteca (Nome, Indirizzo, Email, URLSito, Latitudine, Longitudine, Recapito, Note) VALUES ('$nomeBiblioteca','$indirizzo','$email','$sito','$latitudine', '$longitudine','$recapito','$note' )";
+                $sql = "INSERT INTO Biblioteca VALUES ('$nomeBiblioteca','$indirizzo','$email','$sito','$latitudine', '$longitudine','$recapito','$note')";
+                $sql = $pdo->prepare("INSERT INTO Biblioteca VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
 
-                $res=$pdo->query($sql);
+                $sql->bindParam(1, $nomeBiblioteca, PDO::PARAM_STR);
+                $sql->bindParam(2, $indirizzo, PDO::PARAM_STR);
+                $sql->bindParam(3, $email, PDO::PARAM_STR);
+                $sql->bindParam(4, $sito, PDO::PARAM_STR);
+                $sql->bindParam(5, $latitudine, PDO::PARAM_STR);
+                $sql->bindParam(6, $longitudine, PDO::PARAM_STR);
+                $sql->bindParam(7, $recapito, PDO::PARAM_INT);
+                $sql->bindParam(8, $note, PDO::PARAM_STR);
+                $res = $sql->execute();
 
-                if($res->rowCount() > 0) {
+                if($res > 0) {
                    echo "<script> alert('Biblioteca inserita correttamente!'); window.location.href='../home/home.php'; </script>";
                  } else {
                    echo "<script> alert('La biblioteca NON è stata inserita correttamente!'); window.location.href='inserimentoBiblioteca.php'; </script>";

@@ -34,10 +34,15 @@
             $nota = $_POST['note'];
             $data = date("Y-m-d");
             
-            $sql = "INSERT INTO Messaggio VALUES(0, '$emailAmministratore', '$emailUtilizzatore', '$data', '$titolo', '$messaggio')";
-            $res = $pdo -> query($sql);
+            $sql = $pdo->prepare("INSERT INTO Messaggio (EmailAmministratore, EmailUtilizzatore, DataMessaggio, Titolo, Testo) VALUES (?, ?, ?, ?, ?)");
+            $sql->bindParam(1, $emailAmministratore, PDO::PARAM_STR);
+            $sql->bindParam(2, $emailUtilizzatore, PDO::PARAM_STR);
+            $sql->bindParam(3, $data, PDO::PARAM_STR);
+            $sql->bindParam(4, $titolo, PDO::PARAM_STR);
+            $sql->bindParam(5, $messaggio, PDO::PARAM_STR);
+            $res = $sql->execute();
             
-            if($res->rowCount() > 0)
+            if($res > 0)
                echo "<script> alert('Messaggio inserito correttamente!'); window.location.href='../../home/home.php'; </script>";
             else
                 echo "<script> alert('Il messaggio non è stato inserito correttamente, riprova!'); window.location.href='inserimentoMessaggio.php'; </script>";

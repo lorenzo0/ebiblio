@@ -37,21 +37,32 @@
                 $recapito = $_POST['recapito'];
                 $qualifica = $_POST['qualifica'];
                 $nomeBiblio = $_POST['Biblioteca'];
+                $tipoUtente = 'Amministratore';
 
-                $sql = "INSERT INTO Utente (Email, Nome, Cognome, PasswordUtente, DataNascita, LuogoNascita, RecapitoTelefonico, TipoUtente) VALUES ('$emailUtente','$nomeUtente','$cognomeUtente','$password','$dataNascita','$luogoNascita', '$recapito', 'Amministratore')";
+                $sql = $pdo->prepare("INSERT INTO Utente VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
+                $sql->bindParam(1, $emailUtente, PDO::PARAM_STR);
+                $sql->bindParam(2, $nomeUtente, PDO::PARAM_STR);
+                $sql->bindParam(3, $cognomeUtente, PDO::PARAM_STR);
+                $sql->bindParam(4, $passwordUtente, PDO::PARAM_STR);
+                $sql->bindParam(5, $dataNascitaUtente, PDO::PARAM_STR);
+                $sql->bindParam(6, $luogoNascitaUtente, PDO::PARAM_STR);
+                $sql->bindParam(7, $recapitoUtente, PDO::PARAM_INT);
+                $sql->bindParam(8, $tipoUtente, PDO::PARAM_STR);
+                $res = $sql->execute();
 
-                $res= $pdo->query($sql);
-
-                if($res->rowCount() > 0){
+                if($res > 0){
                     try{
-                         $sql1 = "INSERT INTO Amministratore VALUES ('$emailUtente', '$nomeBiblio', '$qualifica')";
-                         $res = $pdo->query($sql1);    
+                         $sql1 = "INSERT INTO Amministratore VALUES (?, ?, ?)";
+                         $sql->bindParam(1, $emailUtente, PDO::PARAM_STR);
+                         $sql->bindParam(2, $nomeBiblio, PDO::PARAM_STR);
+                         $sql->bindParam(3, $qualifica, PDO::PARAM_STR);
+                         $res = $sql->execute();
                     } catch(PDOException $e) {
                         echo($e->getMesssage());	
                         exit();	
                     } 
 
-                    if($res->rowCount()>0)
+                    if($res>0)
                         echo "<script> alert('Amministratore inserito correttamente'); window.location.href='../login/login.php'; </script>";
                     else
                         echo "<script> alert('L'amministratore NON è stato inserito correttamente'); window.location.href='registrazioneAmministratore.php'; </script>";

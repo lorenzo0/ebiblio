@@ -29,11 +29,15 @@
             if(isset($_POST['submit'])){
 
                 $nomeAutore = $_POST['nomeAutore'];
+                $id = 0;
 
-                $sql = "INSERT INTO Autore VALUES (0,'$nomeAutore')";
-                $res = $pdo->query($sql);
+                $sql = $pdo->prepare("INSERT INTO Autore VALUES (?,?)");
+                $sql->bindParam(1, $id, PDO::PARAM_INT);
+                $sql->bindParam(2, $nomeAutore, PDO::PARAM_STR);
+                
+                $res = $sql->execute();
 
-                if($res->rowCount() > 0)
+                if($res > 0)
                     echo "<script> alert('Autore inserito correttamente'); window.location.href='../../home/home.php'; </script>";
                 else
                     echo "<script> alert('L'amministratore NON è stato inserito correttamente'); window.location.href='inserimentoAmministratore.php'; </script>";

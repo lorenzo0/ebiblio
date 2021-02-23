@@ -40,33 +40,48 @@
                 $luogoNascitaUtente = $_POST['luogoNascita'];
                 $recapitoUtente = $_POST['recapito'];
                 $professione = $_POST['professione'];
+                $tipoUtente = 'Utilizzatore';
 
 
 
-                try {
-                    $sql = "INSERT INTO Utente VALUES('$emailUtente', '$nomeUtente', '$cognomeUtente', '$passwordUtente', '$dataNascitaUtente', '$luogoNascitaUtente', '$recapitoUtente', 'Utilizzatore')";
-                    $res=$pdo->query($sql);
+                try {                    
+                    $sql = $pdo->prepare("INSERT INTO Utente VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
+                    $sql->bindParam(1, $emailUtente, PDO::PARAM_STR);
+                    $sql->bindParam(2, $nomeUtente, PDO::PARAM_STR);
+                    $sql->bindParam(3, $cognomeUtente, PDO::PARAM_STR);
+                    $sql->bindParam(4, $passwordUtente, PDO::PARAM_STR);
+                    $sql->bindParam(5, $dataNascitaUtente, PDO::PARAM_STR);
+                    $sql->bindParam(6, $luogoNascitaUtente, PDO::PARAM_STR);
+                    $sql->bindParam(7, $recapitoUtente, PDO::PARAM_INT);
+                    $sql->bindParam(8, $tipoUtente, PDO::PARAM_STR);
+                    $res = $sql->execute();
+                    
                 }catch(PDOException $e) {
                     echo("Query SQL Failed: ".$e->getMessage());
                     exit();
                 }
 
-                if($res != 0){
+                if($res > 0){
                         $currentData = date("Y/m/d");
+                        $statoAccount = 'Attivo';
                         try {
-                            $sql = "INSERT INTO Utilizzatore VALUES('$emailUtente', '$professione', 'Attivo', '$currentData')";
-                            $res=$pdo->query($sql);
+                            $sql = $pdo->prepare("INSERT INTO Utilizzatore VALUES (?, ?, ?, ?)");
+                            $sql->bindParam(1, $emailUtente, PDO::PARAM_STR);
+                            $sql->bindParam(2, $professione, PDO::PARAM_STR);
+                            $sql->bindParam(3, $statoAccount, PDO::PARAM_STR);
+                            $sql->bindParam(4, $currentData, PDO::PARAM_STR);
+                            $res = $sql->execute();
                         }catch(PDOException $e) {
                             echo("Query SQL Failed: ".$e->getMessage());
                             exit();
                         }
+                    
+                    if($res > 0)
+                        echo "<script> alert('Richiesta processata correttamente!'); window.location.href='../login/login.php'; </script>";
+                    else
+                        echo "<script> alert('La richiesta NON è stata processata correttamente!'); window.location.href='registrationPage.php'; </script>";
                     }
 
-
-                if($res->rowCount() > 0)
-                    echo "<script> alert('Richiesta processata correttamente!'); window.location.href='../login/loginPage.html'; </script>";
-                else
-                    echo "<script> alert('La richiesta NON è stata processata correttamente!'); window.location.href='registrationPage.php'; </script>";
             }
 
         ?>

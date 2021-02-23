@@ -104,6 +104,7 @@
                          $note= $_POST['note'];
                          $tipologiaConsegna = $_POST['tipologiaConsegna']; 
                          $emailVolontario = $_SESSION['email-accesso'];
+                         $id = 0;
                        
                         $sql_emailUtilizzatore = "Select * FROM PrenotazioneCartaceo WHERE IdPrenotazioneCartaceo = $idPrenotazione";
                         $res= $pdo->query($sql_emailUtilizzatore);
@@ -113,10 +114,17 @@
                             $emailUtilizzatore = $row['EmailUtilizzatore'];
                         }
             
-                        $sql = "INSERT INTO Consegna (IdConsegna, IdPrenotazioneCartaceo, EmailVolontario,  EmailUtilizzatore, Note, Tipo, DataConsegna) VALUES (0,'$idPrenotazione', '$emailVolontario','$emailUtilizzatore', '$note', '$tipologiaConsegna', '$data')";
+                        $sql = $pdo->prepare("INSERT INTO Consegna VALUES(?, ?, ?, ?, ?, ?, ?)");
                         
-                    
-                        $res2 = $pdo->query($sql);
+                        $sql->bindParam(1, $id, PDO::PARAM_INT);
+                        $sql->bindParam(2, $idPrenotazione, PDO::PARAM_STR);
+                        $sql->bindParam(3, $emailVolontario, PDO::PARAM_STR);
+                        $sql->bindParam(4, $emailUtilizzatore, PDO::PARAM_STR);
+                        $sql->bindParam(5, $note, PDO::PARAM_STR);
+                        $sql->bindParam(6, $tipologiaConsegna, PDO::PARAM_STR);
+                        $sql->bindParam(7, $data, PDO::PARAM_STR);
+                        
+                        $res = $sql->execute();
                         
                         if ($res>0) {
                            echo "<script> alert('Consegna inserita correttamente!'); window.location.href='../home/home.php'; </script>";

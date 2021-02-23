@@ -9,6 +9,7 @@
     $genere = $_POST['genere'];
     $nomeEdizione = $_POST['nomeEdizione'];
     $tipoLibro = $_POST['tipoLibro'];
+    $disponilita = 'Disponibile';
 
     try {
         $sql = "SELECT NomeBibliotecaAmministrata
@@ -26,16 +27,22 @@
 
 
     try{	
-         $sql = "INSERT INTO Libro VALUES ('$codiceISBN','$titolo','$anno','$genere','$nomeEdizione', '$tipoLibro')";		
-         $res = $pdo->query($sql);
+         $sql = $pdo -> prepare("INSERT INTO Libro VALUES(?,?,?,?,?,?)");
+         $sql->bindParam(1, $codiceISBN, PDO::PARAM_STR);
+         $sql->bindParam(2, $titolo, PDO::PARAM_STR);
+         $sql->bindParam(3, $anno, PDO::PARAM_STR);
+         $sql->bindParam(4, $genere, PDO::PARAM_STR);
+         $sql->bindParam(5, $nomeEdizione, PDO::PARAM_STR);
+         $sql->bindParam(6, $tipoLibro, PDO::PARAM_STR);
+         $res = $sql->execute();
     }	
     catch(PDOException $e)	{	
          echo($e->getMesssage());	
-         exit();	
+         exit();
     }	
 
 
-    if($res->rowCount() > 0){
+    if($res > 0){
 
         switch($tipoLibro){
             case 'Cartaceo':
@@ -46,11 +53,19 @@
 
 
                 try{	
-                     $sql = "INSERT INTO cartaceo VALUES ($codiceISBN,'$conservazione','Disponibile','$pagine','$scaffale')";	
-                     $res = $pdo->query($sql);
-
-                     $sql_dispCartaceo = "INSERT INTO LibriDisponibili VALUES ('$nomeBiblioteca',$codiceISBN, $numeroCopie )";
-                     $pdo -> query($sql_dispCartaceo);
+                     $sql = $pdo -> prepare("INSERT INTO cartaceo VALUES(?,?,?,?,?)");
+                     $sql->bindParam(1, $codiceISBN, PDO::PARAM_INT);
+                     $sql->bindParam(2, $conservazione, PDO::PARAM_STR);
+                     $sql->bindParam(3, $disponilita, PDO::PARAM_STR);
+                     $sql->bindParam(4, $pagine, PDO::PARAM_INT);
+                     $sql->bindParam(5, $scaffale, PDO::PARAM_INT);
+                     $res = $sql->execute();
+                    
+                     $sql = $pdo -> prepare("INSERT INTO LibriDisponibili VALUES(?,?,?)");
+                     $sql->bindParam(1, $nomeBiblioteca, PDO::PARAM_STR);
+                     $sql->bindParam(2, $codiceISBN, PDO::PARAM_INT);
+                     $sql->bindParam(3, $numeroCopie, PDO::PARAM_INT);
+                     $res = $sql->execute();
                 }	
                 catch(PDOException $e)	{	
                      echo($e->getMesssage());	
@@ -85,11 +100,21 @@
 
 
                 try{	
-                     $sql = "INSERT INTO cartaceo VALUES ($codiceISBN,'$conservazione','Disponibile','$pagine','$scaffale')";	
-                     $res = $pdo->query($sql);
-
-                     $sql_dispCartaceo = "INSERT INTO LibriDisponibili VALUES ('$nomeBiblioteca',$codiceISBN, $numeroCopie )";
-                     $pdo -> query($sql_dispCartaceo);
+                     $sql = $pdo -> prepare("INSERT INTO cartaceo VALUES(?,?,?,?,?)");
+                     $sql->bindParam(1, $codiceISBN, PDO::PARAM_INT);
+                     $sql->bindParam(2, $conservazione, PDO::PARAM_STR);
+                     $sql->bindParam(3, $disponilita, PDO::PARAM_STR);
+                     $sql->bindParam(4, $pagine, PDO::PARAM_INT);
+                     $sql->bindParam(5, $scaffale, PDO::PARAM_INT);
+                     $res = $sql->execute();
+                    
+                     $sql = $pdo -> prepare("INSERT INTO LibriDisponibili VALUES(?,?,?)");
+                     $sql->bindParam(1, $nomeBiblioteca, PDO::PARAM_STR);
+                     $sql->bindParam(2, $codiceISBN, PDO::PARAM_INT);
+                     $sql->bindParam(3, $numeroCopie, PDO::PARAM_INT);
+                     $res = $sql->execute();
+                    
+                     
                 }	
                 catch(PDOException $e)	{	
                      echo($e->getMesssage());	
@@ -107,7 +132,7 @@
                 break;
         }
 
-        if($res->rowCount() > 0)
+        if($res > 0)
             echo "<script> alert('Il libro è stato inserito correttamente'); window.location.href='../../visualizzazione/visualizzazioneLibri.php'; </script>";
         else
             echo "<script> alert('Il libro non è stato inserito correttamente'); window.location.href='inserimentoISBN.php'; </script>";

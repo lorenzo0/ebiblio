@@ -30,11 +30,18 @@
             $emailUtilizzatore = $_POST['emailUtilizzatore'];
             $nota = $_POST['note'];
             $data = date("Y/m/d");
+            $id = 0;
             
-            $sql = "INSERT INTO Segnalazione VALUES(0, '$emailAmministratore', '$emailUtilizzatore', '$data', '$nota')";
-            $res = $pdo -> query($sql);
+            $sql = $pdo->prepare("INSERT INTO Segnalazione VALUES (?, ?, ?, ?, ?)");
             
-            if($res->rowCount() > 0)
+            $sql->bindParam(1, $id, PDO::PARAM_INT);
+            $sql->bindParam(2, $emailAmministratore, PDO::PARAM_STR);
+            $sql->bindParam(3, $emailUtilizzatore, PDO::PARAM_STR);
+            $sql->bindParam(4, $data, PDO::PARAM_STR);
+            $sql->bindParam(5, $nota, PDO::PARAM_STR);
+            $res = $sql->execute();
+            
+            if($res > 0)
                echo "<script> alert('Segnalazione inserita correttamente!'); window.location.href='../../home/home.php'; </script>";
             else
                 echo "<script> alert('La segnalazione non è stata inserita correttamente, riprova!'); window.location.href='inserimentoSegnalazione.php'; </script>";

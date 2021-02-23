@@ -54,13 +54,13 @@
                     
                     <div class="form-group input-group">
                         <label for="presaCorrente">Presa Corrente</label>  
-                        <input type="checkbox" class="form-control" id="presaCorrente" name="presaCorrente" value="true">
+                        <input type="checkbox" class="form-control" id="presaCorrente" name="presaCorrente" value=1>
                     </div> 
                        
                 
                   <div class="form-group input-group">
                     <label for="presaEthernet">Presa Ethernet</label>  
-                        <input type="checkbox" class="form-control" id="presaEthernet" name="presaEthernet" value="true">
+                        <input type="checkbox" class="form-control" id="presaEthernet" name="presaEthernet" value=1>
                     </div>
 
                        
@@ -76,13 +76,18 @@
             
             if(isset($_POST['inserisci'])){
             
-                $presaCorrente = isset($_POST['presaCorrente']) ? $_POST['presaCorrente'] : 'false';
-                $presaEthernet = isset($_POST['presaEthernet']) ? $_POST['presaEthernet'] : 'false';
+                $presaCorrente = isset($_POST['presaCorrente']) ? $_POST['presaCorrente'] : 0;
+                $presaEthernet = isset($_POST['presaEthernet']) ? $_POST['presaEthernet'] : 0;
 
                 $nomeBiblioteca= $_POST['nomeBiblioteca'];
+                $id = 0;
 
-                $sql = "INSERT INTO PostoLettura (Id, NomeBiblioteca, Ethernet, Corrente) VALUES (0,'$nomeBiblioteca',$presaEthernet,$presaCorrente)"; 
-                $res=$pdo->query($sql);
+                $sql = $pdo->prepare("INSERT INTO PostoLettura VALUES(?, ?, ?, ?)");
+                $sql->bindParam(1, $id, PDO::PARAM_INT);
+                $sql->bindParam(2, $nomeBiblioteca, PDO::PARAM_STR);
+                $sql->bindParam(3, $presaEthernet, PDO::PARAM_INT);
+                $sql->bindParam(4, $presaCorrente, PDO::PARAM_INT);
+                $res = $sql->execute();
                 
                 if($res>0)
                     echo "<script> alert('Posto lettura inserito correttamente!'); window.location.href='../../visualizzazione/visualizzazionePostiLettura.php'; </script>";
