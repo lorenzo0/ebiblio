@@ -5,7 +5,6 @@
                 echo "<script> alert('Non possiedi le credenziali per accedere a questa pagina'); window.location.href='../../home/home.php'</script>"; 
             }*/
 
-            /* Se vogliamo aggiungere il campo tipo_libro 
             switch($_GET['tipo']){
                 case 'Cartaceo':
                     echo '<style type="text/css">
@@ -30,7 +29,7 @@
                         #ebookGroupNotExist { display: none; }
                     </style>';
                     break;
-            }*/
+            }
         ?>
 
 
@@ -62,9 +61,25 @@
         
         <?php 
         
+            try{
+                $sql = "SELECT * from libro where CodiceISBN=" .$_GET['isbn'];
+                $res = $pdo -> query($sql);
+            }catch(PDOException $e){echo $e->getMessage();}	
+
+            while ($row = $res->fetch()) {
+                $titolo = $row['Titolo'];
+                $annoEdizione = $row['Anno'];
+                $genere = $row['Genere'];
+                $nomeEdizione = $row['NomeEdizione'];
+            }
+        
             if(isset($_POST['inserisci'])){
-                $sql = "UPDATE cartaceo SET NumeroCopie = NumeroCopie + 1 WHERE CodiceISBN = ".$_GET['isbn'];
-                $res = $pdo->query($sql);
+                try{
+                    $sql = "UPDATE libridisponibili SET NumeroCopie = NumeroCopie + 1 WHERE CodiceISBN = ".$_GET['isbn'];
+                    $res = $pdo->query($sql);
+                }catch(PDOException $e){echo $e->getMessage();}	
+                
+                    
                 if($res=0)
                     echo "<script type='text/javascript'>alert('Non è stata inserita una copia!');</script>";
                 else
@@ -91,25 +106,23 @@
                         <img src="../../../images/ebook.png" alt="Avatar" class="avatar">
                     </div>
                    <form method="post"> 
-                       
                        <div id = "cartaceoGroupExist">                           
                            <div class="form-group">
                                 <button type="submit" class="btn btn-primary btn-block" name="inserisci"> Inserisci una copia cartacea! </button>
                             </div>
-                           
                        </div>
                    </form>
                        
                     <div class="containerGroupsCartaceoEbook">
                        <div id = "cartaceoGroupNotExist">
                            <div class="form-group">
-                                <a href="inserimentoLibro.php?tipo=cartaceo&isbn=<?php echo $_GET['isbn']; ?>&tipoLibro=<?php echo $_GET['tipo']; ?>" class="button"> Inserisci nuovo libro cartaceo  </a>
+                                <a href="inserimentoLibro.php?tipo=Cartaceo&isbn=<?php echo $_GET['isbn']; ?>&titolo=<?php echo $titolo; ?>&genere=<?php echo $genere; ?>&nomeEdizione=<?php echo nomeEdizione; ?>&annoEdizione=<?php echo annoEdizione; ?>&tipoLibro=<?php echo $_GET['tipo']; ?>" class="button"> Inserisci nuovo libro cartaceo  </a>
                            </div>
                        </div>
                        
                        <div id = "ebookGroupNotExist">
                            <div class="form-group">
-                                <a href="inserimentoLibro.php?tipo=ebook&isbn=<?php echo $_GET['isbn']; ?>&tipoLibro=<?php echo $_GET['tipo']; ?>" class="button"> Inserisci nuovo libro ebook  </a>
+                               <a href="inserimentoLibro.php?tipo=Ebook&isbn=<?php echo $_GET['isbn']; ?>&titolo=<?php echo $titolo; ?>&genere=<?php echo $genere; ?>&nomeEdizione=<?php echo $nomeEdizione; ?>&annoEdizione=<?php echo $annoEdizione; ?>&tipoLibro=<?php echo $_GET['tipo']; ?>" class="button"> Inserisci nuovo libro ebook  </a>
                            </div>
                        </div>
                     </div>

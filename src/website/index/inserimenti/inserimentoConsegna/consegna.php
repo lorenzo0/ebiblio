@@ -2,9 +2,9 @@
 
 <?php
         require '../../../../connectionDB/connection.php';
-        if ($_SESSION['TipoUtente']!="Volontario"){
+        /*if ($_SESSION['TipoUtente']!="Volontario"){
             echo "<script> alert('Non possiedi le credenziali per accedere a questa pagina'); window.location.href='../../home/home.php'</script>"; 
-        }
+        }*/
  ?>
 
 <html>
@@ -24,6 +24,20 @@
         $(function loadNavFoo(){
           $("#footer").load("../../utils/footer.html"); 
         });
+        
+        $(document).ready(function(){  
+              var i=1;  
+              $('#aggiungi').click(function(){  
+                   i++;  
+                   $('#dynamic_field').append('<tr id="row'+i+'"><td><select name="idPrenotazione[]" id="idPrenotazione[]" class="form-control"><?php try{ $sql = "SELECT Distinct(Email), Nome, Cognome FROM PrenotazioneCartaceo join utente on(EmailUtilizzatore = Email) WHERE IdPrenotazioneCartaceo NOT IN (SELECT IdPrenotazioneCartaceo FROM Consegna)"; $res = $pdo -> query($sql); }catch(PDOException $e){echo $e->getMessage();} while ($row = $res->fetch()) {  echo '<option value=' . $row['Email'] . '>'. $row['Nome'] . ' ' . $row['Cognome'] . '</option>';}?></select></td> <td><button type="button" name="remove" id="'+i+'" class="btn btn-danger btn_remove">X</button></td></tr>');  
+              });  
+              $(document).on('click', '.btn_remove', function(){  
+                   var button_id = $(this).attr("id");   
+                   $('#row'+button_id+'').remove();  
+              });  
+         }); 
+        
+        
    </script>
   </head>
     <header></header>
@@ -49,28 +63,36 @@
                     </div>
                    <form method="post"> 
                        
-                    <div class="form-group">
-                       <label for="utilizzatore">Scegli Consegna da effettuare:</label> 
-                          <select class="form-control" id="idPrenotazione" name="idPrenotazione">
-                                  <?php    
-                                        try {
-                                            $cont = 0;
-                                            $sql = "SELECT IdPrenotazioneCartaceo 
-                                                    FROM PrenotazioneCartaceo 
-                                                    WHERE IdPrenotazioneCartaceo NOT IN (SELECT IdPrenotazioneCartaceo 
-                                                                                         FROM Consegna)"; 
-                                            $res=$pdo->query($sql);
-    
-                                        } catch(PDOException $e) {echo("Query SQL Failed: ".$e->getMessage()); }
-                                            
-                                         while($row = $res->fetch()) {
-                                            $cont++;
-                                            echo "<option value=" . $row['IdPrenotazioneCartaceo'] . ">". $row['IdPrenotazioneCartaceo'] . "</option>";        
-                                         }
-                                        
-                                    ?> 
-                          </select>
-                        </div>
+                    <label> Scegli utente a cui consegnare: </label>
+                       <div class="form-group">  
+                           <table class="table table-bordered" id="dynamic_field" style="margin-top:0px;">  
+                                <tr>  
+                                     <td>
+                                         <select name="idPrenotazione[]" id="idPrenotazione[]" class="form-control">
+                                            <?php    
+                                                try {
+                                                    $cont = 0;
+                                                    $sql = "SELECT Distinct(Email), Nome, Cognome 
+                                                            FROM PrenotazioneCartaceo 
+                                                            JOIN utente on(EmailUtilizzatore = Email)
+                                                            WHERE IdPrenotazioneCartaceo NOT IN (SELECT IdPrenotazioneCartaceo 
+                                                                                                 FROM Consegna)"; 
+                                                    $res=$pdo->query($sql);
+
+                                                } catch(PDOException $e) {echo("Query SQL Failed: ".$e->getMessage()); }
+
+                                                 while($row = $res->fetch()) {
+                                                    $cont++;
+                                                    echo '<option value=' . $row['Email'] . '>'. $row['Nome'] . ' ' . $row['Cognome'] . '</option>'; 
+                                                 }
+
+                                            ?> 
+                                        </select>
+                                    </td>  
+                                     <td><button type="button" name="aggiungi" id="aggiungi" class="btn btn-success">Aggiungi</button></td>  
+                                </tr>  
+                           </table> 
+                        </div> 
                        
                     <div class="form-group">
                         <?php 
@@ -91,7 +113,7 @@
                     </div>
                        
                       <div class="form-group input-group">
-                        <input type="text" placeholder="note" class="form-control" name="note" id="note" required>
+                        <input type="text" placeholder="note" class="form-control" name="note" id="note">
                     </div> 
 
                     
@@ -117,33 +139,53 @@
                          $note= $_POST['note'];
                          $tipologiaConsegna = $_POST['tipologiaConsegna']; 
                          $emailVolontario = $_SESSION['EmailUtente'];
-                         $id = 0;
-                       
-                        $sql_emailUtilizzatore = "Select * FROM PrenotazioneCartaceo WHERE IdPrenotazioneCartaceo = $idPrenotazione";
-                        $res= $pdo->query($sql_emailUtilizzatore);
                         
-            
+                        for($i=0; $i<count($idPrenotazione); $i++){
+                            for($y=$i+1; $y<(count($idPrenotazione)-$i); $y++){
+                                if($idPrenotazione[$i] == $idPrenotazione[$y])
+                                    unset($idPrenotazione[$y]);
+                            }
+                          }
+                        
+                        $sql_emailUtilizzatore = "Select MAX(IdConsegna) AS MaxConsegna FROM Consegna";
+                        $res = $pdo->query($sql_emailUtilizzatore);
+                        
                         while($row = $res->fetch()) {
-                            $emailUtilizzatore = $row['EmailUtilizzatore'];
+                            if($row['MaxConsegna'] != 0)
+                                $id = ($row['MaxConsegna'] + 1);
+                            else
+                                $id = 0;
                         }
-            
-                        $sql = $pdo->prepare("INSERT INTO Consegna VALUES(?, ?, ?, ?, ?, ?, ?)");
+                       
+                        $sqlConsegna = $pdo->prepare("INSERT INTO Consegna VALUES(?, ?, ?, ?, ?, ?, ?)");
+                        for($i=0; $i<count($idPrenotazione); $i++){
+                            
+                            $sql = "Select * 
+                                    FROM PrenotazioneCartaceo join cartaceo on(CodiceISBNCartaceo = CodiceISBN)
+                                    WHERE EmailUtilizzatore = '$idPrenotazione[$i]' and statoprestito = 'Prenotato'";
+                            $res = $pdo->query($sql);
+                            
+                            
+                            while($row = $res->fetch()) {
+                                
+                                $sqlConsegna->bindParam(1, $id, PDO::PARAM_INT);
+                                $sqlConsegna->bindParam(2, $row['IdPrenotazioneCartaceo'], PDO::PARAM_INT);
+                                $sqlConsegna->bindParam(3, $emailVolontario, PDO::PARAM_STR);
+                                $sqlConsegna->bindParam(4, $idPrenotazione[$i], PDO::PARAM_STR);
+                                $sqlConsegna->bindParam(5, $note, PDO::PARAM_STR);
+                                $sqlConsegna->bindParam(6, $tipologiaConsegna, PDO::PARAM_STR);
+                                $sqlConsegna->bindParam(7, $data, PDO::PARAM_STR);
+                                
+                                $res1 = $sqlConsegna->execute();
+                            }
+                            
+                        }
                         
-                        $sql->bindParam(1, $id, PDO::PARAM_INT);
-                        $sql->bindParam(2, $idPrenotazione, PDO::PARAM_STR);
-                        $sql->bindParam(3, $emailVolontario, PDO::PARAM_STR);
-                        $sql->bindParam(4, $emailUtilizzatore, PDO::PARAM_STR);
-                        $sql->bindParam(5, $note, PDO::PARAM_STR);
-                        $sql->bindParam(6, $tipologiaConsegna, PDO::PARAM_STR);
-                        $sql->bindParam(7, $data, PDO::PARAM_STR);
-                        
-                        $res = $sql->execute();
-                        
-                        if ($res>0) {
+                        if ($res>0) 
                            echo "<script> alert('Consegna inserita correttamente!'); window.location.href='../home/home.php'; </script>";
-                         } else {
+                        else 
                            echo "<script> alert('La consegna NON è stata inserita correttamente!'); window.location.href='consegna.php'; </script>";
-                         }
+                         
                     }
                 ?> 
             

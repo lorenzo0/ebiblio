@@ -20,18 +20,10 @@
       
   </head>
     <?php
-        
             require '../../../connectionDB/connection.php';
             
             $tipoUtente= $_SESSION['TipoUtente'];
-            $emailUtente = $_SESSION['EmailUtente'];
-            
-            echo "Tipo utente " . $tipoUtente . ".<br>";
-            echo "Email utente " . $emailUtente . ".<br>";
-            
-            
-            
-        
+            $emailUtente = $_SESSION['EmailUtente'];                
     ?>
     <header></header>
     <body style="background-color:#002a4f; color:#fff">

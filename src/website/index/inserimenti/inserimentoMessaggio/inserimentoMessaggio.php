@@ -94,7 +94,6 @@
 
                                 ?>
                             </select>
-
                        </div> 
                        
                        <div class="form-group input-group">

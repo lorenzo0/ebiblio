@@ -11,8 +11,6 @@
     $tipoLibro = $_POST['tipoLibro'];
     $disponilita = 'Disponibile';
     $autori=$_POST['autore'];
-    
-    $_SESSION['EmailUtente'] = 'admin@admin.it';
 
     try {
         $sql = "SELECT NomeBibliotecaAmministrata
@@ -41,10 +39,10 @@
         
          $sql = $pdo -> prepare("INSERT INTO Scrittori VALUES(?,?)");
         
-         for($i=0; $i<count($names); $i++){
-            for($y=$i+1; $y<(count($names)-$i); $y++){
-                if($names[$i] == $names[$y])
-                    unset($names[$y]);
+         for($i=0; $i<count($autori); $i++){
+            for($y=$i+1; $y<(count($autori)-$i); $y++){
+                if($autori[$i] == $autori[$y])
+                    unset($autori[$y]);
             }
           }
         
@@ -69,6 +67,9 @@
                 $pagine = $_POST['numeroPagine'];
                 $scaffale = $_POST['numeroScaffale'];
                 $numeroCopie = $_POST['numeroCopie'];
+                
+                echo $conservazione . ' - ' . $pagine . ' - ' . $scaffale . ' - ' . $numeroCopie;
+                echo $nomeBiblioteca . ' - ' . $codiceISBN . ' - ' . $numeroCopie . ' - ';
 
 
                 try{	
@@ -117,7 +118,6 @@
                 $numeroCopie = $_POST['numeroCopie'];
 
 
-
                 try{	
                      $sql = $pdo -> prepare("INSERT INTO cartaceo VALUES(?,?,?,?,?)");
                      $sql->bindParam(1, $codiceISBN, PDO::PARAM_INT);
@@ -153,11 +153,11 @@
 
         if($res > 0)
             echo "<script> alert('Il libro è stato inserito correttamente'); window.location.href='../../visualizzazione/visualizzazioneLibri.php'; </script>";
-        else
-            echo "<script> alert('Il libro non è stato inserito correttamente'); window.location.href='inserimentoISBN.php'; </script>";
+        //else
+            //echo "<script> alert('Il libro non è stato inserito correttamente'); window.location.href='inserimentoISBN.php'; </script>";
 
-    }else
-        echo "<script> alert('Il libro non è stato inserito correttamente'); window.location.href='inserimentoISBN.html'; </script>";
+    }//else
+        //echo "<script> alert('Il libro non è stato inserito correttamente'); window.location.href='inserimentoISBN.html'; </script>";
 
 
     ?>

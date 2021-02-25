@@ -101,7 +101,6 @@
                                 }
                             }
                             $res = $pdo -> query($sql);
-                            echo $sql;
                             
                         }catch(PDOException $e){echo $e->getMessage();}
 
