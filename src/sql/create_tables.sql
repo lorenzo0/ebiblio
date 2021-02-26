@@ -39,11 +39,11 @@ CREATE TABLE Libro(
     NomeEdizione varchar(255),
     TipoLibro enum("Cartaceo","Ebook", "Entrambi")
 );
-insert into LibriDisponibili
-values("Biblioteca Universitaria di Bologna", 12345678);
+
 CREATE TABLE LibriDisponibili(
     NomeBiblioteca varchar(255),
     CodiceISBN int(10),
+    NumeroCopie int(10),
     FOREIGN KEY(NomeBiblioteca) REFERENCES Biblioteca(Nome) ON DELETE CASCADE,
     FOREIGN KEY(CodiceISBN) REFERENCES Libro(CodiceISBN) ON DELETE CASCADE,
     PRIMARY KEY(NomeBiblioteca, CodiceISBN)
@@ -61,13 +61,13 @@ CREATE TABLE Scrittori(
     FOREIGN KEY(CodiceISBN) REFERENCES Libro(CodiceISBN) ON DELETE CASCADE
 );
 
+
 CREATE TABLE Cartaceo(
 	CodiceISBN int(10) PRIMARY KEY,
-    StatoDiConservazione enum("Ottimo","Buono","Non buono", "Scadente"),
+    StatoDiConservazione enum("Ottimo","Buono","Non Buono", "Scadente"),
 	StatoPrestito enum("Disponibile","Prenotato","Consegnato"),
 	NumeroPagine int(10),
     NumeroScaffale int(10),
-    NumeroCopie int(10),
     FOREIGN KEY(CodiceISBN) REFERENCES Libro(CodiceISBN) ON DELETE CASCADE
 );
 
@@ -88,9 +88,8 @@ CREATE TABLE Utente(
     DataNascita date,
     LuogoNascita varchar(255),
     RecapitoTelefonico varchar(255),
-    TipoUtente varchar(255)
+    TipoUtente enum('Utilizzatore','Volontario','Amministratore','SuperUser') NOT NULL
 );
-/* TipoUtente enum('utilizzatore','volontario','amministratore','') NOT NULL*/
 
 CREATE TABLE Amministratore(
     EmailUtente varchar(255) PRIMARY KEY,
@@ -115,7 +114,7 @@ CREATE TABLE Utilizzatore(
 );
 
 CREATE TABLE PrenotazioneCartaceo(
-    IdPrenotazioneCartaceo int(10),
+    IdPrenotazioneCartaceo int(10) auto_increment,
     CodiceISBNCartaceo int(10),
     AvvioPrenotazione date,
     FinePrenotazione date,
@@ -128,7 +127,7 @@ CREATE TABLE PrenotazioneCartaceo(
 );
 
 CREATE TABLE Consegna(
-	IdConsegna int(10) AUTO_INCREMENT PRIMARY KEY,
+	IdConsegna int(10),
     IdPrenotazioneCartaceo int(10),
     EmailVolontario varchar(255),
     EmailUtilizzatore varchar(255),
@@ -137,7 +136,8 @@ CREATE TABLE Consegna(
     DataConsegna date,
     FOREIGN KEY(EmailVolontario) REFERENCES Volontario(EmailUtente) ON DELETE CASCADE,
     FOREIGN KEY(EmailUtilizzatore) REFERENCES Utilizzatore(EmailUtente) ON DELETE CASCADE,
-    FOREIGN KEY(IdPrenotazioneCartaceo) REFERENCES PrenotazioneCartaceo(IdPrenotazioneCartaceo)
+    FOREIGN KEY(IdPrenotazioneCartaceo) REFERENCES PrenotazioneCartaceo(IdPrenotazioneCartaceo),
+    PRIMARY KEY(IdConsegna, IdPrenotazioneCartaceo)
 );
 
 CREATE TABLE AccessoEbook(
@@ -243,35 +243,3 @@ BEGIN
 														 WHERE IdConsegna = NEW.IdConsegna
 														 AND NEW.Tipo = "Restituzione"));
 END |
-
-                
-/* Creazione Utente */
-
-DROP USER IF EXISTS utenteSospeso;
-DROP USER IF EXISTS utenteUtilizzatore;
-DROP USER IF EXISTS utenteAmministratore;
-DROP USER IF EXISTS utenteVolontario;
-
-CREATE USER utenteSospeso;
-CREATE USER utenteUtilizzatore;
-CREATE USER utenteAmministratore;
-CREATE USER utenteVolontario;
-
-GRANT ALL PRIVILEGES ON Consegna TO utenteVolontario;
-GRANT ALL PRIVILEGES ON ebiblio TO utenteAmministratore;
-REVOKE ALL PRIVILEGES ON ebiblio TO utenteSospeso;
-
-GRANT INSERT ON prenotazionecartaceo to utenteUtilizzatore;
-GRANT INSERT ON prenotazionepostolettura to utenteUtilizzatore;
-
-
-/*
-	L'utente sospeso non può fare niente - 
-     "impedendo qualsiasi accesso alla piattaforma da parte dell’utente sanzionato"
-	
-    L'utente amministratore può fare tutto
-    L'utente volontario può avere accesso (insert + select + update + delete) evento di consegna
-    
-    L'utente utilizzatore può leggere tutti i dati ed inserire una nuova prenotazione posto lettura e cartaceo
-*/
-

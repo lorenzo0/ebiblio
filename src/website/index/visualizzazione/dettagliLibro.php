@@ -172,7 +172,6 @@
                                 </div>
                         </div>
                         
-                        <!--se può accedere anche da qua l'utente bisogna gestire l'incremento del numero accessi-->
                         <div class="form-group row">
                             <label class="col-4 col-form-label">PDF:</label>
                                 <div class="col-7">
@@ -181,6 +180,26 @@
                         </div>
                         
                     </div>
+                    
+                    <div class="form-group input-group">
+                        <label class="col-4 col-form-label">Autori:</label>
+                            <div class="col-7">
+                                <select class="form-control">
+                                    <?php
+                                        try{
+                                            $sql = "Select NomeAutore 
+                                            from autore join scrittori on(id=IdAutore)
+                                            where codiceISBN = $isbn;";
+                                            $res = $pdo -> query($sql);
+                                        }catch(PDOException $e){echo $e->getMessage();}	
+
+                                        while ($row = $res->fetch()) {
+                                            echo '<option>' . $row['NomeAutore'] . '</option>';
+                                        }
+                                    ?>
+                                </select>
+                            </div>
+                       </div> 
                     
                 </article>
             </div>

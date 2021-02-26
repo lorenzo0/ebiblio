@@ -83,22 +83,27 @@
                         </select>
 
                         <div class="form-group input-group">
-                            <input type="text" placeholder="titolo" class="form-control" name="titolo" id="titolo" required>
+                            <input type="text" placeholder="titolo" class="form-control" name="titolo" id="titolo" <?php if(isset($_GET['titolo'])) echo 'value=' . $_GET['titolo'] . ' readonly'?> required>
                         </div>
 
                         <div class="form-group input-group">
-                            <input type="number" placeholder="anno edizione" class="form-control" name="anno" id="anno" maxlength=4 required>
+                            <input type="number" placeholder="anno edizione" class="form-control" name="anno" id="anno" maxlength=4 <?php if(isset($_GET['annoEdizione'])) echo 'value=' . $_GET['annoEdizione'] . ' readonly'?> required>
                         </div>
 
                         <div class="form-group input-group">
-                            <input type="text" placeholder="genere" class="form-control" name="genere" id="genere" required>
+                            <input type="text" placeholder="genere" class="form-control" name="genere" id="genere" <?php if(isset($_GET['genere'])) echo 'value=' . $_GET['genere'] . ' readonly'?> required>
                         </div>
 
                         <div class="form-group input-group">
-                            <input type="text" placeholder="nome edizione" class="form-control" name="nomeEdizione" id="nomeEdizione" required>
+                            <input type="text" placeholder="nome edizione" class="form-control" name="nomeEdizione" id="nomeEdizione" <?php if(isset($_GET['nomeEdizione'])) echo 'value=' . $_GET['nomeEdizione'] . ' readonly'?> required>
                         </div>
                        
-                       <div class="form-group">  
+                       <?php 
+                            if(isset($_GET['tipoLibro'])) echo '<style type="text/css"> #autoriDaInserire { display: none; } </style>';
+                       ?>
+                       
+                       <label> Autori del libro: </label>
+                       <div class="form-group" id="autoriDaInserire">  
                            <table class="table table-bordered" id="dynamic_field" style="margin-top:0px;">  
                                 <tr>  
                                      <td>
@@ -131,7 +136,7 @@
                               <option value="none" selected>--------</option>  
                               <option value="Ottimo">Ottimo</option>
                               <option value="Buono">Buono</option>
-                              <option value="NonBuono">Non buono</option>
+                              <option value="Non Buono">Non buono</option>
                               <option value="Scadente">Scadente</option>
                             </select>
 

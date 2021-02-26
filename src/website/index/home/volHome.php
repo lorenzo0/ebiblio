@@ -25,12 +25,6 @@
             
             $tipoUtente= $_SESSION['TipoUtente'];
             $emailUtente = $_SESSION['EmailUtente'];
-            
-            echo "Tipo utente " . $tipoUtente . ".<br>";
-            echo "Email utente " . $emailUtente . ".<br>";
-            
-            
-            
         
     ?>
     <header></header>

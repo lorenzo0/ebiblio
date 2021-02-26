@@ -21,9 +21,17 @@
     <body>
         <?php
              require '../../../../connectionDB/connection.php';
+<<<<<<< HEAD
             /*if ($_SESSION['TipoUtente']!="Amministratore"){
                 echo "<script> alert('Non possiedi le credenziali per accedere a questa pagina'); window.location.href='../../home/home.php'</script>"; 
             }*/
+=======
+        
+            if ($_SESSION['TipoUtente']!="SuperUser"){
+                echo "<script> alert('Non possiedi le credenziali per accedere a questa pagina'); window.location.href='../../home/home.php'</script>"; 
+            }
+        
+>>>>>>> aa27dbd1caa90a78ce676bf543ee52b1078bd254
             if(isset($_POST['submit'])){
     
                 $nomeBiblioteca= $_POST['nomeBiblioteca'];
@@ -50,7 +58,7 @@
                 $res = $sql->execute();
 
                 if($res > 0) 
-                   echo "<script> alert('Biblioteca inserita correttamente!'); window.location.href='../home/home.php'; </script>";
+                   echo "<script> alert('Biblioteca inserita correttamente!'); window.location.href='../../home/home.php'; </script>";
                 else 
                    echo "<script> alert('La biblioteca NON è stata inserita correttamente!'); window.location.href='inserimentoBiblioteca.php'; </script>";
                  
@@ -103,11 +111,11 @@
                        </div> 
                        
                         <div class="form-group input-group">
-                          <input type="number" placeholder="Latitudine" class="form-control" name="latitudine" id="latitudine" step="0.00001" required>
+                          <input type="number" placeholder="Latitudine" class="form-control" name="latitudine" id="latitudine" step="0.00000001" required>
                        </div> 
                        
                         <div class="form-group input-group">
-                          <input type="number" placeholder="Latitudine" class="form-control" name="longitudine" id="longitudine" step="0.00001" required>
+                          <input type="number" placeholder="Latitudine" class="form-control" name="longitudine" id="longitudine" step="0.00000001" required>
                        </div> 
 
                         <div class="form-group input-group">
@@ -117,7 +125,6 @@
                        <div class="form-group input-group">
                           <input type="text" placeholder="Note" class="form-control" name="note" id="note" required>
                        </div> 
-                       
                     
                     
                     <div class="form-group">
