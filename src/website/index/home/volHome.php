@@ -37,8 +37,7 @@
     <body>
         <div class="topnav">
             <a href="myHome.php" class="active">Home</a>
-            <a href="../inserimenti/inserimentoConsegna/.php">Consegne</a>
-            <a href="../visualizzazione/visualizzazioneLibri.php">Tutti i libri</a>
+            <a href="../inserimenti/inserimentoConsegna/consegna.php">Consegne</a>
             <button class="logout" style="float:right" onClick="location='../login/logout.php'">Logout</button>
             <button class="logout" style="float:right" onClick="location='../profilo/profilo.php'">Account</button>
             

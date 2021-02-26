@@ -21,79 +21,52 @@
   </head>
     <?php
         
-            require '../../../connectionDB/connection.php';
+            /*require '../../../connectionDB/connection.php';
             
             $tipoUtente= $_SESSION['TipoUtente'];
             $emailUtente = $_SESSION['EmailUtente'];
             
             echo "Tipo utente " . $tipoUtente . ".<br>";
             echo "Email utente " . $emailUtente . ".<br>";
+            if ($_SESSION['TipoUtente']!="Amministratore"){
+                echo "<script> alert('Non possiedi le credenziali per accedere a questa pagina'); window.location.href='../../home/home.php'</script>";
+            }*/
             
             
             
         
     ?>
     <header></header>
-    <body style="background-color:#002a4f; color:#fff">
+    <body>
         <div class="topnav">
-            <a href="../../home/home.php" class="active">Home</a>
-            <a href="../inserimenti/inserimentoAmministratore/inserimentoAmministratore.html">Inserisci utente</a>
-            <a href="../inserimenti/inserimentoAutore/inserimentoAutore.php">Inserisci autore</a>
-            <a href="../inserimenti/inserimentoBiblioteca/inserimentoBiblioteca.php">Inserisci biblioteca</a>
-            <a href="../inserimenti/inserimentoPostoLettura/inserimentoPostoLettura.php">Posto lettura</a>
-            <a href="../inserimenti/inserimentoLibro/inserimentoLibro.php">Inserisci libro</a>            
-            <a href="../inserimenti/inserimentoSegnalazione/inserimentoSegnalazione.php">Nuova segnalazione</a>  
+            <a href="adminHome.php" class="active">Home</a>
+            <div class="top-dropdown">
+                <button class="top-dropbtn">Inserimenti
+                  <i class="fa fa-caret-down"></i>
+                </button>
+                <div class="top-dropdown-content">
+                    <a href="../inserimenti/inserimentoAmministratore/inserimentoAmministratore.html">Inserisci utente</a>
+                    <a href="../inserimenti/inserimentoAutore/inserimentoAutore.php">Inserisci autore</a>
+                    <a href="../inserimenti/inserimentoBiblioteca/inserimentoBiblioteca.php">Inserisci biblioteca</a>
+                    <a href="../inserimenti/inserimentoPostoLettura/inserimentoPostoLettura.php">Posto lettura</a>
+                    <a href="../inserimenti/inserimentoLibro/inserimentoISBN.php">Inserisci libro</a>      
+                </div>
+            </div>
+            <a href="../inserimenti/inserimentoSegnalazione/inserimentoSegnalazione.php">Nuova segnalazione</a> 
+            <a href="../cancellazioni/cancellazioneSegnalazioni.php">Cancella segnalazione</a> 
             <a href="../inserimenti/inserimentoMessaggio/inserimentoMessaggio.php">Messaggi</a>
             <button class="logout" style="float:right" onClick="location='../login/logout.php'">Logout</button>
             <button class="logout" style="float:right" onClick="location='../profilo/profilo.php'">Account</button>
         </div>
-        <div class="container" style="background-color:#002a4f; color:#fff">
-            <div class="card mt-4" style="border: 0; background-color:#002a4f; color:#fff">
-                <article class="card-body mx-auto" style="max-width: 400px;">
-                    <h4 class="card-title mt-3 text-center">CERCA UN LIBRO!</h4>
-                    <div class="imgcontainer">
-                        <img src="../../images/book.png" alt="Avatar" class="avatar">
-                        <img src="../../images/ebook.png" alt="Avatar" class="avatar">
-                    </div>
-                    <form action="myHome.php" method="post">
-                    <div class="input-group mb-3">
-                      <div class="input-group-prepend" >
-                        <span class="input-group-text" id="inputGroup-sizing-default"><b>Titolo</b></span>
-                      </div>
-                      <input type="text" class="form-control" placeholder="Titolo..." id="Titolo" name="Titolo">
-                    </div>
-                    
-                    <div class="input-group mb-3">
-                      <div class="input-group-prepend" >
-                        <span class="input-group-text" id="inputGroup-sizing-default">ISBN</span>
-                      </div>
-                      <input type="text" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-default" placeholder="000-00-000000-0-0" id="Isbn" name="Isbn">
-                    </div>
-                    
-                    <div class="input-group input-group-sm mb-3">
-                      <div class="input-group-prepend" >
-                        <span class="input-group-text" id="inputGroup-sizing-default">Autore</span>
-                      </div>
-                      <input type="text" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-default" placeholder="..." id="Autore" name="Autore">
-                    
-                        
-                    
-                      <div class="input-group-prepend" >
-                        <span class="input-group-text" id="inputGroup-sizing-default">Genere</span>
-                      </div>
-                      <input type="text" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-default" placeholder="..." id="Genere" name="Genere">
-                    </div>
-
-                    <div class="form-group">
-                        <button type="search" name="search" id="search" class="btn btn-block cerca">Cerca</button> 
-                    </div>
-                    </form>
-                </article>
-            </div>
+        <div class="row">
+        
         </div>
-        
-        
-        
-    <div id="footer"></div>
+            
     </body>
+    <footer class="text-center text-white" style="background-color: #bb2e29;">
+          <div class="container p-2"> EBIBLIO</div>
+          <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);">
+            © 2020 Copyright: Progetto Basi di Dati 2020/21
+          </div>
+        </footer> 
 </html>

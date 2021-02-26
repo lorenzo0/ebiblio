@@ -8,7 +8,7 @@ header {
     background-repeat: no-repeat;
     background-size: cover;
     background-attachment: local;
-    position: relative;
+    position: sticky;
     min-width: 865px;
     overflow-x: hidden;
     z-index: -1;
@@ -40,13 +40,13 @@ a.metalink {
 
 .cerca {
 	color: #fff;
-    background-color: #bb2e29;
-    border-color: #bb2e29;
+    background-color: #002a4f;
+    border-color: #606f9c;
 }
 .cerca:hover {
 	color: #002a4f;
     background-color: #fff;
-    border-color: #474747;
+    border-color: #002a4f;
 }
 .login {
 	color: #fff;
@@ -146,7 +146,8 @@ img.avatar {
     position: absolute;
     top: 0;
     left: 0;
-    background-color: #6db3ff;
+    background-color: #002a4f;
+    border-radius: 8px;
 }
 
 /* INZIO Tabella visualizzazioni*/
@@ -209,7 +210,9 @@ th{
 /* Style the navbar */
 .topnav {
     overflow: hidden;
-    background-color: #bb2e29;
+    background-color: whitesmoke;
+    border-top: 3px;
+    border-top-color: #002a4f;
     
 }
 
@@ -217,28 +220,23 @@ th{
 .topnav a {
     float: left;
     display: block;
-    color: white;
+    color: #bb2e29;
     text-align: center;
     padding: 14px 16px;
     text-decoration: none;
     font-size: 17px;
-    border-right: 2px solid #fff;
+    border-right: 2px solid #bb2e29;
 }
 
 /* Navbar links on mouse-over */
 .topnav a:hover {
-  background-color: #002a4f;
+  background-color: #bb2e29;
   color: white;
 }
 
 /* Active/current link */
 .topnav a.active {
-    background-color: #002a4f;
-    color: #fff;
-    font-weight: bold;
-}
-.topnav a.active2 {
-    background-color: #002a4f;
+    background-color: #bb2e29;
     color: #fff;
     font-weight: bold;
 }
@@ -261,6 +259,7 @@ th{
     font-size: 17px;
     border: none;
     cursor: pointer;
+    border-radius: 8px;
 }
 
 .topnav .login-container button:hover {
@@ -280,5 +279,53 @@ th{
     font-size: 17px;
     border: none;
     cursor: pointer;
+    border-radius: 8px;
+}
+/*DROPDOWN*/
+
+.top-dropdown {
+  float: left;
+  overflow: hidden;
+    border-right: 2px solid #bb2e29;
 }
 
+.top-dropdown .top-dropbtn {
+  font-size: 17px;  
+  border: none;
+  outline: none;
+  color: #bb2e29;
+    background-color: whitesmoke;
+  padding: 14px 16px;
+  margin: 0;
+}
+
+.top-dropdown:hover .top-dropbtn {
+  background-color: #bb2e29;
+    color: #fff;
+}
+
+.top-dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: whitesmoke;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+}
+
+.top-dropdown-content a {
+  float: none;
+    color: #bb2e29;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+  text-align: left;
+}
+
+.top-dropdown-content a:hover {
+  background-color: #bb2e29;
+}
+
+.top-dropdown:hover .top-dropdown-content {
+  display: block;
+}

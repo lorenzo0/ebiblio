@@ -12,11 +12,7 @@
       <link href="../../css/foglioStile.css" rel="stylesheet">
       <link href="https://fonts.googleapis.com/css?family=Noto+Sans&display=swap" rel="stylesheet">
       <script src="../../js/script.js"></script>
-      <script>
-        $(function loadNavFoo(){
-          $("#footer").load("../utils/footer.html"); 
-        });
-      </script>
+      
       
   </head>
     <?php
@@ -34,18 +30,21 @@
         
     ?>
     <header></header>
-    <body style="background-color:#002a4f; color:#fff">
+    <body>
         <div class="topnav">
-            <a href="myHome.php" style=" background-color:#002a4f" class="active">Home</a>
-            <a href="../visualizzazione/visualizzazioneBiblioteca.php">Tutte le biblioteche</a>
-            <a href="../visualizzazione/visualizzazioneLibri.php">Tutti i libri</a>
+            <a href="myHome.php" class="active">Home</a>
+            <a href="../prenotazioni/prenotazionePostoLettura/controllaDisponibilitaPostoLettura.php">Prenota posto lettura</a>
+            <a href="../prenotazioni/prenotazioneLibroCartaceo/controllaDisponibilitaCartaceo.php">Prenota Libro</a>
+            <a href="../profilo/conversazioni.php">Conversazioni</a>
+             <a href="../profilo/prenotazioniEffettuate.php">Prenotazioni</a>
+            <a href="../profilo/visualizzazioneSegnalazioni.php" >Segnalazioni</a>
             <button class="logout" style="float:right" onClick="location='../login/logout.php'">Logout</button>
             <button class="logout" style="float:right" onClick="location='../profilo/profilo.php'">Account</button>
             
         </div>
         
-        <div class="container" style="background-color:#002a4f; color:#fff">
-            <div class="card mt-4" style="border: 0; background-color:#002a4f; color:#fff">
+        <div class="container">
+            <div class="card mt-4">
                 <article class="card-body mx-auto" style="max-width: 400px;">
                     <h4 class="card-title mt-3 text-center">CERCA UN LIBRO!</h4>
                     <div class="imgcontainer">
@@ -197,9 +196,11 @@
                     }
             }
         ?>
-        
-        
-        
-    <div id="footer"></div>
+        <footer class="text-center text-white" style="background-color: #bb2e29;">
+          <div class="container p-2"> EBIBLIO</div>
+          <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);">
+            © 2020 Copyright: Progetto Basi di Dati 2020/21
+          </div>
+        </footer>
     </body>
 </html>

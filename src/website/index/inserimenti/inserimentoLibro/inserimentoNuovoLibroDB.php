@@ -11,8 +11,6 @@
     $tipoLibro = $_POST['tipoLibro'];
     $disponilita = 'Disponibile';
     $autori=$_POST['autore'];
-    
-    $_SESSION['EmailUtente'] = 'admin@admin.it';
 
     try {
         $sql = "SELECT NomeBibliotecaAmministrata
@@ -41,10 +39,10 @@
         
          $sql = $pdo -> prepare("INSERT INTO Scrittori VALUES(?,?)");
         
-         for($i=0; $i<count($names); $i++){
-            for($y=$i+1; $y<(count($names)-$i); $y++){
-                if($names[$i] == $names[$y])
-                    unset($names[$y]);
+         for($i=0; $i<count($autori); $i++){
+            for($y=$i+1; $y<(count($autori)-$i); $y++){
+                if($autori[$i] == $autori[$y])
+                    unset($autori[$y]);
             }
           }
         
@@ -69,6 +67,9 @@
                 $pagine = $_POST['numeroPagine'];
                 $scaffale = $_POST['numeroScaffale'];
                 $numeroCopie = $_POST['numeroCopie'];
+                
+                echo $conservazione . ' - ' . $pagine . ' - ' . $scaffale . ' - ' . $numeroCopie;
+                echo $nomeBiblioteca . ' - ' . $codiceISBN . ' - ' . $numeroCopie . ' - ';
 
 
                 try{	
@@ -94,13 +95,18 @@
                 break;
 
             case 'Ebook':
-
+                
                 $pdf = $_POST['pdf'];
-
+                $baseDir = "uploads/";
+                $fileName= basename($_FILES['pdf']['name']);
+                $filePath = $baseDir . SfileName;
                 try{	
-                     $sql1 = "INSERT INTO Ebook (CodiceISBN, PDF, Dimensione, NumeroAccessi) VALUES ('$codiceISBN', '$pdf', 80, 0)";
-                     $pdo->query($sql);
-
+                     if(move_uploaded_file($_FILES['pdf']['tmp_name'], $filePath)){
+                     $sql1 = "INSERT INTO Ebook(CodiceISBN, PDF, Dimensione, NumeroAccessi) VALUES ('$codiceISBN', '$fileName', 120, 0)";
+                     $res = $sql->execute();
+                     } else{
+                         echo "<script> alert('upload  '" . $filePath . " ); window.location.href='../../visualizzazione/visualizzazioneLibri.php'; </script>";
+                     }
                 }	
                 catch(PDOException $e)	{	
                      echo($e->getMesssage());
@@ -115,8 +121,10 @@
                 $scaffale = $_POST['numeroScaffale'];
                 $pdf = $_POST['pdf'];
                 $numeroCopie = $_POST['numeroCopie'];
-
-
+                
+               $baseDir = "uploads/";
+                $fileName= basename($_FILES['pdf']['name']);
+                $filePath = $baseDir . SfileName;
 
                 try{	
                      $sql = $pdo -> prepare("INSERT INTO cartaceo VALUES(?,?,?,?,?)");
@@ -140,9 +148,13 @@
                      exit();	
                 }
 
-                try{	
-                     $sql1 = "INSERT INTO ebook VALUES ('$codiceISBN','$pdf')";
-                     $res1 = $pdo->query($sql);
+                try{
+                    if(move_uploaded_file($_FILES['pdf']['tmp_name'], $filePath)){
+                     $sql1 = "INSERT INTO Ebook(CodiceISBN, PDF, Dimensione, NumeroAccessi) VALUES ('$codiceISBN', '$fileName', 120, 0)";
+                     $res = $sql->execute();
+                     } else{
+                         echo "<script> alert('upload  '" . $filePath . " ); window.location.href='../../visualizzazione/visualizzazioneLibri.php'; </script>";
+                     }
                 }	
                 catch(PDOException $e)	{	
                      echo($e->getMesssage());	
@@ -153,11 +165,11 @@
 
         if($res > 0)
             echo "<script> alert('Il libro è stato inserito correttamente'); window.location.href='../../visualizzazione/visualizzazioneLibri.php'; </script>";
-        else
-            echo "<script> alert('Il libro non è stato inserito correttamente'); window.location.href='inserimentoISBN.php'; </script>";
+        //      else
+            //echo "<script> alert('Il libro non è stato inserito correttamente'); window.location.href='inserimentoISBN.php'; </script>";
 
-    }else
-        echo "<script> alert('Il libro non è stato inserito correttamente'); window.location.href='inserimentoISBN.html'; </script>";
+    }//else
+        //echo "<script> alert('Il libro non è stato inserito correttamente'); window.location.href='inserimentoISBN.html'; </script>";
 
 
     ?>

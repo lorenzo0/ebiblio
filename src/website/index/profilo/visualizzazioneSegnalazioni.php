@@ -24,12 +24,21 @@
   </head>
     <header></header>
     <body>
-        <div id="navbar"></div>
+        <div class="topnav">
+            <a href="../home/myHome.php" >Home</a>
+            <a href="../prenotazioni/prenotazionePostoLettura/controllaDisponibilitaPostoLettura.php">Prenota posto lettura</a>
+            <a href="../prenotazioni/prenotazioneLibroCartaceo/controllaDisponibilitaCartaceo.php">Prenota Libro</a>
+            <a href="conversazioni.php">Conversazioni</a>
+             <a href="prenotazioniEffettuate.php" >Prenotazioni</a>
+            <a href="visualizzazioneSegnalazioni.php" class="active">Segnalazioni</a>
+            <button class="logout" style="float:right" onClick="location='../login/logout.php'">Logout</button>
+            <button class="logout" style="float:right" onClick="location='../profilo/profilo.php'">Account</button>
+        </div>
         <div class="container">
             <div class="card mt-4" style="border: 0">
                 <article class="card-body mx-auto" style="max-width: 1200px;">
                     
-                    <button class="backHomePage"> <a style="color:black;" href="../profilo/profilo.php"> Torna al profilo </a></button>
+                    <button class="backHomePage"> <a style="color:#fff;" href="../profilo/profilo.php"> Torna al profilo </a></button>
 
                     <h4 class="card-title mt-3 text-center">Tutte le segnalazioni attive che hai ricevuto</h4>
 
@@ -82,6 +91,11 @@
             
 
         </div>
-        <div id="footer"></div>
     </body>
+    <footer class="text-center text-white" style="background-color: #bb2e29;">
+      <div class="container p-2"> EBIBLIO</div>
+      <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);">
+        © 2020 Copyright: Progetto Basi di Dati 2020/21
+      </div>
+    </footer>
 </html>

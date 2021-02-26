@@ -26,9 +26,11 @@
     
     <body>
          <div class="topnav">
-            <a href="myHome.php" style=" background-color:#002a4f" class="active">Home</a>
-            <a href="../visualizzazione/visualizzazioneBiblioteca.php">Tutte le biblioteche</a>
-            <a href="../visualizzazione/visualizzazioneLibri.php">Tutti i libri</a>
+            <a href="../home/myHome.php" >Home</a>
+            <a href="../prenotazioni/prenotazionePostoLettura/controllaDisponibilitaPostoLettura.php">Prenota posto lettura</a>
+            <a href="../prenotazioni/prenotazioneLibroCartaceo/controllaDisponibilitaCartaceo.php">Prenota Libro</a>
+            <a href="conversazioni.php">Conversazioni</a>
+             <a href="dettagliPrenotazione.php" class="active">Prenotazioni</a>
             <button class="logout" style="float:right" onClick="location='../login/logout.php'">Logout</button>
             <button class="logout" style="float:right" onClick="location='../profilo/profilo.php'">Account</button>
             
@@ -37,7 +39,7 @@
             <div class="card mt-4" style="border: 0">
                 <article class="card-body mx-auto" style="max-width: 1200px;">
                     
-                    <button class="backHomePage"> <a style="color:black;" href="visualizzazionePrenotazioni.php"> Torna alla lista </a></button>
+                    <button class="backHomePage"> <a style="color:#fff;" href="visualizzazionePrenotazioni.php"> Torna alla lista </a></button>
 
                     <h4 class="card-title mt-3 text-center">Dettaglio prenotazione - <?php echo $_GET['Id']; ?></h4>
 
@@ -93,5 +95,10 @@
 
         </div>
     </body>
-    <div id="footer"></div>
+    <footer class="text-center text-white" style="background-color: #bb2e29;">
+      <div class="container p-2"> EBIBLIO</div>
+      <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);">
+        © 2020 Copyright: Progetto Basi di Dati 2020/21
+      </div>
+    </footer>
 </html>
