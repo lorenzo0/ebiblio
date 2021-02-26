@@ -25,9 +25,9 @@
         <?php
 
             require '../../../../connectionDB/connection.php';
-             if ($_SESSION['TipoUtente']!="Amministratore"){
+             /*if ($_SESSION['TipoUtente']!="Amministratore"){
                 echo "<script> alert('Non possiedi le credenziali per accedere a questa pagina'); window.location.href='../../home/home.php'</script>";                
-            }
+            }*/
         
             if(isset($_POST['submit'])){
 
@@ -47,17 +47,27 @@
             }
 
         ?>
-        <div class="topnav">
-            <a href="../../home/home.php">Home</a>
-            <a href="../inserimenti/inserimentoAmministratore/inserimentoAmministratore.html">Inserisci utente</a>
-            <a href="inserimentoAutore.php" class="active">Inserisci autore</a>
-            <a href="../inserimenti/inserimentoBiblioteca/inserimentoBiblioteca.php">Inserisci biblioteca</a>
-            <a href="../inserimenti/inserimentoPostoLettura/inserimentoPostoLettura.php">Posto lettura</a>
-            <a href="../inserimenti/inserimentoLibro/inserimentoLibro.php">Inserisci libro</a>            
-            <a href="../inserimenti/inserimentoSegnalazione/inserimentoSegnalazione.php">Nuova segnalazione</a>  
-            <a href="../inserimenti/inserimentoMessaggio/inserimentoMessaggio.php">Messaggi</a>
-            <button class="logout" style="float:right" onClick="location='../login/logout.php'">Logout</button>
-            <button class="logout" style="float:right" onClick="location='../profilo/profilo.php'">Account</button>
+       <div class="topnav">
+            <a href="../../home/adminHome.php">Home</a>
+            <div class="top-dropdown">
+                <button class="top-dropbtn">Inserimenti
+                  <i class="fa fa-caret-down"></i>
+                </button>
+                <div class="top-dropdown-content">
+                    <a href="../inserimentoAmministratore/inserimentoAmministratore.html">Inserisci utente</a>
+                    <a href="inserimentoAutore.php" class="active">Inserisci autore</a>
+                    <a href="../inserimentoBiblioteca/inserimentoBiblioteca.php">Inserisci biblioteca</a>
+                    <a href="../inserimentoPostoLettura/inserimentoPostoLettura.php">Posto lettura</a>
+                    <a href="../inserimentoLibro/inserimentoISBN.php">Inserisci libro</a>      
+                </div>
+            </div>
+                <a href="../inserimenti/inserimentoSegnalazione/inserimentoSegnalazione.php">Nuova segnalazione</a> 
+            
+            <a href="../../cancellazioni/cancellazioneSegnalazioni.php">Cancella segnalazione</a> 
+            <a href="../inserimentoMessaggio/inserimentoMessaggio.php">Messaggi</a>
+            <button class="logout" style="float:right" onClick="location='../../login/logout.php'">Logout</button>
+            <button class="logout" style="float:right" onClick="location='../../profilo/profilo.php'">Account</button>
+        
         </div>
         <div class="container">
             <div class="card mt-4" style="border: 0">

@@ -24,11 +24,11 @@
     <header></header>
     <body>
          <div class="topnav">
-            <a href="myHome.php" style=" background-color:#002a4f" class="active">Home</a>
-            <a href="../visualizzazione/visualizzazioneBiblioteca.php">Tutte le biblioteche</a>
-            <a href="../visualizzazione/visualizzazioneLibri.php">Tutti i libri</a>
-            <button class="logout" style="float:right" onClick="location='../login/logout.php'">Logout</button>
-            <button class="logout" style="float:right" onClick="location='../profilo/profilo.php'">Account</button>
+            <a href="../../home/myHome.php" >Home</a>
+            <a href="controllaDisponibilitaPostoLettura.php" class="active">Prenota posto lettura</a>
+            <a href="../prenotazionePostoLettura/controllaDisponibilitaPostoLettura.php">Prenota Libro</a>
+            <button class="logout" style="float:right" onClick="location='../../login/logout.php'">Logout</button>
+            <button class="logout" style="float:right" onClick="location='../../profilo/profilo.php'">Account</button>
             
         </div>
         <div class="container">
@@ -106,6 +106,12 @@
                 </article>
             </div>
         </div>
-        <div id="footer"></div>
+        
     </body>
+    <footer class="text-center text-white" style="background-color: #bb2e29;">
+          <div class="container p-2"> EBIBLIO</div>
+          <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);">
+            © 2020 Copyright: Progetto Basi di Dati 2020/21
+          </div>
+        </footer>
 </html>

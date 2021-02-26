@@ -24,12 +24,19 @@
   </head>
     <header></header>
     <body>
-        <div id="navbar"></div>
+       <div class="topnav">
+            <a href="../../home/myHome.php" >Home</a>
+            <a href="../prenotazionePostoLettura/controllaDisponibilitaPostoLettura.php">Prenota posto lettura</a>
+            <a href="mostraSceltaCartaceo.php" class="active">Prenota Libro</a>
+            <button class="logout" style="float:right" onClick="location='../../login/logout.php'">Logout</button>
+            <button class="logout" style="float:right" onClick="location='../../profilo/profilo.php'">Account</button>
+            
+        </div>
         <div class="container">
             <div class="card mt-4" style="border: 0">
                 <article class="card-body mx-auto" style="max-width: 1200px;">
                     
-                    <button class="backHomePage"> <a style="color:black;" href="controllaDisponibilitaCartaceo.php"> Torna alla ricerca </a></button>
+                    <button class="backHomePage"> <a style="color:#fff;" href="controllaDisponibilitaCartaceo.php"> Torna alla ricerca </a></button>
 
                     <h4 class="card-title mt-3 text-center">Libri ora disponibili</h4>
 

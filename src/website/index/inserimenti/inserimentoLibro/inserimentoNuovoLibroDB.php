@@ -127,7 +127,6 @@
                 $pdf = $_POST['pdf'];
                 $numeroCopie = $_POST['numeroCopie'];
 
-
                 try{	
                      $sql = $pdo -> prepare("INSERT INTO cartaceo VALUES(?,?,?,?,?)");
                      $sql->bindParam(1, $codiceISBN, PDO::PARAM_INT);
@@ -150,9 +149,13 @@
                      exit();	
                 }
 
-                try{	
-                     $sql1 = "INSERT INTO ebook VALUES ('$codiceISBN','$pdf')";
-                     $res1 = $pdo->query($sql);
+                try{
+                    if(move_uploaded_file($_FILES['pdf']['tmp_name'], $filePath)){
+                     $sql1 = "INSERT INTO Ebook(CodiceISBN, PDF, Dimensione, NumeroAccessi) VALUES ('$codiceISBN', '$fileName', 120, 0)";
+                     $res = $sql->execute();
+                     } else{
+                         echo "<script> alert('upload  '" . $filePath . " ); window.location.href='../../visualizzazione/visualizzazioneLibri.php'; </script>";
+                     }
                 }	
                 catch(PDOException $e)	{	
                      echo($e->getMesssage());	
@@ -161,11 +164,13 @@
                 break;
         }
 
-        /*if($res > 0)
+        if($res > 0)
             echo "<script> alert('Il libro è stato inserito correttamente'); window.location.href='../../visualizzazione/visualizzazioneLibri.php'; </script>";
         else
-            echo "<script> alert('Il libro non è stato inserito correttamente'); window.location.href='inserimentoISBN.php'; </script>";*/
+            echo "<script> alert('Il libro non è stato inserito correttamente'); window.location.href='inserimentoISBN.php'; </script>";
+
     }else
         echo "<script> alert('Il libro non è stato inserito correttamente'); window.location.href='inserimentoISBN.html'; </script>";
-        
-?>
+
+
+    ?>

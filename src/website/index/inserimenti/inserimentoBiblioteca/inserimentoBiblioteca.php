@@ -21,11 +21,17 @@
     <body>
         <?php
              require '../../../../connectionDB/connection.php';
+<<<<<<< HEAD
+            /*if ($_SESSION['TipoUtente']!="Amministratore"){
+                echo "<script> alert('Non possiedi le credenziali per accedere a questa pagina'); window.location.href='../../home/home.php'</script>"; 
+            }*/
+=======
         
             if ($_SESSION['TipoUtente']!="SuperUser"){
                 echo "<script> alert('Non possiedi le credenziali per accedere a questa pagina'); window.location.href='../../home/home.php'</script>"; 
             }
         
+>>>>>>> aa27dbd1caa90a78ce676bf543ee52b1078bd254
             if(isset($_POST['submit'])){
     
                 $nomeBiblioteca= $_POST['nomeBiblioteca'];
@@ -60,16 +66,24 @@
 
         ?>
         <div class="topnav">
-            <a href="../../home/home.php">Home</a>
-            <a href="../inserimentoAmministratore/inserimentoAmministratore.html">Inserisci utente</a>
-            <a href="../inserimentoAutore/inserimentoAutore.php">Inserisci autore</a>
-            <a href="inserimentoBiblioteca.php" class="active">Inserisci biblioteca</a>
-            <a href="../inserimentoPostoLettura/inserimentoPostoLettura.php">Posto lettura</a>
-            <a href="../inserimentoLibro/inserimentoLibro.php">Inserisci libro</a>            
-            <a href="../inserimentoSegnalazione/inserimentoSegnalazione.php">Nuova segnalazione</a>  
+            <a href="../../home/adminHome.php">Home</a>
+            <div class="top-dropdown">
+                <button class="top-dropbtn">Inserimenti
+                  <i class="fa fa-caret-down"></i>
+                </button>
+                <div class="top-dropdown-content">
+                    <a href="../inserimentoAmministratore/inserimentoAmministratore.html" >Inserisci utente</a>
+                    <a href="../inserimentoAutore/inserimentoAutore.php">Inserisci autore</a>
+                    <a href="inserimentoBiblioteca.php" class="active">Inserisci biblioteca</a>
+                    <a href="../inserimentoPostoLettura/inserimentoPostoLettura.php">Posto lettura</a>
+                    <a href="../inserimentoLibro/inserimentoISBN.php">Inserisci libro</a>      
+                </div>
+            </div>
+                <a href="../inserimenti/inserimentoSegnalazione/inserimentoSegnalazione.php">Nuova segnalazione</a> 
+            <a href="../../cancellazioni/cancellazioneSegnalazioni.php">Cancella segnalazione</a> 
             <a href="../inserimentoMessaggio/inserimentoMessaggio.php">Messaggi</a>
-            <button class="logout" style="float:right" onClick="location='../login/logout.php'">Logout</button>
-            <button class="logout" style="float:right" onClick="location='../profilo/profilo.php'">Account</button>
+            <button class="logout" style="float:right" onClick="location='../../login/logout.php'">Logout</button>
+            <button class="logout" style="float:right" onClick="location='../../profilo/profilo.php'">Account</button>
         </div>
         <div class="container">
             <div class="card mt-4" style="border: 0">

@@ -24,19 +24,19 @@
   </head>
     <header></header>
     <body>
-         <div class="topnav">
-            <a href="myHome.php" style=" background-color:#002a4f" class="active">Home</a>
-            <a href="../visualizzazione/visualizzazioneBiblioteca.php">Tutte le biblioteche</a>
-            <a href="../visualizzazione/visualizzazioneLibri.php">Tutti i libri</a>
-            <button class="logout" style="float:right" onClick="location='../login/logout.php'">Logout</button>
-            <button class="logout" style="float:right" onClick="location='../profilo/profilo.php'">Account</button>
+        <div class="topnav">
+            <a href="../../home/myHome.php" >Home</a>
+            <a href="controllaDisponibilitaPostoLettura.php" class="active">Prenota posto lettura</a>
+            <a href="../prenotazionePostoLettura/controllaDisponibilitaPostoLettura.php">Prenota Libro</a>
+            <button class="logout" style="float:right" onClick="location='../../login/logout.php'">Logout</button>
+            <button class="logout" style="float:right" onClick="location='../../profilo/profilo.php'">Account</button>
             
         </div>
         <div class="container">
             <div class="card mt-4" style="border: 0">
                 <article class="card-body mx-auto" style="max-width: 1200px;">
                     
-                    <button class="backHomePage"> <a style="color:black;" href="controllaDisponibilitaPostoLettura.php"> Torna alla ricerca </a></button>
+                    <button class="backHomePage"> <a style="color:withe;" href="controllaDisponibilitaPostoLettura.php"> Torna alla ricerca </a></button>
 
                     <h4 class="card-title mt-3 text-center">Posti lettura a disposizione</h4>
 

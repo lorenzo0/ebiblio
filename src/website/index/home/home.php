@@ -139,7 +139,7 @@
         
         ?>
         <div class="topnav">
-            <a href="home.php" style=" background-color:#fff "class="active2">Home</a>
+            <a href="home.php" class="active">Home</a>
             <a href="../../openStreetMap/map.html">MAP</a>
             <a href="../visualizzazione/visualizzazioneBiblioteca.php">Tutte le biblioteche</a>
             <a href="../visualizzazione/visualizzazioneLibri.php">Tutti i libri</a>
@@ -201,9 +201,12 @@
                 </article>
             </div>
         </div>
-        
-        
-        
-    <div id="footer"></div>
+        <footer class="text-center text-white" style="background-color: #bb2e29;">
+          <div class="container p-2"> EBIBLIO</div>
+          <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);">
+            © 2020 Copyright: Progetto Basi di Dati 2020/21
+          </div>
+        </footer>
     </body>
+    
 </html>
