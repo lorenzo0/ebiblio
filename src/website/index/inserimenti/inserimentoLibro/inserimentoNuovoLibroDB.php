@@ -57,7 +57,6 @@
          echo($e->getMesssage());	
          exit();
     }	
-    echo $tipoLibro;
 
 
     if($res > 0){
@@ -93,8 +92,7 @@
 
             case 'Ebook':
 
-                //$dir = $_FILES[$_POST['pdf']]['name'];
-                //echo $dir;
+                
                 
                 $dir = '../../../../../pdf/' . $_POST['pdf'];
 
@@ -168,7 +166,6 @@
             echo "<script> alert('Il libro è stato inserito correttamente'); window.location.href='../../visualizzazione/visualizzazioneLibri.php'; </script>";
         else
             echo "<script> alert('Il libro non è stato inserito correttamente'); window.location.href='inserimentoISBN.php'; </script>";
-
     }else
         echo "<script> alert('Il libro non è stato inserito correttamente'); window.location.href='inserimentoISBN.html'; </script>";
 

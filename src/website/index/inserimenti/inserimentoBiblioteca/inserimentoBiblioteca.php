@@ -21,17 +21,14 @@
     <body>
         <?php
              require '../../../../connectionDB/connection.php';
-<<<<<<< HEAD
             /*if ($_SESSION['TipoUtente']!="Amministratore"){
                 echo "<script> alert('Non possiedi le credenziali per accedere a questa pagina'); window.location.href='../../home/home.php'</script>"; 
             }*/
-=======
-        
-            if ($_SESSION['TipoUtente']!="SuperUser"){
+
+            /*if ($_SESSION['TipoUtente']!="SuperUser"){
                 echo "<script> alert('Non possiedi le credenziali per accedere a questa pagina'); window.location.href='../../home/home.php'</script>"; 
-            }
+            }*/
         
->>>>>>> aa27dbd1caa90a78ce676bf543ee52b1078bd254
             if(isset($_POST['submit'])){
     
                 $nomeBiblioteca= $_POST['nomeBiblioteca'];
