@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Ebiblio - Ebook</title>
+    <title>Ebiblio</title>
 	<script src="https://kit.fontawesome.com/188e218822.js"></script>
       
 	<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
@@ -154,6 +154,7 @@
                                 echo "<td>" . "<button class=" . "btn btn-primary btn-block" . " onclick=" . "location.href='dettagliLibro.php?Isbn=" .
                                     "$isbn" . "&Tipo=" . urlencode($tipoLibro) . "&Titolo=" . urlencode($titolo) . "&Anno=" . "$anno" . "&Genere=" . urlencode($genere) . "&NomeEdizione=" . urlencode($nomeEdizione) . "'" . "> Dettagli </button></td>";
                                 echo "<td>" . "<button style='background-color:#bb2e29;' class=" . "btn btn-primary btn-block" . " onclick=" . "location.href='../cancellazioni/cancellazioneLibro.php?Isbn=" . "$isbn" . "&Tipo=" . urlencode($tipoLibro) . "'" . "><i class='fa fa-trash'></i></button></td>";
+                                echo "<td>" . "<button style='background-color:#bb2e29;' class=" . "btn btn-primary btn-block" . " onclick=" . "location.href='visualizzazioneEBook.php?Isbn=" . "$isbn" . "'" . "><i class='fa fa-external-link'></i></button></td>";
                                 echo "</tr>"; 
                             }        
                     echo "</table></tbody>";

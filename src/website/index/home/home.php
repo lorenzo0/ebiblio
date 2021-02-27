@@ -25,6 +25,12 @@
         <?php
         
             require '../../../connectionDB/connection.php';
+        
+            phpinfo();
+            if (extension_loaded('mongo')) echo 'yes'; else echo 'no';
+        
+            $connessioneMongo = new MongoDB\Driver\Manager("mongodb://localhost:27017");
+            echo 'connected';
             
             if(isset($_POST['search'])){
                 $titoloLibro = $_POST['Titolo'];

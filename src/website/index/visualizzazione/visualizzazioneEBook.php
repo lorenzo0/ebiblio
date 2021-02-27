@@ -28,10 +28,12 @@
         <?php
             require '../../../connectionDB/connection.php';
         
-            //$isbn = $_GET['Isbn'];
-            $isbn = 12;
+            $isbn = $_GET['Isbn'];
         
             try{
+                
+                    $sql = "UPDATE Ebook SET NumeroAccessi = NumeroAccessi + 1 WHERE codiceISBN = $isbn";
+                    $res = $pdo -> query($sql);
                 
                     $sql = "SELECT * FROM Ebook WHERE codiceISBN = $isbn";
                     $res = $pdo -> query($sql);
