@@ -121,14 +121,11 @@
                 $scaffale = $_POST['numeroScaffale'];
                 $pdf = $_POST['pdf'];
                 $numeroCopie = $_POST['numeroCopie'];
-<<<<<<< HEAD
-                
-               $baseDir = "uploads/";
-                $fileName= basename($_FILES['pdf']['name']);
-                $filePath = $baseDir . SfileName;
-=======
 
->>>>>>> aa27dbd1caa90a78ce676bf543ee52b1078bd254
+               $baseDir = "uploads/";
+                $fileName= basename($_FILES[$pdf]['name']);
+                $filePath = $baseDir . SfileName;
+
 
                 try{	
                      $sql = $pdo -> prepare("INSERT INTO cartaceo VALUES(?,?,?,?,?)");
@@ -169,11 +166,11 @@
 
         if($res > 0)
             echo "<script> alert('Il libro è stato inserito correttamente'); window.location.href='../../visualizzazione/visualizzazioneLibri.php'; </script>";
-<<<<<<< HEAD
+
         //      else
-=======
+
         //else
->>>>>>> aa27dbd1caa90a78ce676bf543ee52b1078bd254
+
             //echo "<script> alert('Il libro non è stato inserito correttamente'); window.location.href='inserimentoISBN.php'; </script>";
 
     }//else

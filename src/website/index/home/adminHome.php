@@ -20,8 +20,6 @@
       
   </head>
     <?php
-<<<<<<< HEAD
-        
             /*require '../../../connectionDB/connection.php';
             
             $tipoUtente= $_SESSION['TipoUtente'];
@@ -33,15 +31,10 @@
                 echo "<script> alert('Non possiedi le credenziali per accedere a questa pagina'); window.location.href='../../home/home.php'</script>";
             }*/
             
-            
-            
-        
-=======
             require '../../../connectionDB/connection.php';
             
             $tipoUtente= $_SESSION['TipoUtente'];
-            $emailUtente = $_SESSION['EmailUtente'];                
->>>>>>> aa27dbd1caa90a78ce676bf543ee52b1078bd254
+            $emailUtente = $_SESSION['EmailUtente'];
     ?>
     <header></header>
     <body>

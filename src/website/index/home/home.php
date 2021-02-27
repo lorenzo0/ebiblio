@@ -13,11 +13,7 @@
       <link href="https://fonts.googleapis.com/css?family=Noto+Sans&display=swap" rel="stylesheet">
       <script src="../../js/script.js"></script>
       <script src="../../../connectionDB/connection.js"></script>
-      <script>
-        $(function loadNavFoo(){
-          $("#footer").load("../utils/footer.html"); 
-        });
-      </script>
+      
       
   </head>
     <header></header>
@@ -25,7 +21,14 @@
         <?php
         
             require '../../../connectionDB/connection.php';
+            require '../../../connectionDB/connectionMongo.php';
             
+            $bulk = new MongoDB\Driver\BulkWrite();
+        
+            $doc = ['_id' => new MongoDB\BSON\ObjectID(), 'titolo' => 'accesso titolo'];
+            $bulk -> insert($doc);
+            $connessioneMongo -> executeBulkWrite('ebiblio.log',$bulk);
+        
             if(isset($_POST['search'])){
                 $titoloLibro = $_POST['Titolo'];
                 $ISBN = $_POST['Isbn'];
