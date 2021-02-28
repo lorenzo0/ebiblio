@@ -37,7 +37,7 @@
         }
       
     </script>
-    <title>MAPS</title>
+    <title>Ebiblio</title>
   </head>
   <body>
     <div id="mapid" style = "width:80%; height:580px;"></div>

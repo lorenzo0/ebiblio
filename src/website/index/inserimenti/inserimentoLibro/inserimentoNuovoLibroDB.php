@@ -92,8 +92,6 @@
 
             case 'Ebook':
 
-                
-                
                 $dir = '../../../../../pdf/' . $_POST['pdf'];
 
                 try{
