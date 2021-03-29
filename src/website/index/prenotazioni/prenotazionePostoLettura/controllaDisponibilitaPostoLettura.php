@@ -23,10 +23,14 @@
   </head>
     <header></header>
     <body>
-         <div class="topnav">
-            <a href="../../home/myHome.php" >Home</a>
-            <a href="controllaDisponibilitaPostoLettura.php" class="active">Prenota posto lettura</a>
-            <a href="../prenotazionePostoLettura/controllaDisponibilitaPostoLettura.php">Prenota Libro</a>
+        <div class="topnav">
+            <a href="../../home/myHome.php">Home</a>
+            <a href="controllaDisponibilitaPostoLettura.php"class="active">Prenota posto lettura</a>
+            <a href="../prenotazioneLibroCartaceo/controllaDisponibilitaCartaceo.php">Prenota Libro</a>            
+            <a href="../../visualizzazione/visualizzazioneLibri.php" >Visualizza EBook</a>
+            <a href="../../profilo/conversazioni.php">Conversazioni</a>
+             <a href="../../profilo/prenotazioniEffettuate.php">Prenotazioni</a>
+            <a href="../../profilo/visualizzazioneSegnalazioni.php" >Segnalazioni</a>
             <button class="logout" style="float:right" onClick="location='../../login/logout.php'">Logout</button>
             <button class="logout" style="float:right" onClick="location='../../profilo/profilo.php'">Account</button>
             
@@ -55,8 +59,6 @@
                                 <?php
                                 
                                     require '../../../../connectionDB/connection.php';   
-                                
-                                    $_SESSION['EmailUtente'] = 'utilizzatore2@gmail.it';
 
                                     try{
                                         $sql = "SELECT Nome FROM Biblioteca";
@@ -64,7 +66,7 @@
                                     }catch(PDOException $e){echo $e->getMessage();}	
 
                                     while ($row = $res->fetch()) {
-                                        echo '<option value=' . $row['Nome'] . '>' . $row['Nome'] . '</option>';
+                                        echo '<option value=' . urlencode($row['Nome']) . '>' . $row['Nome'] . '</option>';
                                     }
 
                                 ?>

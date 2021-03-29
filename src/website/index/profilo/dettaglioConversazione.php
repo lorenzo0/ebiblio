@@ -29,8 +29,9 @@
             <a href="../prenotazioni/prenotazionePostoLettura/controllaDisponibilitaPostoLettura.php">Prenota posto lettura</a>
             <a href="../prenotazioni/prenotazioneLibroCartaceo/controllaDisponibilitaCartaceo.php">Prenota Libro</a>
             <a href="dettaglioConversazione.php" class="active"> Conversazioni</a>
+            <a href="prenotazioniEffettuate.php">Prenotazioni</a>             
+            <a href="visualizzazioneSegnalazioni.php" >Segnalazioni</a>
             <button class="logout" style="float:right" onClick="location='../login/logout.php'">Logout</button>
-            <button class="logout" style="float:right" onClick="location='../profilo/profilo.php'">Account</button>
             
         </div>
         <div class="container">
@@ -54,7 +55,7 @@
                         try{                            
                             $sql = "SELECT Titolo, Testo, DataMessaggio
                                     FROM Messaggio
-                                    WHERE EmailUtilizzatore = '" . $_SESSION['email-accesso'] . "' 
+                                    WHERE EmailUtilizzatore = '" . $_SESSION['EmailUtente'] . "' 
                                     AND EmailAmministratore = '" . $emailAmm ."'";
                             $res = $pdo -> query($sql);
                             
@@ -80,7 +81,7 @@
                                 $data = $row['DataMessaggio'];
                                 
                                 echo "<tr>"; 
-                                echo "<td><img src=" . "../../images/book.png" . " alt=" . "Book" . " class=" . "avatarTableBiblio" . "></td>";
+                                echo "<td><img src=" . "../../images/chat.png" . " alt=" . "Book" . " class=" . "avatarTableBiblio" . "></td>";
                                 echo "<td>" . $titolo . "</td>";
                                 echo "<td>" . $testo . "</td>";
                                 echo "<td>" . $data . "</td>";

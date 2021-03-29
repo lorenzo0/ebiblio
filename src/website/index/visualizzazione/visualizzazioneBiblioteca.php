@@ -15,13 +15,7 @@
       
     <!-- Script JS -->
     <script src="../../js/script.js"></script>
-    <script>
-        $(function loadNavFoo(){
-          $("#navbar").load("../utils/navbar.html"); 
-          $("#footer").load("../utils/footer.html"); 
-        });
-    </script>
-
+    
   </head>
     <header></header>
     <body>
@@ -30,7 +24,18 @@
             <a href="../../openStreetMap/map.html">MAP</a>
             <a href="visualizzazioneBiblioteca.php" class="active" >Tutte le biblioteche</a>
             <a href="../visualizzazione/visualizzazioneLibri.php">Tutti i libri</a>
-            
+            <a href="../visualizzazione/visualizzazionePostiLettura.php">Tutti i posti lettura</a>
+            <div class="top-dropdown">
+                <button class="top-dropbtn">Statistiche
+                  <i class="fa fa-caret-down"></i>
+                </button>
+                <div class="top-dropdown-content">
+                    <a href="../statistiche/ebookPiuAcceduti.php">EBook più acceduti</a>
+                    <a href="../statistiche/numCartaceiPrenotati.php">Numero Cartacei Prenotati</a>
+                    <a href="../statistiche/numConsegneVolontario.php">Consegne Volontario</a>
+                    <a href="../statistiche/postoLetturaMenoUtilizzati.php">Posti lettura meno utilizzati</a>
+                </div>
+            </div>
             <div class="login-container">
                 <button onClick="location='../login/login.php'">Accedi</button>
                 <button onClick="location='../registrazione/registrazione.php'">Registrati</button>
@@ -52,8 +57,8 @@
 
                         try{
                             
-                            $sql = "SELECT Nome, Indirizzo, Email, Recapito, URLSito, COUNT(postolettura.NomeBiblioteca) AS NumeroPostiLettura
-                                    FROM BIBLIOTECA, POSTOLETTURA
+                            $sql = "SELECT Nome, Indirizzo, Email, URLSito, COUNT(postolettura.NomeBiblioteca) AS NumeroPostiLettura
+                                    FROM Biblioteca, postolettura
                                     WHERE Biblioteca.Nome = postolettura.NomeBiblioteca
                                     GROUP BY postolettura.NomeBiblioteca";
                             $res = $pdo -> query($sql);
@@ -69,7 +74,6 @@
                                     <th>Indirizzo</th> 
                                     <th>Email</th>
                                     <th>URL Sito</th>
-                                    <th>Recapito</th>
                                     <th>Posti lettura</th>
                                     <th></th>
                                 </tr>
@@ -82,16 +86,14 @@
                                 $indirizzo = $row['Indirizzo'];
                                 $email = $row['Email'];
                                 $URLSito = $row['URLSito'];
-                                $recapito = $row['Recapito'];
                                 $numeroPosti = $row['NumeroPostiLettura'];
                                 
                                 echo "<tr>"; 
-                                echo "<td><img src=" . "../../images/inserimentoCartaceo.png" . " alt=" . "Book" . " class=" . "avatarTableBiblio" . "></td>";
+                                echo "<td><img src=" . "../../images/library.png" . " alt=" . "Cartaceo" . " class=" . "avatarTableLibro" . "></td>";
                                 echo "<td>" . $nomeBiblioteca . "</td>";
                                 echo "<td>" . $indirizzo . "</td>";
                                 echo "<td>" . $email . "</td>";
                                 echo "<td><a href='$URLSito'> $URLSito </a></td>";
-                                echo "<td>" . $recapito . "</td>";
                                 echo "<td>" . $numeroPosti . "</td>";
                                 echo "</tr>"; 
                             }        

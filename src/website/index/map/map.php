@@ -37,10 +37,37 @@
         }
       
     </script>
-    <title>Ebiblio</title>
+    <title>MAPS</title>
+      <link href="../../css/bootstrap-4.0.0.css" rel="stylesheet">
+      <link href="../../css/foglioStile.css" rel="stylesheet">
+      <link href="https://fonts.googleapis.com/css?family=Noto+Sans&display=swap" rel="stylesheet">
+
   </head>
+    <header></header>
   <body>
-    <div id="mapid" style = "width:80%; height:580px;"></div>
+      <div class="topnav">
+      <a href="../home/home.php" >Home</a>
+            <a href="map.php" class="active">MAP</a>
+            <a href="../visualizzazione/visualizzazioneBiblioteca.php">Tutte le biblioteche</a>
+            <a href="../visualizzazione/visualizzazioneLibri.php">Tutti i libri</a>
+            <a href="../visualizzazione/visualizzazionePostiLettura.php">Tutti i posti lettura</a>
+            <div class="top-dropdown">
+                <button class="top-dropbtn">Statistiche
+                  <i class="fa fa-caret-down"></i>
+                </button>
+                <div class="top-dropdown-content">
+                    <a href="../statistiche/ebookPiuAcceduti.php">EBook più acceduti</a>
+                    <a href="../statistiche/numCartaceiPrenotati.php">Numero Cartacei Prenotati</a>
+                    <a href="../statistiche/numConsegneVolontario.php">Consegne Volontario</a>
+                    <a href="../statistiche/postoLetturaMenoUtilizzati.php">Posti lettura meno utilizzati</a>
+                </div>
+            </div>
+          <div class="login-container">
+                <button onClick="location='../login/login.php'">Accedi</button>
+                <button onClick="location='../registrazione/registrazione.php'">Registrati</button>
+            </div>
+      </div>
+    <div id="mapid" style = "width:100%; height:580px;"  >
       
       <?php
         require '../../../connectionDB/connection.php'; 
@@ -61,6 +88,12 @@
     ?>
       
       <script>createMap();</script>
-    
+    </div>
   </body>
+    <footer class="text-center text-white" style="background-color: #bb2e29;">
+      <div class="container p-2"> EBIBLIO</div>
+      <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);">
+        © 2020 Copyright: Progetto Basi di Dati 2020/21
+      </div>
+    </footer>
 </html>

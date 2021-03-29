@@ -14,24 +14,37 @@
 	<link href="https://fonts.googleapis.com/css?family=Noto+Sans&display=swap" rel="stylesheet">  
       
     <!-- Script JS -->
-    <script src="../../js/script.js"></script>
-    <script>
-        $(function loadNavFoo(){
-          $("#navbar").load("../utils/navbar.html"); 
-          $("#footer").load("../utils/footer.html"); 
-        });
-    </script>
+      <script src="../../js/script.js"></script>
 
   </head>
-    
+    <header></header>
     <body>
-        <div id="navbar"></div>
+       <div class="topnav">
+            <a href="../home/home.php" >Home</a>
+            <a href="../map/map.php">MAP</a>
+            <a href="../visualizzazione/visualizzazioneBiblioteca.php">Tutte le biblioteche</a>
+            <a href="../visualizzazione/visualizzazioneLibri.php">Tutti i libri</a>
+            <a href="../visualizzazione/visualizzazionePostiLettura.php">Tutti i posti lettura</a>
+            <div class="top-dropdown">
+                <button class="top-dropbtn">Statistiche
+                  <i class="fa fa-caret-down"></i>
+                </button>
+                <div class="top-dropdown-content">
+                    <a href="../statistiche/ebookPiuAcceduti.php" >EBook più acceduti</a>
+                    <a href="../statistiche/numCartaceiPrenotati.php">Numero Cartacei Prenotati</a>
+                    <a href="../statistiche/numConsegneVolontario.php" >Consegne Volontario</a>
+                    <a href="../statistiche/postoLetturaMenoUtilizzati.php" class="active">Posti lettura meno utilizzati</a>
+                </div>
+            </div>
+           <div class="login-container">
+                <button onClick="location='../login/login.php'">Accedi</button>
+                <button onClick="location='../registrazione/registrazione.php'">Registrati</button>
+            </div>
+        </div>
         <div class="container">
             <div class="card mt-4" style="border: 0">
                 <article class="card-body mx-auto" style="max-width: 1200px;">
                     
-                    <button class="backHomePage"> <a style="color:black;" href="../home/home.php"> Torna alla homepage </a></button>
-
                     <h4 class="card-title mt-3 text-center">Classifica dei posti lettura meno utilizzati - rispetto al numero totale di prenotazioni effettuate</h4>
 
                     
@@ -71,7 +84,7 @@
 
                                 echo "<tr>"; 
                                 
-                                 echo "<td><img src=" . "../../images/desk-lamp.png" . " alt=" . "Book" . " class=" . "avatarTableBiblio" . "></td>";
+                                 echo "<td><img src=" . "../../images/desk.png" . " alt=" . "Book" . " class=" . "avatarTableBiblio" . "></td>";
                                                   
                                 echo "<td>" . $nomeBiblioteca . "</td>";
                                 echo "<td>" .$id . "</td>";
@@ -87,6 +100,11 @@
             
 
         </div>
-        <div id="footer"></div>
     </body>
+    <footer class="text-center text-white" style="background-color: #bb2e29;">
+      <div class="container p-2"> EBIBLIO</div>
+      <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);">
+        © 2020 Copyright: Progetto Basi di Dati 2020/21
+      </div>
+    </footer> 
 </html>

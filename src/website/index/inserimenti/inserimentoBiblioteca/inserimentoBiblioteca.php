@@ -45,13 +45,17 @@
     <body>
         <?php
              require '../../../../connectionDB/connection.php';
-            /*if ($_SESSION['TipoUtente']!="Amministratore"){
-                echo "<script> alert('Non possiedi le credenziali per accedere a questa pagina'); window.location.href='../../home/home.php'</script>"; 
-            }*/
-
-            /*if ($_SESSION['TipoUtente']!="SuperUser"){
-                echo "<script> alert('Non possiedi le credenziali per accedere a questa pagina'); window.location.href='../../home/home.php'</script>"; 
-            }*/
+            require '../../../../connectionDB/connectionMongo.php';
+            
+            if($_SESSION['TipoUtente']=="Amministratore"){
+                echo "<script> alert('Non possiedi le credenziali per accedere a questa pagina'); window.location.href='../../home/adminHome.php'</script>";
+            }else if($_SESSION['TipoUtente']=="Utilizzatore"){
+                 echo "<script> alert('Non possiedi le credenziali per accedere a questa pagina'); window.location.href='../../home/myHome.php'</script>";
+            }else if($_SESSION['TipoUtente']=="Volontario"){
+                 echo "<script> alert('Non possiedi le credenziali per accedere a questa pagina'); window.location.href='../../home/volHome.php'</script>";
+            }else if($_SESSION['TipoUtente']==""){
+                 echo "<script> alert('Non possiedi le credenziali per accedere a questa pagina'); window.location.href='../../home/home.php'</script>";
+            }
         
             if(isset($_POST['submit'])){
     
@@ -81,7 +85,6 @@
 
 
                 try{
-                    $sql = "INSERT INTO Biblioteca VALUES ('$nomeBiblioteca','$indirizzo','$email','$sito','$latitudine', '$longitudine','$recapito','$note')";
                     $sql = $pdo->prepare("INSERT INTO Biblioteca VALUES (?, ?, ?, ?, ?, ?, ?)");
 
                     $sql->bindParam(1, $nomeBiblioteca, PDO::PARAM_STR);
@@ -92,24 +95,27 @@
                     $sql->bindParam(6, $longitudine, PDO::PARAM_STR);
                     $sql->bindParam(7, $note, PDO::PARAM_STR);
                     $res = $sql->execute();
-                    
 
-                    $sql = $pdo -> prepare("INSERT INTO Foto VALUES(?, ?, ?)");
-                    
-                    for($i=0; $i<count($foto); $i++){
-                        $dir = '../../../../../foto/' . $foto[$i];
-                        $blob = fopen($dir, 'rb');
-                        
-                        $sql->bindValue(1, $foto[$i], PDO::PARAM_STR);
-                        $sql->bindValue(2, $nomeBiblioteca, PDO::PARAM_STR);
-                        $sql->bindParam(3, $blob, PDO::PARAM_LOB); 
-                        $sql->execute();
-                     }
+                    $sql = $pdo -> prepare("INSERT INTO Foto VALUES(?, ?)");
+
+                        for($i=0; $i<count($foto); $i++){
+                            
+                            $target_dir = '../../../../../foto/';
+                            $target_file = $target_dir . $foto[$i];
+                            $imageFileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
+                            
+                            if($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg") {
+                                echo "<script> alert('Formato documento non accetttato'); window.location.href='../../visualizzazione/visualizzazioneLibri.php'; </script>";
+                            }else{
+                                $sql->bindValue(1, $foto[$i], PDO::PARAM_STR);
+                                $sql->bindValue(2, $nomeBiblioteca, PDO::PARAM_STR);
+                                $sql->execute();
+                            }
+                        }
                     
                     $sql = $pdo -> prepare("INSERT INTO RecapitiBiblioteca VALUES(?, ?)");
                     
                     for($i=0; $i<count($recapito); $i++){
-                        
                         $sql->bindValue(1, $nomeBiblioteca, PDO::PARAM_STR);
                         $sql->bindValue(2, $recapito[$i], PDO::PARAM_INT);
                         $sql->execute();
@@ -120,33 +126,31 @@
                      exit();	
                 }	
 
-                if($res > 0) 
-                   echo "<script> alert('Biblioteca inserita correttamente!'); window.location.href='../../home/home.php'; </script>";
-                else 
+                if($res > 0){
+                   $bulk = new MongoDB\Driver\BulkWrite();
+
+                    $doc = ['_id' => new MongoDB\BSON\ObjectID(), 'titolo' => 'Biblioteca', 'tipoUtente'=>$_SESSION['TipoUtente'], 'emailUtente'=>$_SESSION['EmailUtente'], 'timeStamp'=>date('Y-m-d H:i:s')];
+                    $bulk -> insert($doc);
+                    $connessioneMongo -> executeBulkWrite('ebiblio.log',$bulk);
+                    echo "<script> alert('Biblioteca inserita correttamente!'); window.location.href='../../home/superUserHome.php'; </script>";
+                }else 
                    echo "<script> alert('La biblioteca NON è stata inserita correttamente!'); window.location.href='inserimentoBiblioteca.php'; </script>";
                  
             }
 
         ?>
         <div class="topnav">
-            <a href="../../home/adminHome.php">Home</a>
+            <a href="../../home/adminHome.php" >Home</a>
             <div class="top-dropdown">
                 <button class="top-dropbtn">Inserimenti
                   <i class="fa fa-caret-down"></i>
                 </button>
                 <div class="top-dropdown-content">
-                    <a href="../inserimentoAmministratore/inserimentoAmministratore.html" >Inserisci utente</a>
-                    <a href="../inserimentoAutore/inserimentoAutore.php">Inserisci autore</a>
-                    <a href="inserimentoBiblioteca.php" class="active">Inserisci biblioteca</a>
-                    <a href="../inserimentoPostoLettura/inserimentoPostoLettura.php">Posto lettura</a>
-                    <a href="../inserimentoLibro/inserimentoISBN.php">Inserisci libro</a>      
+                    <a href="inserimentoBiblioteca.php" class="active">Inserisci Biblioteca</a>
+                    <a href="../inserimentoAmministratore/inserimentoAmministratore.php">Inserisci Amministratore</a>
                 </div>
             </div>
-                <a href="../inserimenti/inserimentoSegnalazione/inserimentoSegnalazione.php">Nuova segnalazione</a> 
-            <a href="../../cancellazioni/cancellazioneSegnalazioni.php">Cancella segnalazione</a> 
-            <a href="../inserimentoMessaggio/inserimentoMessaggio.php">Messaggi</a>
             <button class="logout" style="float:right" onClick="location='../../login/logout.php'">Logout</button>
-            <button class="logout" style="float:right" onClick="location='../../profilo/profilo.php'">Account</button>
         </div>
         <div class="container">
             <div class="card mt-4" style="border: 0">
@@ -178,7 +182,8 @@
                        </div> 
                        
                         <div class="form-group input-group">
-                          <input type="number" placeholder="Latitudine" class="form-control" name="longitudine" id="longitudine" step="0.00000001" required>
+                          <input type="number" placeholder="Longitudine" class="form-control" name="longitudine" id="longitudine" step="0.00000001" required>
+
                        </div>
                        
                        <label> Recapiti telefonici: </label>
@@ -211,9 +216,12 @@
                </form>
                 </article>
             </div>
-            
-
         </div>
-        <div id="footer"></div>
     </body>
+    <footer class="text-center text-white" style="background-color: #bb2e29;">
+      <div class="container p-2"> EBIBLIO</div>
+      <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);">
+        © 2020 Copyright: Progetto Basi di Dati 2020/21
+      </div>
+    </footer>
 </html>

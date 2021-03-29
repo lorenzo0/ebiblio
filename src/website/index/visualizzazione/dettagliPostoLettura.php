@@ -57,9 +57,9 @@
             <a href="../prenotazioni/prenotazionePostoLettura/controllaDisponibilitaPostoLettura.php">Prenota posto lettura</a>
             <a href="../prenotazioni/prenotazioneLibroCartaceo/controllaDisponibilitaCartaceo.php">Prenota Libro</a>
             <a href="conversazioni.php">Conversazioni</a>
-             <a href="dettagliPostoLettura.php" class="active">Prenotazioni</a>
+             <a href="prenotazioniEffettuate.php" class="active">Prenotazioni</a>
+            <a href="visualizzazioneSegnalazioni.php" >Segnalazioni</a>
             <button class="logout" style="float:right" onClick="location='../login/logout.php'">Logout</button>
-            <button class="logout" style="float:right" onClick="location='../profilo/profilo.php'">Account</button>
             
         </div>
         <div class="container">

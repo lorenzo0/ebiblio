@@ -4,6 +4,4 @@
     } catch (MongoDB\Driver\Exception\Exception $e) {
         echo 'Connection failed: ' . $e->getMessage();
     }
-
-    //echo 'ciao';
 ?>

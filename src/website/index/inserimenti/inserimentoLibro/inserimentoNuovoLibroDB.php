@@ -1,6 +1,17 @@
 <?php
                 
     require '../../../../connectionDB/connection.php';
+    require '../../../../connectionDB/connectionMongo.php';
+
+    if($_SESSION['TipoUtente']=="Utilizzatore"){
+         echo "<script> alert('Non possiedi le credenziali per accedere a questa pagina'); window.location.href='../../home/myHome.php'</script>";
+     }else if($_SESSION['TipoUtente']=="Volontario"){
+         echo "<script> alert('Non possiedi le credenziali per accedere a questa pagina'); window.location.href='../../home/volHome.php'</script>";
+     }else if($_SESSION['TipoUtente']==""){
+         echo "<script> alert('Non possiedi le credenziali per accedere a questa pagina'); window.location.href='../../home/home.php'</script>";
+     }else if ($_SESSION['TipoUtente']=="SuperUser"){
+         echo "<script> alert('Non possiedi le credenziali per accedere a questa pagina'); window.location.href='../../home/superUserHome.php'</script>";
+    }
     unset($_SESSION['tipoLibro']);
 
     $codiceISBN = $_POST['codice'];
@@ -91,31 +102,38 @@
                 break;
 
             case 'Ebook':
+                
+                $target_dir = '../../../../../pdf/';
+                $target_file = $target_dir . basename($_FILES["pdf"]["name"]);
+                $imageFileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
+                
+                $acc = 0;
+                $dim = filesize($target_file);
 
-                $dir = '../../../../../pdf/' . $_POST['pdf'];
+                /*$check = getimagesize($_FILES["fileToUpload"]["tmp_name"]);*/
 
-                try{
-                    
-                    $blob = fopen($dir, 'rb');
-                    //$dim = filesize($dir);
-                    $blob = 20;
-                    $acc = 0;
+                if($imageFileType != "pdf") {
+                    echo $imageFileType;
+                    echo "<script> alert('Formato documento non accetttato'); </script>";
+                }else{
+                    try{
+                        $nomePDF=$_FILES["pdf"]["name"];
+                        $sql = $pdo -> prepare("INSERT INTO Ebook (CodiceISBN,PDF,Dimensione,NumeroAccessi) VALUES(?, ?, ?, ?)");
 
-                    $sql = $pdo -> prepare("INSERT INTO Ebook VALUES(?, ?, ?, ?)");
+                        $sql->bindParam(1, $codiceISBN, PDO::PARAM_INT);
+                        $sql->bindParam(2, $nomePDF, PDO::PARAM_STR);
+                        $sql->bindParam(3, $dim, PDO::PARAM_STR); //DOUBLE
+                        $sql->bindParam(4, $acc, PDO::PARAM_INT); 
 
-                    $sql->bindParam(1, $codiceISBN, PDO::PARAM_INT);
-                    $sql->bindParam(2, $blob, PDO::PARAM_LOB);
-                    $sql->bindParam(3, $dim, PDO::PARAM_STR); 
-                    $sql->bindParam(4, $acc, PDO::PARAM_INT); 
-                    $res = $sql->execute();
-                }	
-                catch(PDOException $e)	{	
+                        $res = $sql->execute();
+                    }catch(PDOException $e)	{	
                      echo($e->getMesssage());
-                     exit();	
-                }	
+                     exit();
+                    }	
+                }
 
                 break;
-
+                
             case 'Entrambi':
                 $conservazione = $_POST['statoConservazione'];
                 $pagine = $_POST['numeroPagine'];
@@ -145,27 +163,48 @@
                      exit();	
                 }
 
-                try{
-                    if(move_uploaded_file($_FILES['pdf']['tmp_name'], $filePath)){
-                     $sql1 = "INSERT INTO Ebook(CodiceISBN, PDF, Dimensione, NumeroAccessi) VALUES ('$codiceISBN', '$fileName', 120, 0)";
-                     $res = $sql->execute();
-                     } else{
-                         echo "<script> alert('upload  '" . $filePath . " ); window.location.href='../../visualizzazione/visualizzazioneLibri.php'; </script>";
-                     }
-                }	
-                catch(PDOException $e)	{	
-                     echo($e->getMesssage());	
-                     exit();	
+                $target_dir = '../../../../../pdf/';
+                $target_file = $target_dir . basename($_FILES["pdf"]["name"]);
+                $imageFileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
+                
+                $acc = 0;
+                $dim = filesize($target_file);
+
+                /*$check = getimagesize($_FILES["fileToUpload"]["tmp_name"]);*/
+
+                if($imageFileType != "pdf") {
+                    echo $imageFileType;
+                    echo "<script> alert('Formato documento non accetttato'); </script>";
+                }else{
+                    try{
+                        $nomePDF=$_FILES["pdf"]["name"];
+                        $sql = $pdo -> prepare("INSERT INTO Ebook (CodiceISBN,PDF,Dimensione,NumeroAccessi) VALUES(?, ?, ?, ?)");
+
+                        $sql->bindParam(1, $codiceISBN, PDO::PARAM_INT);
+                        $sql->bindParam(2, $nomePDF, PDO::PARAM_STR);
+                        $sql->bindParam(3, $dim, PDO::PARAM_STR); //DOUBLE
+                        $sql->bindParam(4, $acc, PDO::PARAM_INT); 
+
+                        $res = $sql->execute();
+                    }catch(PDOException $e)	{	
+                     echo($e->getMesssage());
+                     exit();
+                    }	
                 }
                 break;
         }
 
-        if($res > 0)
-            echo "<script> alert('Il libro è stato inserito correttamente'); window.location.href='../../visualizzazione/visualizzazioneLibri.php'; </script>";
-        else
+        if($res > 0){
+            $bulk = new MongoDB\Driver\BulkWrite();
+            $doc = ['_id' => new MongoDB\BSON\ObjectID(), 'titolo' => 'Libro', 'tipoUtente'=>$_SESSION['TipoUtente'], 'emailUtente'=>$_SESSION['EmailUtente'], 'timeStamp'=>date('Y-m-d H:i:s')];
+            $bulk -> insert($doc);
+            $connessioneMongo -> executeBulkWrite('ebiblio.log',$bulk);
+            
+            echo "<script> alert('Il libro è stato inserito correttamente'); window.location.href='../../home/adminHome.php'; </script>";
+        }else
             echo "<script> alert('Il libro non è stato inserito correttamente'); window.location.href='inserimentoISBN.php'; </script>";
     }else
-        echo "<script> alert('Il libro non è stato inserito correttamente'); window.location.href='inserimentoISBN.html'; </script>";
+        echo "<script> alert('Il libro non è stato inserito correttamente'); window.location.href='inserimentoISBN.php'; </script>";
 
 
     ?>

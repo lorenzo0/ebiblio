@@ -49,24 +49,32 @@
                     }
                   }
 
+                $target_dir = '../../../../../foto/';
+                $target_file = $target_dir . basename($_FILES["foto"]["name"]);
+                $imageFileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
 
-                try{
-                    $sql = $pdo -> prepare("INSERT INTO Foto VALUES(?, ?, ?)");
+                if($imageFileType != "pdf") {
+                    echo "<script> alert('Formato documento non accetttato'); window.location.href='inserimentoBiblioteca.php'; </script>";
+                }else{
+                    $nomePDF=$_FILES["foto"]["name"];
                     
-                    for($i=0; $i<count($foto); $i++){
-                        $dir = '../../../../../foto/' . $foto[$i];
-                        $blob = fopen($dir, 'rb');
-                        
-                        $sql->bindValue(1, $foto[$i], PDO::PARAM_STR);
-                        $sql->bindValue(2, $nomeBiblioteca, PDO::PARAM_STR);
-                        $sql->bindParam(3, $blob, PDO::PARAM_LOB); 
-                        $sql->execute();
-                     }
-                }	
-                catch(PDOException $e)	{	
-                     echo($e->getMesssage());
-                     exit();	
-                }	
+                    try{
+                        $sql = $pdo -> prepare("INSERT INTO Foto VALUES(?, ?)");
+
+                        for($i=0; $i<count($foto); $i++){
+                            $dir = '../../../../../foto/' . $foto[$i];
+                            $blob = fopen($dir, 'rb');
+
+                            $sql->bindValue(1, $foto[$i], PDO::PARAM_STR);
+                            $sql->bindValue(2, $nomeBiblioteca, PDO::PARAM_STR);
+                            $sql->execute();
+                         }
+                    }	
+                    catch(PDOException $e)	{	
+                         echo($e->getMesssage());
+                         exit();	
+                    }	
+                }
 
                 if($res > 0) 
                    echo "<script> alert('Foto inserite correttamente!'); window.location.href='../../home/home.php'; </script>";

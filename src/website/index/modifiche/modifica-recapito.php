@@ -11,15 +11,7 @@
     <link href="../../css/bootstrap-4.0.0.css" rel="stylesheet">
 	<link href="../../css/foglioStile.css" rel="stylesheet">
 	<link href="https://fonts.googleapis.com/css?family=Noto+Sans&display=swap" rel="stylesheet">    
-      
-    <!-- Script JS -->
-    <script src="../../js/script.js"></script>
-    <script>
-        $(function loadNavFoo(){
-          $("#navbar").load("../utils/navbar.html");
-          $("#footer").load("../utils/footer.html");
-        });
-    </script>
+
       
   </head>
     <header></header>
@@ -28,15 +20,15 @@
         <?php 
         
             require '../../../connectionDB/connection.php';
-            if ($_SESSION['TipoUtente']==""){
-                echo "<script> alert('Non possiedi le credenziali per accedere a questa pagina'); window.location.href='../../home/home.php'</script>";
-            }else if($_SESSION['TipoUtente']=="Utilizzatore"){
-                echo "<div class='topnav'>
-                        <a href='../home/myHome.php'>Home</a>
-                        <a href='../../visualizzazione/visualizzazioneBiblioteca.php'>Tutte le biblioteche</a>
-                        <a href='../../visualizzazione/visualizzazioneLibri.php'>Tutti i libri</a>
-                        <button class='logout' style='float:right' onClick='location='../../login/logout.php''>Logout</button>
-                    </div>";
+        
+            if($_SESSION['TipoUtente']=="Amministratore"){
+                 echo "<script> alert('Non possiedi le credenziali per accedere a questa pagina'); window.location.href='../../home/adminHome.php'</script>";
+             }else if($_SESSION['TipoUtente']=="Volontario"){
+                 echo "<script> alert('Non possiedi le credenziali per accedere a questa pagina'); window.location.href='../../home/volHome.php'</script>";
+             }else if($_SESSION['TipoUtente']==""){
+                 echo "<script> alert('Non possiedi le credenziali per accedere a questa pagina'); window.location.href='../../home/home.php'</script>";
+             }else if ($_SESSION['TipoUtente']=="SuperUser"){
+                 echo "<script> alert('Non possiedi le credenziali per accedere a questa pagina'); window.location.href='../../home/superUserHome.php'</script>";
             }
         
             if(isset($_POST['inserisci'])){
@@ -49,7 +41,18 @@
                 
             }
         ?>
-        
+        <div class="topnav">
+            <a href="myHome.php">Home</a>
+            <a href="../prenotazioni/prenotazionePostoLettura/controllaDisponibilitaPostoLettura.php">Prenota posto lettura</a>
+            <a href="../prenotazioni/prenotazioneLibroCartaceo/controllaDisponibilitaCartaceo.php">Prenota Libro</a>            
+            <a href="../visualizzazione/visualizzazioneLibri.php" >Visualizza EBook</a>
+            <a href="../profilo/conversazioni.php">Conversazioni</a>
+             <a href="../profilo/prenotazioniEffettuate.php">Prenotazioni</a>
+            <a href="../profilo/visualizzazioneSegnalazioni.php" >Segnalazioni</a>
+            <button class="logout" style="float:right" onClick="location='../login/logout.php'">Logout</button>
+            <button class="logout" style="float:right" onClick="location='../profilo/profilo.php'">Account</button>
+            
+        </div>
         
         <div class="container">
             <div class="card mt-4" style="border: 0">

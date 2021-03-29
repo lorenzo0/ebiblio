@@ -2,8 +2,9 @@
 
     require '../../../../connectionDB/connection.php';
 
-    $IsbnLibro = $_GET['Id'];
-    $nomeBiblioteca = $_GET['Nome'];
+    $IsbnLibro = $_GET['Isbn'];
+    $nomeBibliotecaEncode = $_GET['Nome'];
+    $nomeBiblioteca = urldecode($nomeBibliotecaEncode);
     $email = $_SESSION['EmailUtente'];
 
     $inizio = date("Y-m-d");
@@ -27,9 +28,9 @@
     }catch(PDOException $e){echo $e->getMessage();}	
 
     if($res > 0)
-        echo "<script> alert('Prenotazione effettuata correttamente!'); window.location.href='../../home/home.php'; </script>";
+        echo "<script> alert('Prenotazione effettuata correttamente!'); window.location.href='../../home/myHome.php'; </script>";
     else
-        echo "<script> alert('La prenotazione NON è stato effettuata, riprova!'); window.location.href='controllaDisponibilita.php'; </script>";
+        echo "<script> alert('La prenotazione NON è stato effettuata, riprova!'); window.location.href='controllaDisponibilitaCartaceo.php'; </script>";
 
 
 ?>

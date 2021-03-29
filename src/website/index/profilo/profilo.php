@@ -55,7 +55,6 @@
              <a href="prenotazioniEffettuate.php" >Prenotazioni</a>
             <a href="visualizzazioneSegnalazioni.php" >Segnalazioni</a>
             <button class="logout" style="float:right" onClick="location='../login/logout.php'">Logout</button>
-            <button class="logout" style="float:right" onClick="location='../profilo/profilo.php'">Account</button>
             
         </div>
         <div class="container">
@@ -104,7 +103,7 @@
                                 <input type="text" class="form-control" id="RecapitoTelefonico" value = "<?php echo $recapitoTelefonico ?>" readonly>
                             </div>
                             <div class="col-1">
-                                <a class="btn btn-primary" href="modifica-recapito.php">Modifica</a>
+                                <button class="backHomePage"> <a style="color: #fff;" href="../modifiche/modifica-recapito.php">Modifica</a> </button>
                             </div>
                     </div>
                     

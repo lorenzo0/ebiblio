@@ -12,22 +12,20 @@
 	<link href="../../css/foglioStile.css" rel="stylesheet">
 	<link href="https://fonts.googleapis.com/css?family=Noto+Sans&display=swap" rel="stylesheet">    
     
-    <script src="../../../js/script.js"></script>
-    <script>
-        $(function loadNavFoo(){
-          $("#footer").load("../utils/footer.html"); 
-        });
-   </script>
-      
+    <script src="../../../js/script.js"></script>      
   </head>
     <header></header>
     <body>
         <?php
         
             require '../../../connectionDB/connection.php';
-            /*if ($_SESSION['TipoUtente']!="Amministratore"){
-                echo "<script> alert('Non possiedi le credenziali per accedere a questa pagina'); window.location.href='../../home/home.php'</script>";
-            }*/
+            if($_SESSION['TipoUtente']=="Utilizzatore"){
+                 echo "<script> alert('Non possiedi le credenziali per accedere a questa pagina'); window.location.href='../../home/myHome.php'</script>";
+             }else if($_SESSION['TipoUtente']=="Volontario"){
+                 echo "<script> alert('Non possiedi le credenziali per accedere a questa pagina'); window.location.href='../../home/volHome.php'</script>";
+             }else if($_SESSION['TipoUtente']==""){
+                 echo "<script> alert('Non possiedi le credenziali per accedere a questa pagina'); window.location.href='../../home/home.php'</script>";
+             }
             if(isset($_POST['submit'])){
                 $emailUtilizzatore = $_POST['emailUtilizzatore'];
                 try{
@@ -49,26 +47,23 @@
             }
         
         ?>
-        <h1>DA SISTEMARE NAVBAR</h1>
         <div class="topnav">
-            <a href="../../home/home.php">Home</a>
+            <a href="../home/adminHome.php" >Home</a>
             <div class="top-dropdown">
                 <button class="top-dropbtn">Inserimenti
                   <i class="fa fa-caret-down"></i>
                 </button>
                 <div class="top-dropdown-content">
-                    <a href="../inserimenti/inserimentoAmministratore/inserimentoAmministratore.html">Inserisci utente</a>
                     <a href="../inserimenti/inserimentoAutore/inserimentoAutore.php">Inserisci autore</a>
-                    <a href="../inserimenti/inserimentoBiblioteca/inserimentoBiblioteca.php">Inserisci biblioteca</a>
-                    <a href="../inserimenti/inserimentoPostoLettura/inserimentoPostoLettura.php">Posto lettura</a>
-                    <a href="../inserimenti/inserimentoLibro/inserimentoLibro.php">Inserisci libro</a>      
+                    <a href="../inserimenti/inserimentoPostoLettura/inserimentoPostoLettura.php">Inserisci Posto lettura</a>
+                    <a href="../inserimenti/inserimentoLibro/inserimentoISBN.php">Inserisci libro</a>      
                 </div>
             </div>
-            <a href="../inserimenti/inserimentoSegnalazione/inserimentoSegnalazione.php">Nuova segnalazione</a>
-            <a href="cancellazioneSegnalazioni.php" class = "active">Cancella segnalazione</a>  
-            <a href="../inserimenti/inserimentoMessaggio/inserimentoMessaggio.php">Messaggi</a>
+            <a href="../visualizzazione/visualizzazioneLibri.php">Tutti i libri</a>
+            <a href="../inserimenti/inserimentoSegnalazione/inserimentoSegnalazione.php">Nuova segnalazione</a> 
+            <a href="../cancellazioni/cancellazioneSegnalazioni.php" class="active">Cancella segnalazione</a> 
+            <a href="../inserimenti/inserimentoMessaggio/inserimentoMessaggio.php">Messaggio</a>
             <button class="logout" style="float:right" onClick="location='../login/logout.php'">Logout</button>
-            <button class="logout" style="float:right" onClick="location='../profilo/profilo.php'">Account</button>
         </div>
         <div class="container">
             <div class="card mt-4" style="border: 0">
@@ -79,7 +74,7 @@
                     </div>
                    <form method="post"> 
                        
-                       <button class="backHomePage"> <a style="color:black;" href="../home/home.php"> Torna alla lista </a></button>
+                       <button class="backHomePage"> <a style="color:#fff;" href="../home/home.php"> Torna alla lista </a></button>
 
                        
                        <div class="form-group input-group" id="email">
@@ -127,11 +122,11 @@
              
 
         </div>
-         <footer class="text-center text-white fixed-bottom" style="background-color: #bb2e29;">
-          <div class="container p-2"> EBIBLIO</div>
-          <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);">
-            © 2020 Copyright: Progetto Basi di Dati 2020/21
-          </div>
-        </footer> 
     </body>
+    <footer class="text-center text-white fixed-bottom" style="background-color: #bb2e29;">
+      <div class="container p-2"> EBIBLIO</div>
+      <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);">
+        © 2020 Copyright: Progetto Basi di Dati 2020/21
+      </div>
+    </footer>
 </html>

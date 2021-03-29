@@ -1,9 +1,9 @@
 <?php
     require '../../../../connectionDB/connection.php';
 
-     /*if ($_SESSION['TipoUtente']!="Amministratore"){
+    if ($_SESSION['TipoUtente']!="Amministratore"){
         echo "<script> alert('Non possiedi le credenziali per accedere a questa pagina'); window.location.href='../../home/home.php'</script>";
-    }*/
+    }
 
     if(isset($_POST['submit'])){
         $mod = $_POST['mod'];        

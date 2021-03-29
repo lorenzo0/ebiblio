@@ -27,9 +27,16 @@
 
             require '../../../../connectionDB/connection.php';
         
-            /*if ($_SESSION['TipoUtente']!="Amministratore"){
-                echo "<script> alert('Non possiedi le credenziali per accedere a questa pagina'); window.location.href='../../home/home.php'</script>"; 
-            }*/
+            if($_SESSION['TipoUtente']=="Utilizzatore"){
+                 echo "<script> alert('Non possiedi le credenziali per accedere a questa pagina'); window.location.href='../../home/myHome.php'</script>";
+             }else if($_SESSION['TipoUtente']=="Volontario"){
+                 echo "<script> alert('Non possiedi le credenziali per accedere a questa pagina'); window.location.href='../../home/volHome.php'</script>";
+             }else if($_SESSION['TipoUtente']==""){
+                 echo "<script> alert('Non possiedi le credenziali per accedere a questa pagina'); window.location.href='../../home/home.php'</script>";
+             }else if ($_SESSION['TipoUtente']=="SuperUser"){
+                 echo "<script> alert('Non possiedi le credenziali per accedere a questa pagina'); window.location.href='../../home/superUserHome.php'</script>";
+                 
+            }
         
             if(isset($_POST['submit'])){
 
@@ -60,18 +67,16 @@
                   <i class="fa fa-caret-down"></i>
                 </button>
                 <div class="top-dropdown-content">
-                    <a href="../inserimentoAmministratore/inserimentoAmministratore.html" >Inserisci utente</a>
                     <a href="../inserimentoAutore/inserimentoAutore.php">Inserisci autore</a>
-                    <a href="../inserimentoBiblioteca/inserimentoBiblioteca.php">Inserisci biblioteca</a>
-                    <a href="../inserimentoPostoLettura/inserimentoPostoLettura.php">Posto lettura</a>
-                    <a href="inserimentoISBN.php" class="active">Inserisci libro</a>      
+                    <a href="../inserimentoPostoLettura/inserimentoPostoLettura.php" >Inserisci Posto lettura</a>
+                    <a href="nserimentoISBN.php" class="active">Inserisci libro</a>      
                 </div>
             </div>
-                <a href="../inserimenti/inserimentoSegnalazione/inserimentoSegnalazione.php">Nuova segnalazione</a> 
+            <a href="../../visualizzazione/visualizzazioneLibri.php">Tutti i libri</a>
+            <a href="../inserimentoSegnalazione/inserimentoSegnalazione.php">Nuova segnalazione</a> 
             <a href="../../cancellazioni/cancellazioneSegnalazioni.php">Cancella segnalazione</a> 
-            <a href="../inserimentoMessaggio/inserimentoMessaggio.php">Messaggi</a>
+            <a href="../inserimentoMessaggio/inserimentoMessaggio.php">Messaggio</a>
             <button class="logout" style="float:right" onClick="location='../../login/logout.php'">Logout</button>
-            <button class="logout" style="float:right" onClick="location='../../profilo/profilo.php'">Account</button>
         </div>
         <div class="container">
             <div class="card mt-4" style="border: 0">
@@ -95,6 +100,11 @@
              
 
         </div>
-        <div id="footer"></div>
     </body>
+    <footer class="text-center text-white" style="background-color: #bb2e29;">
+      <div class="container p-2"> EBIBLIO</div>
+      <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);">
+        © 2020 Copyright: Progetto Basi di Dati 2020/21
+      </div>
+    </footer>
 </html>
