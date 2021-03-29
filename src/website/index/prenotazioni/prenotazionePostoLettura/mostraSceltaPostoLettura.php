@@ -14,12 +14,6 @@
 	<link href="https://fonts.googleapis.com/css?family=Noto+Sans&display=swap" rel="stylesheet">  
       
     <script src="../../../js/script.js"></script>
-    <script>
-        $(function loadNavFoo(){
-          $("#navbar").load("../../utils/navbar.html"); 
-          $("#footer").load("../../utils/footer.html"); 
-        });
-    </script>
 
   </head>
     <header></header>
@@ -36,7 +30,7 @@
             <div class="card mt-4" style="border: 0">
                 <article class="card-body mx-auto" style="max-width: 1200px;">
                     
-                    <button class="backHomePage"> <a style="color:withe;" href="controllaDisponibilitaPostoLettura.php"> Torna alla ricerca </a></button>
+                    <button class="backHomePage"> <a style="color:#fff;" href="controllaDisponibilitaPostoLettura.php"> Torna alla ricerca </a></button>
 
                     <h4 class="card-title mt-3 text-center">Posti lettura a disposizione</h4>
 
@@ -55,20 +49,20 @@
                         $oraInizio = intval($_POST['OraInizio']);
                         $durata = intval($_POST['Durata']);
                         $oraFine = $oraInizio + $durata;
-                    
-
                         try{
                             
                             if($_POST['Biblioteca'] != 'none'){ 
-                                $nome = $_POST['Biblioteca'];
+                                
+                                $nomeEncode = $_POST['Biblioteca'];
+                                $nome = urldecode($nomeEncode);
                                 $sql = "SELECT NomeBiblioteca, Id, Ethernet, Corrente
                                         FROM PostoLettura 
-                                        WHERE Ethernet=$ethernet AND Corrente=$corrente
+                                        WHERE Ethernet=$ethernet AND Corrente=$corrente AND NomeBiblioteca = '$nome'
                                         AND Id NOT IN (SELECT IdPostoLettura 
                                                          FROM PrenotazionePostoLettura 
                                                          JOIN PostoLettura ON (IdPostoLettura = Id) 
                                                          WHERE OraFine BETWEEN '" . $oraInizio . ":00:00' and '" . $oraFine . ":00:00'
-                                                         AND DataPrenotazione = '$data' AND NomeBiblioteca = '$nome')";
+                                                         AND DataPrenotazione = '$data')";
                              }else{
                                 $sql = "SELECT NomeBiblioteca, Id, Ethernet, Corrente
                                         FROM PostoLettura 
@@ -79,7 +73,6 @@
                                                          WHERE OraFine BETWEEN '" . $oraInizio . ":00:00' and '" . $oraFine . ":00:00'
                                                          AND DataPrenotazione = '$data');";
                             }
-                            
                             $res = $pdo -> query($sql);
                             
                         }catch(PDOException $e){echo $e->getMessage();}
@@ -112,12 +105,12 @@
                                 echo "<td>" . $oraInizio . "</td>";
                                 echo "<td>" . $oraFine . "</td>";
                                 echo "<td>";
-                                    if($ethernet=1) echo 'Disponibile'; else echo 'Non disponibile';
+                                    if($ethernet==1) echo 'Disponibile'; else echo 'Non disponibile';
                                 echo "</td>";
                                 echo "<td>";
-                                    if($corrente=1) echo 'Disponibile'; else echo 'Non disponibile';
+                                    if($corrente==1) echo 'Disponibile'; else echo 'Non disponibile';
                                 echo "</td>";
-                                echo "<td>" . "<button style='background-color: #7ABB3B;'class=" . "btn btn-primary btn-block" . " onclick=" . "location.href='prenotaPostoLettura.php?Id=" . "$idPL" . "&Inizio=" . $oraInizio . "&Fine=" . $oraFine . "&Data=" . $data . "'" . "> Prenota! </button></td>";
+                                echo "<td>" . "<button style='background-color: #7ABB3B;'class=" . "btn btn-primary btn-block" . " onclick=" . "location.href='prenotaPostoLettura.php?Id=" . $idPL . "&Inizio=" . $oraInizio . "&Fine=" . $oraFine . "&Data=" . $data . "'" . "> Prenota! </button></td>";
                                 echo "</tr>"; 
                             }        
                     echo "</table></tbody>";
@@ -128,6 +121,11 @@
             
 
         </div>
-        <div id="footer"></div>
     </body>
+    <footer class="text-center text-white" style="background-color: #bb2e29;">
+      <div class="container p-2"> EBIBLIO</div>
+      <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);">
+        © 2020 Copyright: Progetto Basi di Dati 2020/21
+      </div>
+    </footer>
 </html>

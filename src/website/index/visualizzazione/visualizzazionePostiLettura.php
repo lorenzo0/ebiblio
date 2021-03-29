@@ -14,29 +14,36 @@
       
     <!-- Script JS -->
     <script src="../../js/script.js"></script>
-    <script>
-        $(function loadNavFoo(){
-          $("#navbar").load("../utils/navbar.html"); 
-          $("#footer").load("../utils/footer.html"); 
-        });
-    </script>
 
   </head>
     <header></header>
     <body> 
         <div class="topnav">
-            <a href="myHome.php" style=" background-color:#002a4f" class="active">Home</a>
+            <a href="../home/home.php">Home</a>
+            <a href="../map/map.php">MAP</a>
             <a href="../visualizzazione/visualizzazioneBiblioteca.php">Tutte le biblioteche</a>
             <a href="../visualizzazione/visualizzazioneLibri.php">Tutti i libri</a>
-            <button class="logout" style="float:right" onClick="location='../login/logout.php'">Logout</button>
-            <button class="logout" style="float:right" onClick="location='../profilo/profilo.php'">Account</button>
+            <a href="visualizzazionePostiLettura.php" class="active">Tutti i posti lettura</a>
+            <div class="top-dropdown">
+                <button class="top-dropbtn">Statistiche
+                  <i class="fa fa-caret-down"></i>
+                </button>
+                <div class="top-dropdown-content">
+                    <a href="../statistiche/ebookPiuAcceduti.php">EBook più acceduti</a>
+                    <a href="../statistiche/numCartaceiPrenotati.php">Numero Cartacei Prenotati</a>
+                    <a href="../statistiche/numConsegneVolontario.php">Consegne Volontario</a>
+                    <a href="../statistiche/postoLetturaMenoUtilizzati.php">Posti lettura meno utilizzati</a>
+                </div>
+            </div>
             
+            <div class="login-container">
+                <button onClick="location='../login/login.php'">Accedi</button>
+                <button onClick="location='../registrazione/registrazione.php'">Registrati</button>
+            </div>
         </div>
         <div class="container">
             <div class="card mt-4" style="border: 0">
                 <article class="card-body mx-auto" style="max-width: 1200px;">
-                    
-                    <button class="backHomePage"> <a style="color:black;" href="../home/home.php"> Torna alla homepage </a></button>
 
                     <h4 class="card-title mt-3 text-center">Tutti i posti lettura</h4>
 

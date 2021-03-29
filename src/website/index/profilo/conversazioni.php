@@ -25,19 +25,21 @@
     <header></header>
     <body>
        <div class="topnav">
-            <a href="../home/myHome.php" >Home</a>
+            <a href="../home/myHome.php">Home</a>
             <a href="../prenotazioni/prenotazionePostoLettura/controllaDisponibilitaPostoLettura.php">Prenota posto lettura</a>
-            <a href="../prenotazioni/prenotazioneLibroCartaceo/controllaDisponibilitaCartaceo.php">Prenota Libro</a>
-            <a href="conversazioni.php" class="active">Conversazioni</a>
+            <a href="../prenotazioni/prenotazioneLibroCartaceo/controllaDisponibilitaCartaceo.php">Prenota Libro</a>            
+            <a href="../visualizzazione/visualizzazioneLibri.php" >Visualizza EBook</a>
+            <a href="conversazioni.php"class="active">Conversazioni</a>
+             <a href="../profilo/prenotazioniEffettuate.php">Prenotazioni</a>
+            <a href="../profilo/visualizzazioneSegnalazioni.php" >Segnalazioni</a>
             <button class="logout" style="float:right" onClick="location='../login/logout.php'">Logout</button>
             <button class="logout" style="float:right" onClick="location='../profilo/profilo.php'">Account</button>
-            
         </div>
         <div class="container">
             <div class="card mt-4" style="border: 0">
                 <article class="card-body mx-auto" style="max-width: 1200px;">
                     
-                    <button class="backHomePage"> <a style="color:black;" href="../profilo/profilo.php"> Torna al profilo </a></button>
+                    <button class="backHomePage"> <a style="color:#fff;" href="../profilo/profilo.php"> Torna al profilo </a></button>
 
                     <h4 class="card-title mt-3 text-center">Tutte le tue conversazioni</h4>
 
@@ -52,7 +54,7 @@
                         try{                            
                             $sql = "SELECT Distinct(EmailAmministratore), MAX(DataMessaggio) As DataMessaggio, Nome
                                     FROM Messaggio Join Utente on(EmailAmministratore = Email)
-                                    WHERE EmailUtilizzatore = '" . $_SESSION['email-accesso'] . "'";
+                                    WHERE EmailUtilizzatore = '" . $_SESSION['EmailUtente'] . "'";
                             $res = $pdo -> query($sql);
                             
                         }catch(PDOException $e){echo $e->getMessage();}

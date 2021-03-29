@@ -13,12 +13,7 @@
         <link href="https://fonts.googleapis.com/css?family=Noto+Sans&display=swap" rel="stylesheet">    
 
         <script src="../../js/script.js"></script>
-        <script>
-            $(function loadNavFoo(){
-              $("#navbar").load("../utils/navbar.html"); 
-              $("#footer").load("../utils/footer.html"); 
-            });
-        </script>
+        
       
     </head>
     <header></header>
@@ -33,10 +28,10 @@
                 $passwordUtente = md5($passwordUtente);
 
                 try{
-                    $sql = "SELECT * FROM utente WHERE Email='$emailUtente' AND PasswordUtente='$passwordUtente'";
+                    $sql = "SELECT * FROM utente WHERE Email='$emailUtente'";
                     $res = $pdo->query($sql);
                 }catch(PDOException $e){echo $e->getMessage();}	
-
+                
                 if($res->rowCount() > 0){
                     $_SESSION['EmailUtente'] = $emailUtente;
                     try{
@@ -49,9 +44,18 @@
                     if($tipoUtente=="Amministratore"){
                          header('Location: ../home/adminHome.php');
                     }else if($tipoUtente == "Utilizzatore"){
-                        header('Location: ../home/myHome.php');
-                    }else{
+                        $sql = "SELECT StatoAccount FROM utilizzatore WHERE EmailUtente='$emailUtente'";
+                        $res = $pdo->query($sql);                        
+                        $row = $res->fetch();
+                        $statoUtente = $row['StatoAccount'];
+                        if ($statoUtente=="Sospeso"){
+                            echo "<script> alert('SEI STATO SOSPESO DALLA PIATTAFORMA'); window.location.href='logout.php'; </script>";
+                        } else                            
+                            header('Location: ../home/myHome.php');
+                    }else if($tipoUtente == "Volontario"){
                         header('Location: ../home/volHome.php');
+                    }else if($tipoUtente == "SuperUser"){
+                        header('Location: ../home/superUserHome.php');
                     }
                     
                 }else
@@ -60,9 +64,6 @@
         ?>
         <div class="topnav">
             <a href="../home/home.php">Home</a>
-            <a href="../../openStreetMap/map.html">MAP</a>
-            <a href="../visualizzazione/visualizzazioneBiblioteca.php">Tutte le biblioteche</a>
-            <a href="../visualizzazione/visualizzazioneLibri.php">Tutti i libri</a>
             
             <div class="login-container">
                 <button onClick="location='../registrazione/registrazione.php'">Registrati</button>
@@ -95,7 +96,7 @@
 
         </div>
     </body>
-    <footer class="text-center text-white" style="background-color: #bb2e29;">
+    <footer class="text-center text-white fixed-bottom" style="background-color: #bb2e29;">
       <div class="container p-2"> EBIBLIO</div>
       <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);">
         © 2020 Copyright: Progetto Basi di Dati 2020/21

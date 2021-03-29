@@ -1,10 +1,17 @@
 <!DOCTYPE html>
 
 <?php
-        require '../../../../connectionDB/connection.php';
-        /*if ($_SESSION['TipoUtente']!="Volontario"){
-            echo "<script> alert('Non possiedi le credenziali per accedere a questa pagina'); window.location.href='../../home/home.php'</script>"; 
-        }*/
+    require '../../../../connectionDB/connection.php';
+    require '../../../../connectionDB/connectionMongo.php';
+    if($_SESSION['TipoUtente']=="Utilizzatore"){
+         echo "<script> alert('Non possiedi le credenziali per accedere a questa pagina'); window.location.href='../../home/myHome.php'</script>";
+     }else if($_SESSION['TipoUtente']=="SuperUser"){
+         echo "<script> alert('Non possiedi le credenziali per accedere a questa pagina'); window.location.href='../../home/superUserHome.php'</script>";
+     }else if($_SESSION['TipoUtente']==""){
+         echo "<script> alert('Non possiedi le credenziali per accedere a questa pagina'); window.location.href='../../home/home.php'</script>";
+     }else if ($_SESSION['TipoUtente']=="Amministratore"){
+         echo "<script> alert('Non possiedi le credenziali per accedere a questa pagina'); window.location.href='../../home/adminHome.php'</script>";
+    }
  ?>
 
 <html>
@@ -54,7 +61,7 @@
                 <article class="card-body mx-auto" style="max-width: 400px;">
                     <h4 class="card-title mt-3 text-center">Inserisci Consegna</h4>
                     <div class="imgcontainer">
-                        <img src="../../../images/phone-call.png" alt="Avatar" class="avatar">
+                        <img src="../../../images/delivery.png" alt="Avatar" class="avatar">
                     </div>
                    <form method="post"> 
                        
@@ -176,9 +183,15 @@
                             
                         }
                         
-                        if ($res>0) 
-                           echo "<script> alert('Consegna inserita correttamente!'); window.location.href='../home/home.php'; </script>";
-                        else 
+                        if ($res>0) {
+                            $bulk = new MongoDB\Driver\BulkWrite();
+
+                            $doc = ['_id' => new MongoDB\BSON\ObjectID(), 'titolo' => 'Consegna', 'tipoUtente'=>$_SESSION['TipoUtente'], 'emailUtente'=>$_SESSION['EmailUtente'], 'timeStamp'=>date('Y-m-d H:i:s')];
+                            $bulk -> insert($doc);
+                            $connessioneMongo -> executeBulkWrite('ebiblio.log',$bulk);
+                        
+                           echo "<script> alert('Consegna inserita correttamente!'); window.location.href='../../home/volHome.php'; </script>";
+                        }else 
                            echo "<script> alert('La consegna NON è stata inserita correttamente!'); window.location.href='consegna.php'; </script>";
                          
                     }

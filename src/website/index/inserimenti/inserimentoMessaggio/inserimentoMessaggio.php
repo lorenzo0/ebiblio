@@ -25,9 +25,16 @@
     <?php
     
     require '../../../../connectionDB/connection.php';
-    /*if ($_SESSION['TipoUtente']!="Amministratore"){
-        echo "<script> alert('Non possiedi le credenziali per accedere a questa pagina'); window.location.href='../../home/home.php'</script>"; 
-    }*/
+    require '../../../../connectionDB/connectionMongo.php';
+    if($_SESSION['TipoUtente']=="Utilizzatore"){
+         echo "<script> alert('Non possiedi le credenziali per accedere a questa pagina'); window.location.href='../../home/myHome.php'</script>";
+     }else if($_SESSION['TipoUtente']=="Volontario"){
+         echo "<script> alert('Non possiedi le credenziali per accedere a questa pagina'); window.location.href='../../home/volHome.php'</script>";
+     }else if($_SESSION['TipoUtente']==""){
+         echo "<script> alert('Non possiedi le credenziali per accedere a questa pagina'); window.location.href='../../home/home.php'</script>";
+     }else if ($_SESSION['TipoUtente']=="SuperUser"){
+         echo "<script> alert('Non possiedi le credenziali per accedere a questa pagina'); window.location.href='../../home/superUserHome.php'</script>";
+    }
     
         if(isset($_POST['messaggioButton'])){
             $emailAmministratore = $_SESSION['EmailUtente'];
@@ -45,9 +52,14 @@
             $sql->bindParam(5, $messaggio, PDO::PARAM_STR);
             $res = $sql->execute();
             
-            if($res > 0)
-               echo "<script> alert('Messaggio inserito correttamente!'); window.location.href='../../home/home.php'; </script>";
-            else
+            if($res > 0){
+                $bulk = new MongoDB\Driver\BulkWrite();
+                $doc = ['_id' => new MongoDB\BSON\ObjectID(), 'titolo' => 'Messaggio', 'tipoUtente'=>$_SESSION['TipoUtente'], 'emailUtente'=>$_SESSION['EmailUtente'], 'timeStamp'=>date('Y-m-d H:i:s')];
+                $bulk -> insert($doc);
+                $connessioneMongo -> executeBulkWrite('ebiblio.log',$bulk);
+                echo "<script> alert('Messaggio inserito correttamente!'); window.location.href='../../home/adminHome.php'; </script>";
+            
+            }else
                 echo "<script> alert('Il messaggio non è stato inserito correttamente, riprova!'); window.location.href='inserimentoMessaggio.php'; </script>";
         }
         
@@ -55,23 +67,29 @@
     <header></header>
     <body>
         <div class="topnav">
-            <a href="../../home/home.php">Home</a>
-            <a href="../inserimentoAmministratore/inserimentoAmministratore.html">Inserisci utente</a>
-            <a href="../inserimentoAutore/inserimentoAutore.php">Inserisci autore</a>
-            <a href="../inserimentoBiblioteca/inserimentoBiblioteca.php" >Inserisci biblioteca</a>
-            <a href="../inserimentoPostoLettura/inserimentoPostoLettura.php">Posto lettura</a>
-            <a href="../inserimentoLibro/inserimentoLibro.php">Inserisci libro</a>            
-            <a href="../inserimentoSegnalazione/inserimentoSegnalazione.php">Nuova segnalazione</a>  
-            <a href="inserimentoMessaggio.php" class="active">Messaggi</a>
-            <button class="logout" style="float:right" onClick="location='../login/logout.php'">Logout</button>
-            <button class="logout" style="float:right" onClick="location='../profilo/profilo.php'">Account</button>
+            <a href="../../home/adminHome.php">Home</a>
+            <div class="top-dropdown">
+                <button class="top-dropbtn">Inserimenti
+                  <i class="fa fa-caret-down"></i>
+                </button>
+                <div class="top-dropdown-content">
+                    <a href="../inserimentoAutore/inserimentoAutore.php">Inserisci autore</a>
+                    <a href="../inserimentoPostoLettura/inserimentoPostoLettura.php" >Inserisci Posto lettura</a>
+                    <a href="../inserimentoLibro/inserimentoISBN.php">Inserisci libro</a>      
+                </div>
+            </div>
+            <a href="../../visualizzazione/visualizzazioneLibri.php">Tutti i libri</a>
+            <a href="../inserimentoSegnalazione/inserimentoSegnalazione.php">Nuova segnalazione</a> 
+            <a href="../../cancellazioni/cancellazioneSegnalazioni.php">Cancella segnalazione</a> 
+            <a href="inserimentoMessaggio.php" class="active">Messaggio</a>
+            <button class="logout" style="float:right" onClick="location='../../login/logout.php'">Logout</button>
         </div>
         <div class="container">
             <div class="card mt-4" style="border: 0">
                 <article class="card-body mx-auto" style="max-width: 400px;">
                     <h4 class="card-title mt-3 text-center">Invia un messaggio ad un utente utilizzatore</h4>
                     <div class="imgcontainer">
-                        <img src="../../../images/bottle.png" alt="Avatar" class="avatar">
+                        <img src="../../../images/chat.png" alt="Avatar" class="avatar">
                     </div>
                    <form method="post"> 
                        

@@ -172,13 +172,6 @@
                                 </div>
                         </div>
                         
-                        <div class="form-group row">
-                            <label class="col-4 col-form-label">PDF:</label>
-                                <div class="col-7">
-                                    <button class="cerca" herf="visualEBook">Visualizza E-Book</button>
-                                </div>
-                        </div>
-                        
                     </div>
                     
                     <div class="form-group input-group">

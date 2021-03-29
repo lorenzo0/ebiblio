@@ -1,9 +1,16 @@
 <?php
     require '../../../../connectionDB/connection.php';
+    require '../../../../connectionDB/connectionMongo.php';
 
-     /*if ($_SESSION['TipoUtente']!="Amministratore"){
-        echo "<script> alert('Non possiedi le credenziali per accedere a questa pagina'); window.location.href='../../home/home.php'</script>";
-    }*/
+     if ($_SESSION['TipoUtente']=="Amministratore"){
+        echo "<script> alert('Non possiedi le credenziali per accedere a questa pagina'); window.location.href='../../home/adminHome.php'</script>";
+    }else if($_SESSION['TipoUtente']=="Utilizzatore"){
+         echo "<script> alert('Non possiedi le credenziali per accedere a questa pagina'); window.location.href='../../home/myHome.php'</script>";
+     }else if($_SESSION['TipoUtente']=="Volontario"){
+         echo "<script> alert('Non possiedi le credenziali per accedere a questa pagina'); window.location.href='../../home/volHome.php'</script>";
+     }else if($_SESSION['TipoUtente']==""){
+         echo "<script> alert('Non possiedi le credenziali per accedere a questa pagina'); window.location.href='../../home/home.php'</script>";
+     }
 
     if(isset($_POST['submit'])){
         $nomeUtente= $_POST['nomeUtente'];
@@ -14,7 +21,7 @@
         $dataNascita= $_POST['dataNascita'];
         $luogoNascita = $_POST['luogoNascita'];
         $recapito = $_POST['recapito'];
-        $nomeBiblio = $_POST['biblio'];
+        $nomeEncode = $_POST['biblio'];
         $qualifica = $_POST['qualifica'];
 
         $amministratore = "Amministratore";
@@ -34,21 +41,29 @@
 
         if ($res >0 ) {
             try{
+                $nomeBiblio = urldecode($nomeEncode);
+                echo $emailUtente;
+                echo $decode;
+                echo $qualifica;
                  $sql = $pdo->prepare("INSERT INTO Amministratore VALUES (?, ?, ?)");    
                 
                  $sql->bindParam(1, $emailUtente, PDO::PARAM_STR);
                  $sql->bindParam(2, $nomeBiblio, PDO::PARAM_STR);
                  $sql->bindParam(3, $qualifica, PDO::PARAM_STR);
-                
+                 
                  $res = $sql->execute();
             } catch(PDOException $e) {
                 echo($e->getMesssage());	
                 exit();	
             } 
 
-            if($res>0)
-                echo "<script> alert('Amministratore inserito correttamente'); window.location.href='../../login/login.php'; </script>";
-            else
+            if($res>0){
+                $bulk = new MongoDB\Driver\BulkWrite();
+                $doc = ['_id' => new MongoDB\BSON\ObjectID(), 'titolo' => 'Amministratore', 'tipoUtente'=>$_SESSION['TipoUtente'], 'emailUtente'=>$_SESSION['EmailUtente'], 'timeStamp'=>date('Y-m-d H:i:s')];
+                $bulk -> insert($doc);
+                $connessioneMongo -> executeBulkWrite('ebiblio.log',$bulk);
+                echo "<script> alert('Amministratore inserito correttamente'); window.location.href='../../home/superUserHome.php'; </script>";
+            }else
                 echo "<script> alert('L'amministratore NON è stato inserito correttamente'); window.location.href='inserimentoAmministratore.php'; </script>";
         }
     }
@@ -63,7 +78,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Ebiblio - Amministratore</title>
+    <title>Ebiblio</title>
 	<script src="https://kit.fontawesome.com/188e218822.js"></script>
       
 	<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
@@ -81,16 +96,17 @@
     <header></header>
     <body>
         <div class="topnav">
-            <a href="../../home/home.php">Home</a>
-            <a href="inserimentoAmministratore.html" class="active">Inserisci utente</a>
-            <a href="../inserimentoAutore/inserimentoAmministratore.html">Inserisci autore</a>
-            <a href="../inserimentoBiblioteca/inserimentoBiblioteca.php">Inserisci biblioteca</a>
-            <a href="../inserimentoPostoLettura/inserimentoPostoLettura.php">Posto lettura</a>
-            <a href="../inserimentoLibro/inserimentoLibro.php">Inserisci libro</a>            
-            <a href="../inserimentoSegnalazione/inserimentoSegnalazione.php">Nuova segnalazione</a>  
-            <a href="../inserimentoMessaggio/inserimentoMessaggio.php">Messaggi</a>
-            <button class="logout" style="float:right" onClick="location='../login/logout.php'">Logout</button>
-            <button class="logout" style="float:right" onClick="location='../profilo/profilo.php'">Account</button>
+            <a href="../../home/adminHome.php" >Home</a>
+            <div class="top-dropdown">
+                <button class="top-dropbtn">Inserimenti
+                  <i class="fa fa-caret-down"></i>
+                </button>
+                <div class="top-dropdown-content">
+                    <a href="../inserimentoBiblioteca/inserimentoBiblioteca.php">Inserisci Biblioteca</a>
+                    <a href="inserimentoAmministratore.php"  class="active">Inserisci Amministratore</a>
+                </div>
+            </div>
+            <button class="logout" style="float:right" onClick="location='../../login/logout.php'">Logout</button>
         </div>
         <div class="container">
             <div class="card mt-4" style="border: 0">
@@ -140,7 +156,7 @@
                                     }catch(PDOException $e){echo $e->getMessage();}	
 
                                     while ($row = $res->fetch()) {
-                                        echo '<option value=' . $row['Nome'] . '>' . $row['Nome'] . '</option>';
+                                        echo '<option value=' . urlencode($row['Nome']) . '>' . $row['Nome'] . '</option>';
                                     }
 
                                 ?>
@@ -157,8 +173,12 @@
                </form>
                 </article>
             </div>
-        </div>
-        <div id="footer"></div>
-        
+        </div>        
     </body>
+    <footer class="text-center text-white" style="background-color: #bb2e29;">
+      <div class="container p-2"> EBIBLIO</div>
+      <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);">
+        © 2020 Copyright: Progetto Basi di Dati 2020/21
+      </div>
+    </footer>
 </html>

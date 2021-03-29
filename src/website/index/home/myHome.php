@@ -18,6 +18,15 @@
     <?php
         
             require '../../../connectionDB/connection.php';
+            if($_SESSION['TipoUtente']=="SuperUser"){
+                 echo "<script> alert('Non possiedi le credenziali per accedere a questa pagina'); window.location.href='../../home/superUserHome.php'</script>";
+             }else if($_SESSION['TipoUtente']=="Volontario"){
+                 echo "<script> alert('Non possiedi le credenziali per accedere a questa pagina'); window.location.href='../../home/volHome.php'</script>";
+             }else if($_SESSION['TipoUtente']==""){
+                 echo "<script> alert('Non possiedi le credenziali per accedere a questa pagina'); window.location.href='../../home/home.php'</script>";
+             }else if ($_SESSION['TipoUtente']=="Amministratore"){
+                 echo "<script> alert('Non possiedi le credenziali per accedere a questa pagina'); window.location.href='../../home/adminHome.php'</script>";
+            }
             
             $tipoUtente= $_SESSION['TipoUtente'];
             $emailUtente = $_SESSION['EmailUtente'];
@@ -28,7 +37,8 @@
         <div class="topnav">
             <a href="myHome.php" class="active">Home</a>
             <a href="../prenotazioni/prenotazionePostoLettura/controllaDisponibilitaPostoLettura.php">Prenota posto lettura</a>
-            <a href="../prenotazioni/prenotazioneLibroCartaceo/controllaDisponibilitaCartaceo.php">Prenota Libro</a>
+            <a href="../prenotazioni/prenotazioneLibroCartaceo/controllaDisponibilitaCartaceo.php">Prenota Libro</a>            
+            <a href="../visualizzazione/visualizzazioneLibri.php" >Visualizza EBook</a>
             <a href="../profilo/conversazioni.php">Conversazioni</a>
              <a href="../profilo/prenotazioniEffettuate.php">Prenotazioni</a>
             <a href="../profilo/visualizzazioneSegnalazioni.php" >Segnalazioni</a>
@@ -37,159 +47,62 @@
             
         </div>
         
-        <div class="container">
-            <div class="card mt-4">
-                <article class="card-body mx-auto" style="max-width: 400px;">
-                    <h4 class="card-title mt-3 text-center">CERCA UN LIBRO!</h4>
-                    <div class="imgcontainer">
-                        <img src="../../images/book.png" alt="Avatar" class="avatar">
-                        <img src="../../images/ebook.png" alt="Avatar" class="avatar">
-                    </div>
-                    <form action="myHome.php" method="post">
-                    <div class="input-group mb-3">
-                      <div class="input-group-prepend" >
-                        <span class="input-group-text" id="inputGroup-sizing-default"><b>Titolo</b></span>
-                      </div>
-                      <input type="text" class="form-control" placeholder="Titolo..." id="Titolo" name="Titolo">
-                    </div>
-                    
-                    <div class="input-group mb-3">
-                      <div class="input-group-prepend" >
-                        <span class="input-group-text" id="inputGroup-sizing-default">ISBN</span>
-                      </div>
-                      <input type="text" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-default" placeholder="000-00-000000-0-0" id="Isbn" name="Isbn">
-                    </div>
-                    
-                    <div class="input-group input-group-sm mb-3">
-                      <div class="input-group-prepend" >
-                        <span class="input-group-text" id="inputGroup-sizing-default">Autore</span>
-                      </div>
-                      <input type="text" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-default" placeholder="..." id="Autore" name="Autore">
-                    
-                        
-                    
-                      <div class="input-group-prepend" >
-                        <span class="input-group-text" id="inputGroup-sizing-default">Genere</span>
-                      </div>
-                      <input type="text" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-default" placeholder="..." id="Genere" name="Genere">
-                    </div>
-
-                    <div class="form-group">
-                        <button type="search" name="search" id="search" class="btn btn-block cerca">Cerca</button> 
-                    </div>
-                    </form>
+        <div>
+            <div class="card" style="border: 0; width:100%">
+                <article class="card-body mx-auto" style="width: 90%; background-color:#fff; color:#002a4f">
+                    <h2 class="card-title mt-3 text-center">BENVENUTO IN E-BIBLIO <?php echo $_SESSION['EmailUtente']?></h2>
+                    <h4 class="card-title mt-2 text-center">Come Utente Utilizzatore puoi svolgere le seguenti azioni:</h4>
                 </article>
             </div>
         </div>
-        <?php 
-        if(isset($_POST['search'])){
-                $titoloLibro = $_POST['Titolo'];
-                $ISBN = $_POST['Isbn'];
-                //$autoreLibro = $_POST['Autore'];
-                $genereLibro = $_POST['Genere'];
-
-                try{
-                    if($titoloLibro != null){
-                        if($ISBN != null){
-                            if($genereLibro != null){
-                                $sql = "SELECT *
-                                    FROM libriDisponibili as ld Join libro as l On ld.CodiceISBN = l.CodiceISBN
-                                    WHERE l.Titolo='$titoloLibro' AND l.CodiceISBN='$ISBN' AND l.Genere='$genereLibro'";
-                                $res = $pdo->query($sql); 
-                                $rowCount = $res->rowCount();
-                            }else{
-                                $sql = "SELECT *
-                                    FROM libriDisponibili as ld Join libro as l On ld.CodiceISBN = l.CodiceISBN
-                                    WHERE l.Titolo='$titoloLibro' AND l.CodiceISBN='$ISBN'";
-                                $res = $pdo->query($sql); 
-                                $rowCount = $res->rowCount();
-                            }
-                        }else{
-                            $sql = "SELECT *
-                                    FROM libriDisponibili as ld Join libro as l On ld.CodiceISBN = l.CodiceISBN
-                                    WHERE l.Titolo='$titoloLibro'";
-                                $res = $pdo->query($sql); 
-                                $rowCount = $res->rowCount();
-                        }
-                    }else if($ISBN != null){
-                        $sql = "SELECT *
-                                FROM libriDisponibili as ld Join libro as l On ld.CodiceISBN = l.CodiceISBN
-                                WHERE l.CodiceISBN='$ISBN'";
-                        $res = $pdo->query($sql); 
-                        $rowCount = $res->rowCount();
-                    }else if($genereLibro != null){
-                        $sql = "SELECT *
-                                FROM libriDisponibili as ld Join libro as l On ld.CodiceISBN = l.CodiceISBN
-                                WHERE l.Genere='$genereLibro'";
-                        $res = $pdo->query($sql); 
-                        $rowCount = $res->rowCount();
-                    }
-                }catch(PDOException $e){ echo("Query SQL Failed: ".$e->getMessage());
-                                            exit();}
+        <div class="card-deck" style="border: 10px; width:100%">
+          <div class="card mb-3" >
+              <img class="card-img-top rounded mx-auto d-blockr" src="../../images/book.png" style="width: 180px">
+            <div class="card-body">
+              <h5 class="card-title"><a href="../prenotazioni/prenotazioneLibroCartaceo/controllaDisponibilitaCartaceo.php" style="color:#bb2e29">Prenota Libro</a></h5>
+              <p class="card-text">Puoi prenotare un libro cartaceo da ricevere comodamente a casa.</p>
+            </div>
+          </div>
+          <div class="card mb-3" >
+              <img class="card-img-top rounded mx-auto d-blockr" src="../../images/desk.png" style="width: 180px">
+            <div class="card-body">
+              <h5 class="card-title"><a href="../prenotazioni/prenotazionePostoLettura/controllaDisponibilitaPostoLettura.php" style="color:#bb2e29">Prenota Posto Lettura</a></h5>
+              <p class="card-text">Prenota un posto lettura nella tua biblioteca preferita.</p>
+            </div>
+          </div>
+          <div class="card mb-3" >
+              <img class="card-img-top rounded mx-auto d-blockr" src="../../images/ebook.png" style="width: 180px">
+            <div class="card-body">
+              <h5 class="card-title"><a href="../visualizzazione/visualizzazioneLibri.php" style="color:#bb2e29">Visualizza Libri e Ebook</a></h5>
+              <p class="card-text">Puoi visualizzare tutti i libri presenti all'interno della tua biblioteca, visualizzarne i dettagli e l'e-book. </p>
+            </div>
+          </div>
+        </div>
+        <div class="card-deck" style="border: 10px; width:100%">
+          <div class="card mb-3" >
+              <img class="card-img-top rounded mx-auto d-blockr" src="../../images/warning.png" style="width: 180px">
+            <div class="card-body">
+              <h5 class="card-title"><a href="../profilo/prenotazioniEffettuate.php" style="color:#bb2e29">Visualizza Prenotazioni</a></h5>
+              <p class="card-text">Visualizza tutte le prenotazioni da te effettuate.</p>
+            </div>
+          </div>
+          <div class="card mb-3" >
+              <img class="card-img-top rounded mx-auto d-blockr" src="../../images/users.png" style="width: 180px">
+            <div class="card-body">
+              <h5 class="card-title"><a href="../profilo/visualizzazioneSegnalazioni.php" style="color:#bb2e29">Visualizza Segnalazioni</a></h5>
+              <p class="card-text">Visualizza tutte le segnalazioni da te ricevute.</p>
+            </div>
+          </div>
+          <div class="card mb-3" >
+              <img class="card-img-top rounded mx-auto d-blockr" src="../../images/chat.png" style="width: 180px" >
+            <div class="card-body">
+              <h5 class="card-title"><a href="../profilo/conversazioni.php" style="color:#bb2e29">Visualizza Conversazioni</a></h5>
+              <p class="card-text">Visualizza i messaggi ricevuti.</p>
+            </div>
+          </div>
             
-            if($rowCount > 0){
-            echo '
-                <div>
-                    <div class="card" style="border: 0; width:100%">
-                        <article class="card-body mx-auto" style="width: 100%; background-color:#002a4f; color:#fff">
-                            <h2 class="card-title mt-1 text-center">Risultati ricerca:</h2>
-                        </article>
-                    </div>
-                </div>
-                  <table>
-                    <thead>
-                        <tr>
-                            <th></th>
-                            <th></th>
-                            <th style="color:#fff; background-color: #bb2e29">Codice ISBN</th> 
-                            <th style="color:#fff; background-color: #bb2e29">Titolo</th>
-                            <th style="color:#fff; background-color: #bb2e29">Biblioteca</th>
-                            <th style="color:#fff; background-color: #bb2e29">Anno</th>
-                            <th style="color:#fff; background-color: #bb2e29">Genere</th>
-                            <th style="color:#fff; background-color: #bb2e29">Nome Edizione</th>
-                            <th></th>
-                            <th></th>
-                        </tr>
-                    </thead>
-                    <tbody>';
+        </div>
 
-
-                    while ($row = $res->fetch()) {
-                        $isbn = $row['CodiceISBN'];
-                        $tipoLibro = $row['TipoLibro'];
-                        $titolo = $row['Titolo'];
-                        $biblioteca = $row['NomeBiblioteca'];
-                        $anno = $row['Anno'];
-                        $genere = $row['Genere'];
-                        $nomeEdizione = $row['NomeEdizione'];
-                        echo("<tr>");
-                        echo("<td></td>");
-                        echo "<td>";
-                        if($tipoLibro == 'Cartaceo')
-                            echo "<img src=" . "../../images/book.png" . " alt=" . "Cartaceo" . " class=" . "avatarTableLibro" . ">";
-                        else if($tipoLibro == 'Ebook')
-                            echo "<img src=" . "../../images/ebook.png" . " alt=" . "Cartaceo" . " class=" . "avatarTableLibro" . ">";
-                        else if($tipoLibro == 'Entrambi'){
-                            echo "<img src=" . "../../images/ebook.png" . " alt=" . "Cartaceo" . " class=" . "avatarTableLibro" . ">";
-                            echo "<img src=" . "../../images/book.png" . " alt=" . "Cartaceo" . " class=" . "avatarTableLibro" . ">";
-                        }
-                        echo "</td>";
-                        echo "<td>" . $isbn . "</td>";
-                        echo "<td>" . $titolo . "</td>";
-                        echo "<td>" . $biblioteca . "</td>";
-                        echo "<td>" . $anno . "</td>";
-                        echo "<td>" . $genere . "</td>";
-                        echo "<td>" . $nomeEdizione . "</td>";
-                        if($_SESSION['TipoUtente']=='Utilizzatore'){
-                        echo "<td>" . "<button class=" . "btn btn-primary btn-block" . " onclick=" . "location.href='../prenotazioni/prenotazioneLibroCartaceo/prenotaFromHome.php?Isbn=" . "$isbn" . "&Titolo=" . urlencode($titolo) . "&Genere=" . urlencode($genere) . "&Biblioteca=" . urlencode($biblioteca) . "'" . "> PRENOTA </button></td>"; 
-                        }else if($_SESSION['TipoUtente']=='Amministratore'){echo "<td>" . "<button class=" . "btn btn-primary btn-block" . " onclick=" . "location.href='../inserimenti/inserimentoLibro.php?Isbn=" . "$isbn" . "&Tipo=" . urlencode($tipoLibro) . "&Titolo=" . urlencode($titolo) . "&Anno=" . "$anno" . "&Genere=" . urlencode($genere) . "&NomeEdizione=" . urlencode($nomeEdizione) . "'" . "> MODIFICA </button></td>"; }
-                    }        
-                    echo "</table></tbody>";
-                    }else{
-                        echo "<br/>NONE";
-                    }
-            }
-        ?>
         <footer class="text-center text-white" style="background-color: #bb2e29;">
           <div class="container p-2"> EBIBLIO</div>
           <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);">

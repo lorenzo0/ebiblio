@@ -25,14 +25,14 @@
     <header></header>
     <body>
         <div class="topnav">
-            <a href="../home/myHome.php" >Home</a>
+            <a href="../home/myHome.php">Home</a>
             <a href="../prenotazioni/prenotazionePostoLettura/controllaDisponibilitaPostoLettura.php">Prenota posto lettura</a>
-            <a href="../prenotazioni/prenotazioneLibroCartaceo/controllaDisponibilitaCartaceo.php">Prenota Libro</a>
-            <a href="conversazioni.php">Conversazioni</a>
+            <a href="../prenotazioni/prenotazioneLibroCartaceo/controllaDisponibilitaCartaceo.php">Prenota Libro</a>            
+            <a href="../visualizzazione/visualizzazioneLibri.php" >Visualizza EBook</a>
+            <a href="conversazioni.php" >Conversazioni</a>
              <a href="prenotazioniEffettuate.php" >Prenotazioni</a>
             <a href="visualizzazioneSegnalazioni.php" class="active">Segnalazioni</a>
             <button class="logout" style="float:right" onClick="location='../login/logout.php'">Logout</button>
-            <button class="logout" style="float:right" onClick="location='../profilo/profilo.php'">Account</button>
         </div>
         <div class="container">
             <div class="card mt-4" style="border: 0">
@@ -53,7 +53,7 @@
                         try{                            
                             $sql = "SELECT EmailAmministratore, DataSegnalazione, Nota
                                     FROM segnalazione
-                                    WHERE EmailUtilizzatore = '" . $_SESSION['email-accesso'] . "'";
+                                    WHERE EmailUtilizzatore = '" . $_SESSION['EmailUtente'] . "'";
                             $res = $pdo -> query($sql);
                             
                         }catch(PDOException $e){echo $e->getMessage();}

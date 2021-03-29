@@ -15,12 +15,7 @@
       
     <!-- Script JS -->
     <script src="../../js/script.js"></script>
-    <script>
-        $(function loadNavFoo(){
-          $("#navbar").load("../utils/navbar.html"); 
-          $("#footer").load("../utils/footer.html"); 
-        });
-    </script>
+   
       
   </head>
     <header></header>
@@ -76,9 +71,13 @@
                             exit();
                         }
                     
-                    if($res > 0)
+                    if($res > 0){
+                        $bulk = new MongoDB\Driver\BulkWrite();
+                        $doc = ['_id' => new MongoDB\BSON\ObjectID(), 'titolo' => 'Utilizzatore', 'tipoUtente'=>$tipoUtente, 'emailUtente'=>$emailUtente, 'timeStamp'=>date('Y-m-d H:i:s')];
+                        $bulk -> insert($doc);
+                        $connessioneMongo -> executeBulkWrite('ebiblio.log',$bulk);
                         echo "<script> alert('Richiesta processata correttamente!'); window.location.href='../login/login.php'; </script>";
-                    else
+                    }else
                         echo "<script> alert('La richiesta NON è stata processata correttamente!'); window.location.href='registrationPage.php'; </script>";
                     }
             }

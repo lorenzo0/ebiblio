@@ -147,6 +147,7 @@ img.avatar {
     top: 0;
     left: 0;
     background-color: #002a4f;
+    color: #fff;
     border-radius: 8px;
 }
 
@@ -233,6 +234,7 @@ th{
   background-color: #bb2e29;
   color: white;
 }
+
 
 /* Active/current link */
 .topnav a.active {

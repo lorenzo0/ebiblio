@@ -25,9 +25,13 @@
     <header></header>
     <body>
        <div class="topnav">
-            <a href="../../home/myHome.php" >Home</a>
+            <a href="../../home/myHome.php">Home</a>
             <a href="../prenotazionePostoLettura/controllaDisponibilitaPostoLettura.php">Prenota posto lettura</a>
-            <a href="mostraSceltaCartaceo.php" class="active">Prenota Libro</a>
+            <a href="controllaDisponibilitaCartaceo.php"class="active">Prenota Libro</a>            
+            <a href="../../visualizzazione/visualizzazioneLibri.php" >Visualizza EBook</a>
+            <a href="../../profilo/conversazioni.php">Conversazioni</a>
+             <a href="../../profilo/prenotazioniEffettuate.php">Prenotazioni</a>
+            <a href="../../profilo/visualizzazioneSegnalazioni.php" >Segnalazioni</a>
             <button class="logout" style="float:right" onClick="location='../../login/logout.php'">Logout</button>
             <button class="logout" style="float:right" onClick="location='../../profilo/profilo.php'">Account</button>
             
@@ -56,7 +60,9 @@
                         try{
                             
                             if($_POST['Biblioteca'] != 'none'){ 
-                                $nome = $_POST['Biblioteca'];
+                                
+                                $nomeEncode = $_POST['Biblioteca'];
+                                $nome = urldecode($nomeEncode);
                                 if($_POST['Isbn'] != ''){
                                     
                                     $isbn = $_POST['Isbn'];
@@ -135,7 +141,7 @@
                                 echo "<td>" . $titolo . "</td>";
                                 echo "<td>" . $nomeBiblioteca . "</td>";
                                 echo "<td>" . $statoConservazione . "</td>";
-                                echo "<td>" . "<button style='background-color: #7ABB3B;'class=" . "btn btn-primary btn-block" . " onclick=" . "location.href='prenotaCartaceo.php?Id=" . "$codiceIsbn" . "&Nome=" . $nomeBiblioteca . "'" . "> Prenota! </button></td>";
+                                echo "<td>" . "<button style='background-color:#bb2e29;color:#fff' class=" . "btn btn-primary btn-block" . " onclick=" . "location.href='prenotaCartaceo.php?Isbn=" . "$codiceIsbn" . "&Nome=" . urlencode($nomeBiblioteca) . "'" . ">Prenota!</button></td>";
                                 echo "</tr>"; 
                             }        
                     echo "</table></tbody>";

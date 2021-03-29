@@ -1,10 +1,16 @@
 <?php
 
             require '../../../../connectionDB/connection.php';
-             /*if ($_SESSION['TipoUtente']!="Amministratore"){
-                echo "<script> alert('Non possiedi le credenziali per accedere a questa pagina'); window.location.href='../../home/home.php'</script>"; 
-            }*/
-
+            require '../../../../connectionDB/connectionMongo.php';
+             if($_SESSION['TipoUtente']=="Utilizzatore"){
+                 echo "<script> alert('Non possiedi le credenziali per accedere a questa pagina'); window.location.href='../../home/myHome.php'</script>";
+             }else if($_SESSION['TipoUtente']=="Volontario"){
+                 echo "<script> alert('Non possiedi le credenziali per accedere a questa pagina'); window.location.href='../../home/volHome.php'</script>";
+             }else if($_SESSION['TipoUtente']==""){
+                 echo "<script> alert('Non possiedi le credenziali per accedere a questa pagina'); window.location.href='../../home/home.php'</script>";
+             }else if ($_SESSION['TipoUtente']=="SuperUser"){
+                 echo "<script> alert('Non possiedi le credenziali per accedere a questa pagina'); window.location.href='../../home/superUserHome.php'</script>";
+             }
             switch($_GET['tipo']){
                 case 'Cartaceo':
                     echo '<style type="text/css">
@@ -82,8 +88,14 @@
                     
                 if($res=0)
                     echo "<script type='text/javascript'>alert('Non è stata inserita una copia!');</script>";
-                else
+                else{
+                    $bulk = new MongoDB\Driver\BulkWrite();
+                    $doc = ['_id' => new MongoDB\BSON\ObjectID(), 'titolo' => 'CopiaCartaceo', 'tipoUtente'=>$_SESSION['TipoUtente'], 'emailUtente'=>$_SESSION['EmailUtente'], 'timeStamp'=>date('Y-m-d H:i:s')];
+                    $bulk -> insert($doc);
+                    $connessioneMongo -> executeBulkWrite('ebiblio.log',$bulk);
                     echo "<script type='text/javascript'>alert('Copia inserita correttamente!');</script>";
+                    
+                }
             }
         ?>
         <div class="topnav">
@@ -93,18 +105,16 @@
                   <i class="fa fa-caret-down"></i>
                 </button>
                 <div class="top-dropdown-content">
-                    <a href="../inserimentoAmministratore/inserimentoAmministratore.html" >Inserisci utente</a>
                     <a href="../inserimentoAutore/inserimentoAutore.php">Inserisci autore</a>
-                    <a href="../inserimentoBiblioteca/inserimentoBiblioteca.php">Inserisci biblioteca</a>
-                    <a href="../inserimentoPostoLettura/inserimentoPostoLettura.php">Posto lettura</a>
-                    <a href="inserimentoISBN.php" class="active">Inserisci libro</a>      
+                    <a href="../inserimentoPostoLettura/inserimentoPostoLettura.php" >Inserisci Posto lettura</a>
+                    <a href="nserimentoISBN.php" class="active">Inserisci libro</a>        
                 </div>
             </div>
-                <a href="../inserimenti/inserimentoSegnalazione/inserimentoSegnalazione.php">Nuova segnalazione</a> 
+            <a href="../../visualizzazione/visualizzazioneLibri.php">Tutti i libri</a>
+            <a href="../inserimentoSegnalazione/inserimentoSegnalazione.php">Nuova segnalazione</a> 
             <a href="../../cancellazioni/cancellazioneSegnalazioni.php">Cancella segnalazione</a> 
-            <a href="../inserimentoMessaggio/inserimentoMessaggio.php">Messaggi</a>
+            <a href="../inserimentoMessaggio/inserimentoMessaggio.php">Messaggio</a>
             <button class="logout" style="float:right" onClick="location='../../login/logout.php'">Logout</button>
-            <button class="logout" style="float:right" onClick="location='../../profilo/profilo.php'">Account</button>
         </div>
         <div class="container">
             <div class="card mt-4" style="border: 0">
