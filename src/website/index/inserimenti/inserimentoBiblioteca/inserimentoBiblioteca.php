@@ -95,7 +95,6 @@
                     $sql->bindParam(6, $longitudine, PDO::PARAM_STR);
                     $sql->bindParam(7, $note, PDO::PARAM_STR);
                     $res = $sql->execute();
-                    
 
                     $sql = $pdo -> prepare("INSERT INTO Foto VALUES(?, ?)");
 
@@ -184,6 +183,7 @@
                        
                         <div class="form-group input-group">
                           <input type="number" placeholder="Longitudine" class="form-control" name="longitudine" id="longitudine" step="0.00000001" required>
+
                        </div>
                        
                        <label> Recapiti telefonici: </label>

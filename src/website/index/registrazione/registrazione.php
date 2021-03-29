@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Ebiblio - Registration</title>
+    <title>Ebiblio</title>
 	<script src="https://kit.fontawesome.com/188e218822.js"></script>
       
     <!-- Bootstrap and CSS-->

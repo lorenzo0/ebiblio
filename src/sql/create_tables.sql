@@ -10,8 +10,14 @@ CREATE TABLE Biblioteca(
     URLSito varchar(255),
     Latitudine double(20,5),
     Longitudine double(20,5),
-    Recapito int(15),
     Note varchar(255)
+);
+
+CREATE TABLE RecapitiBiblioteca(
+	NomeBiblioteca varchar(255),
+    Recapito int(15),
+    FOREIGN KEY(NomeBiblioteca) REFERENCES Biblioteca(Nome) ON DELETE CASCADE,
+    PRIMARY KEY (NomeBiblioteca, Recapito)
 );
 
 CREATE TABLE Foto(
