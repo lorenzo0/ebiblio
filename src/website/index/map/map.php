@@ -13,9 +13,6 @@
         biblios = new Array();
         
         function createMap(){
-            const test = document.getElementById('test');
-            const test1 = document.getElementById('test1');
-
             var mymap = L.map('mapid').setView([44.4990968,11.2616454], 13);
 
             L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {

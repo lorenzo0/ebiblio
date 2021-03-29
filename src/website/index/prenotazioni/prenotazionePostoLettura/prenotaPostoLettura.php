@@ -1,7 +1,6 @@
 <?php
 
 require '../../../../connectionDB/connection.php';
-require '../../../../connectionDB/connectionMongo.php';
 
 $idPL = $_GET['Id'];
 $oraInizio = $_GET['Inizio'] . ':00:00';
@@ -25,13 +24,9 @@ try{
     
 }catch(PDOException $e){echo $e->getMessage();}	
 
-if($res > 0){
-    $bulk = new MongoDB\Driver\BulkWrite();
-    $doc = ['_id' => new MongoDB\BSON\ObjectID(), 'titolo' => 'PrenotazionePostoLettura', 'tipoUtente'=>$_SESSION['TipoUtente'], 'emailUtente'=>$_SESSION['EmailUtente'], 'timeStamp'=>date('Y-m-d H:i:s')];
-    $bulk -> insert($doc);
-    $connessioneMongo -> executeBulkWrite('ebiblio.log',$bulk);
+if($res > 0)
     echo "<script> alert('Prenotazione effettuata correttamente!'); window.location.href='../../home/myHome.php'; </script>";
-}else
+else
     echo "<script> alert('La prenotazione NON è stato effettuata, riprova!'); window.location.href='controllaDisponibilitaPostoLettura.php'; </script>";
 
 

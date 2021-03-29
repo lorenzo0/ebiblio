@@ -29,11 +29,7 @@
         
             try{
                 $tipoUtente= $_SESSION['TipoUtente'];
-                $email = $_SESSION['EmailUtente'];
-            
-                //echo "Tipo utente " . $tipoUtente . ".<br>";
-                //echo "Email utente " . $email . ".<br>";
-                
+                $email = $_SESSION['EmailUtente'];                
                 
                 $sql = "SELECT * FROM Utente WHERE Email = '$email'";
                 $res = $pdo -> query($sql);

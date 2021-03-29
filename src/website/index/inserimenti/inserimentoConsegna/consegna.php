@@ -2,7 +2,6 @@
 
 <?php
     require '../../../../connectionDB/connection.php';
-    require '../../../../connectionDB/connectionMongo.php';
     if($_SESSION['TipoUtente']=="Utilizzatore"){
          echo "<script> alert('Non possiedi le credenziali per accedere a questa pagina'); window.location.href='../../home/myHome.php'</script>";
      }else if($_SESSION['TipoUtente']=="SuperUser"){
@@ -183,15 +182,9 @@
                             
                         }
                         
-                        if ($res>0) {
-                            $bulk = new MongoDB\Driver\BulkWrite();
-
-                            $doc = ['_id' => new MongoDB\BSON\ObjectID(), 'titolo' => 'Consegna', 'tipoUtente'=>$_SESSION['TipoUtente'], 'emailUtente'=>$_SESSION['EmailUtente'], 'timeStamp'=>date('Y-m-d H:i:s')];
-                            $bulk -> insert($doc);
-                            $connessioneMongo -> executeBulkWrite('ebiblio.log',$bulk);
-                        
+                        if ($res>0) 
                            echo "<script> alert('Consegna inserita correttamente!'); window.location.href='../../home/volHome.php'; </script>";
-                        }else 
+                        else 
                            echo "<script> alert('La consegna NON è stata inserita correttamente!'); window.location.href='consegna.php'; </script>";
                          
                     }

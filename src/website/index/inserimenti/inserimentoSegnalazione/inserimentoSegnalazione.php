@@ -23,7 +23,6 @@
     <?php
     
         require '../../../../connectionDB/connection.php';
-        require '../../../../connectionDB/connectionMongo.php';
         if($_SESSION['TipoUtente']=="Utilizzatore"){
                  echo "<script> alert('Non possiedi le credenziali per accedere a questa pagina'); window.location.href='../../home/myHome.php'</script>";
              }else if($_SESSION['TipoUtente']=="Volontario"){
@@ -48,15 +47,9 @@
             $sql->bindParam(3, $data, PDO::PARAM_STR);
             $sql->bindParam(4, $nota, PDO::PARAM_STR);
             $res = $sql->execute();
-            if($res > 0){
-               $bulk = new MongoDB\Driver\BulkWrite();
-                $doc = ['_id' => new MongoDB\BSON\ObjectID(), 'titolo' => 'Segnalazione', 'tipoUtente'=>$_SESSION['TipoUtente'], 'emailUtente'=>$_SESSION['EmailUtente'], 'timeStamp'=>date('Y-m-d H:i:s')];
-                $bulk -> insert($doc);
-                $connessioneMongo -> executeBulkWrite('ebiblio.log',$bulk);
-                
+            if($res > 0)
                 echo "<script> alert('Segnalazione inserita correttamente!'); window.location.href='../../home/adminHome.php'; </script>";
-            
-            }else
+            else
                 echo "<script> alert('La segnalazione non è stata inserita correttamente, riprova!'); window.location.href='inserimentoSegnalazione.php'; </script>";
         }
         

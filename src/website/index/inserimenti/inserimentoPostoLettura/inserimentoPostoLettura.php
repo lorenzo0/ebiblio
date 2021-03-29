@@ -16,7 +16,7 @@
     <body>
          <?php 
             require '../../../../connectionDB/connection.php';
-            require '../../../../connectionDB/connectionMongo.php';
+        
             if($_SESSION['TipoUtente']=="Utilizzatore"){
                  echo "<script> alert('Non possiedi le credenziali per accedere a questa pagina'); window.location.href='../../home/myHome.php'</script>";
              }else if($_SESSION['TipoUtente']=="Volontario"){
@@ -45,13 +45,9 @@
                 $sql->bindParam(2, $presaEthernet, PDO::PARAM_INT);
                 $sql->bindParam(3, $presaCorrente, PDO::PARAM_INT);
                 
-                if($sql->execute()) {
-                    $bulk = new MongoDB\Driver\BulkWrite();
-                    $doc = ['_id' => new MongoDB\BSON\ObjectID(), 'titolo' => 'PostoLettura', 'tipoUtente'=>$_SESSION['TipoUtente'], 'emailUtente'=>$_SESSION['EmailUtente'], 'timeStamp'=>date('Y-m-d H:i:s')];
-                    $bulk -> insert($doc);
-                    $connessioneMongo -> executeBulkWrite('ebiblio.log',$bulk);
+                if($sql->execute()) 
                     echo "<script> alert('Posto Lettura inserito correttamente!'); window.location.href='../../home/adminHome.php'; </script>";
-                }else
+                else
                     echo "<script> alert('Il posto lettura non è stato inserito correttamente, riprova!'); window.location.href='inserimentoPostoLettura.php'; </script>";
             }
         ?>

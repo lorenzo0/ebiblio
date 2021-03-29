@@ -45,7 +45,6 @@
     <body>
         <?php
              require '../../../../connectionDB/connection.php';
-            require '../../../../connectionDB/connectionMongo.php';
             
             if($_SESSION['TipoUtente']=="Amministratore"){
                 echo "<script> alert('Non possiedi le credenziali per accedere a questa pagina'); window.location.href='../../home/adminHome.php'</script>";
@@ -127,14 +126,9 @@
                      exit();	
                 }	
 
-                if($res > 0){
-                   $bulk = new MongoDB\Driver\BulkWrite();
-
-                    $doc = ['_id' => new MongoDB\BSON\ObjectID(), 'titolo' => 'Biblioteca', 'tipoUtente'=>$_SESSION['TipoUtente'], 'emailUtente'=>$_SESSION['EmailUtente'], 'timeStamp'=>date('Y-m-d H:i:s')];
-                    $bulk -> insert($doc);
-                    $connessioneMongo -> executeBulkWrite('ebiblio.log',$bulk);
+                if($res > 0)
                     echo "<script> alert('Biblioteca inserita correttamente!'); window.location.href='../../home/superUserHome.php'; </script>";
-                }else 
+                else 
                    echo "<script> alert('La biblioteca NON è stata inserita correttamente!'); window.location.href='inserimentoBiblioteca.php'; </script>";
                  
             }
